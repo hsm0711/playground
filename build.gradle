@@ -1,0 +1,56 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.11'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'com.member'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('springCloudGcpVersion', "3.4.9")
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.google.cloud:spring-cloud-gcp-starter'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	implementation 'com.auth0:java-jwt:4.2.1'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation 'org.json:json:20220924'
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation 'org.postgresql:postgresql:42.6.0'
+	implementation 'com.google.cloud:spring-cloud-gcp-starter-secretmanager'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "com.google.cloud:spring-cloud-gcp-dependencies:${springCloudGcpVersion}"
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+tasks.withType(JavaExec) {
+    systemProperty 'GOOGLE_APPLICATION_CREDENTIALS', 'C:\\playground\\workspace\\member\\src\\main\\resources\\gcp\\service.json'
+}
+

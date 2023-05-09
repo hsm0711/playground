@@ -1,0 +1,58 @@
+server:
+ port: 8080
+ servlet:
+  encoding:
+   charset: UTF-8
+   
+springdoc:
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  api-docs:
+    groups:
+      enabled: true
+  swagger-ui:
+    operations-sorter: alpha # alpha(알파벳 오름차순), method(HTTP메소드순)
+    tags-sorter: alpha # 태그 정렬 기준
+    path: /swagger-ui.html # html 문서 접속 경로
+    disable-swagger-default-url: true
+    doc-expansion: none # tag, operation 펼치는 방식
+
+spring:
+ cloud:
+  gcp:
+   #project-id: august-cascade-385602
+   #credentials.location: file:C:\playground\workspace\member\src\main\resources\gcp\service.json
+   secretmanager:
+    project-id: august-cascade-385602
+    allow-default-secret: true
+    credentials.location: file:C:\playground\workspace\member\src\main\resources\gcp\service.json
+ config.import: sm://
+ datasource:
+  master:
+   hikari:
+    driver-class-name: org.postgresql.Driver
+    jdbc-url: ${sm://jdbc-url}
+    username: app_user
+    password: ${sm://db-pwd}
+    read-only: false
+  slave:
+   hikari:
+    driver-class-name: org.postgresql.Driver
+    jdbc-url: ${sm://jdbc-url}
+    username: app_user
+    password: ${sm://db-pwd}
+    read-only: true
+ sql:
+  init:
+   mode: EMBEDDED
+ jpa:
+  database: postgresql
+  database-platform: org.hibernate.dialect.PostgreSQLDialect
+  defer-datasource-initialization: true
+  show-sql: true
+  hibernate:
+   ddl-auto: validate
+ mvc:
+  pathmatch:
+   matching-strategy: ANT_PATH_MATCHER
+
