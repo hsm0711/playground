@@ -38,6 +38,7 @@ dependencies {
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 	implementation 'org.postgresql:postgresql:42.6.0'
 	implementation 'com.google.cloud:spring-cloud-gcp-starter-secretmanager'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 dependencyManagement {
@@ -49,8 +50,3 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
-tasks.withType(JavaExec) {
-    systemProperty 'GOOGLE_APPLICATION_CREDENTIALS', 'C:\\playground\\workspace\\member\\src\\main\\resources\\gcp\\service.json'
-}
-
