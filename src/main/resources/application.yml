@@ -18,15 +18,10 @@ springdoc:
     doc-expansion: none # tag, operation 펼치는 방식
 
 spring:
- cloud:
-  gcp:
-   #project-id: august-cascade-385602
-   #credentials.location: file:C:\playground\workspace\member\src\main\resources\gcp\service.json
-   secretmanager:
-    project-id: august-cascade-385602
-    allow-default-secret: true
-    credentials.location: file:C:\playground\workspace\member\src\main\resources\gcp\service.json
  config.import: sm://
+ redis:
+    port: 6379
+    host: ${sm://redis-url}
  datasource:
   master:
    hikari:
@@ -56,3 +51,8 @@ spring:
   pathmatch:
    matching-strategy: ANT_PATH_MATCHER
 
+logging:
+  pattern.console: "%clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr([${LOG_LEVEL_PATTERN:%5p}]) %clr([%X{userId}]) %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+  level:
+    root: info
+    com.member: debug
