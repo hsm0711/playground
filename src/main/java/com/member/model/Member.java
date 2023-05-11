@@ -1,16 +1,21 @@
 package com.member.model;
 
-import lombok.Data;
+import com.member.annotation.Secret;
 
-@Data
-public class Member {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class Member extends BaseDto {
 
 	private String userId; //아이디
-	
-	private String password; //패스워드
-	
-	private String name; //이름
-	
-	private String regNo; //주민등록번호
 
+	@Secret
+	private String password; //패스워드
+
+	private String name; //이름
+
+	@Secret
+	private String regNo; //주민등록번호
 }

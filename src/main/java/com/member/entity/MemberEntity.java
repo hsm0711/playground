@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.member.annotation.Secret;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,18 +15,19 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name="member")
-public class MemberEntity {
+public class MemberEntity extends BaseEntity {
 
 	@Id
 	@Column(name = "user_id")
 	private String userId; //아이디
-	
+
+	@Secret
 	@Column
 	private String password; //패스워드
-	
+
 	@Column
 	private String name; //이름
-	
+
 	@Column(name = "reg_no")
 	private String regNo; //주민등록번호
 
@@ -36,5 +39,5 @@ public class MemberEntity {
 		this.name = name;
 		this.regNo = regNo;
 	}
-	
+
 }
