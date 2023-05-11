@@ -11,7 +11,8 @@ import com.member.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-@RedisHash
+//@RedisHash(value = keyspace값, timeToLive = 만료시간(초))
+@RedisHash(value = "RedisEntity")
 @Getter
 @Setter
 public class RedisEntity extends BaseEntity {

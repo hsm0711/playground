@@ -46,6 +46,11 @@ spring:
   database-platform: org.hibernate.dialect.PostgreSQLDialect
   defer-datasource-initialization: true
   show-sql: true
+  properties:
+   hibernate:
+    show_sql: true
+    format_sql: true
+    use_sql_comments: true
   hibernate:
    ddl-auto: validate
  mvc:
@@ -60,4 +65,11 @@ logging:
   pattern.console: "%clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr([${LOG_LEVEL_PATTERN:%5p}]) %clr([%10.10X{userId}]){magenta} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
   level:
     root: info
-    com.member: debug
+    org:
+     hibernate:
+      SQL: debug
+      type:
+       descriptor:
+        sql: trace
+    com:
+     member: debug

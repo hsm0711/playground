@@ -1,5 +1,6 @@
 package com.member.api.member.service;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -12,6 +13,7 @@ import com.member.api.member.model.MyInfoResponse;
 import com.member.api.member.model.SignRequest;
 import com.member.api.member.model.SignResponse;
 import com.member.api.member.repository.MemberRepository;
+import com.member.constants.CacheType;
 import com.member.exception.CustomException;
 import com.member.utils.CryptoUtil;
 import com.member.utils.JwtTokenUtil;
@@ -81,6 +83,7 @@ public class MemberService {
 				.build();
 	}
 
+	@Cacheable(cacheManager = CacheType.TEN_MINUTES, cacheNames = "members", key = "#token", unless = "#result == null")
 	@Transactional(readOnly = true)
 	public MyInfoResponse myInfo(String token) {
 
