@@ -29,7 +29,6 @@
    - application.yml의 spring.cloud.gcp.secretmanager.credentials.location 설정이 적용되지 않아서 추후 확인 및 테스트 필요
    - 임시로 GOOGLE_APPLICATION_CREDENTIALS 시스템 변수 설정이 필요함
      - git repository의 Settings - Secrets and variables - Actions 메뉴에서 Variables탭에 GOOGLE_APPLICATION_CREDENTIALS 항목 복사
-
      - PC의 특정 영역에 json파일로 저장한 후 해당 파일을 GOOGLE_APPLICATION_CREDENTIALS 환경변수로 등록
 
 > 관련 소스
@@ -62,6 +61,12 @@
    : 민감정보 로그에 표출되지 않도록 마스킹 처리를 위해 ToString Override
 
 # 5. Redis
+
+
+
+
+
+
 
 ------------------------------------------------------------
 
