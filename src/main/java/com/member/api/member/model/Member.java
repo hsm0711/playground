@@ -1,6 +1,7 @@
-package com.member.model;
+package com.member.api.member.model;
 
 import com.member.annotation.Secret;
+import com.member.model.BaseDto;
 
 import lombok.Getter;
 import lombok.Setter;

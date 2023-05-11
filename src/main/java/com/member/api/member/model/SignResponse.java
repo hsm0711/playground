@@ -1,4 +1,6 @@
-package com.member.model;
+package com.member.api.member.model;
+
+import com.member.model.BaseResponse;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

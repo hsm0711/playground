@@ -1,4 +1,4 @@
-package com.member.entity;
+package com.member.api.member.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.member.annotation.Secret;
+import com.member.entity.BaseEntity;
 
 import lombok.Builder;
 import lombok.Getter;

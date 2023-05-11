@@ -1,17 +1,17 @@
-package com.member.service;
+package com.member.api.member.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import com.member.entity.MemberEntity;
+import com.member.api.member.entity.MemberEntity;
+import com.member.api.member.model.LoginRequest;
+import com.member.api.member.model.LoginResponse;
+import com.member.api.member.model.Member;
+import com.member.api.member.model.MyInfoResponse;
+import com.member.api.member.model.SignRequest;
+import com.member.api.member.model.SignResponse;
+import com.member.api.member.repository.MemberRepository;
 import com.member.exception.CustomException;
-import com.member.model.LoginRequest;
-import com.member.model.LoginResponse;
-import com.member.model.Member;
-import com.member.model.MyInfoResponse;
-import com.member.model.SignRequest;
-import com.member.model.SignResponse;
-import com.member.repository.MemberRepository;
 import com.member.utils.CryptoUtil;
 import com.member.utils.JwtTokenUtil;
 import com.member.utils.MessageUtils;

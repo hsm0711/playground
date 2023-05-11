@@ -1,4 +1,4 @@
-package com.member.controller;
+package com.member.api.member;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.member.model.LoginRequest;
-import com.member.model.LoginResponse;
-import com.member.model.MyInfoResponse;
-import com.member.model.SignRequest;
-import com.member.model.SignResponse;
-import com.member.service.MemberService;
+import com.member.api.member.model.LoginRequest;
+import com.member.api.member.model.LoginResponse;
+import com.member.api.member.model.MyInfoResponse;
+import com.member.api.member.model.SignRequest;
+import com.member.api.member.model.SignResponse;
+import com.member.api.member.service.MemberService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

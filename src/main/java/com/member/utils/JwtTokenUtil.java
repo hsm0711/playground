@@ -6,9 +6,9 @@ import java.util.Map;
 
 import org.springframework.util.StringUtils;
 
+import com.member.api.member.model.Member;
 import com.member.constants.MemberConstants;
 import com.member.exception.CustomException;
-import com.member.model.Member;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
