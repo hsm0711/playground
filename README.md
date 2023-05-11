@@ -30,6 +30,17 @@
 
 > 관련 소스
    - [application.yml](https://github.com/hsm0711/member/blob/master/src/main/resources/application.yml#L21)
+   : ${sm://jdbc-url} 와 같은 형태로 사용
    - [build.gradle](https://github.com/hsm0711/member/blob/master/build.gradle#L40)
    : spring-cloud-gcp-starter, spring-cloud-gcp-starter-secretmanager
 
+> 참고 링크
+   - <https://spring-gcp.saturnism.me/app-dev/cloud-services/secret-management>
+   - <https://codelabs.developers.google.com/codelabs/cloud-spring-cloud-gcp-secret-manager#1>
+
+
+------------------------------------------------------------
+
+
+> DB접속정보 등 기타 정보는
+  Settings - Secrets and variables - Actions에 메뉴에서 Variables탭에 기록함
