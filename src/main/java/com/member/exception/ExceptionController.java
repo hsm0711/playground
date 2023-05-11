@@ -17,28 +17,28 @@ public class ExceptionController {
 
 	@ExceptionHandler(UnsupportedJwtException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public BaseResponse UnsupportedJwtException(Exception e) {
+	public BaseResponse unsupportedJwtException(Exception e) {
 		e.printStackTrace();
 		return new BaseResponse("UnsupportedJwtException");
 	}
 
 	@ExceptionHandler(MalformedJwtException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public BaseResponse MalformedJwtException(Exception e) {
+	public BaseResponse malformedJwtException(Exception e) {
 		e.printStackTrace();
 		return new BaseResponse("MalformedJwtException");
 	}
 
 	@ExceptionHandler(ExpiredJwtException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public BaseResponse ExpiredJwtException(Exception e) {
+	public BaseResponse expiredJwtException(Exception e) {
 		e.printStackTrace();
 		return new BaseResponse("ExpiredJwtException");
 	}
 
 	@ExceptionHandler(SignatureException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public BaseResponse SignatureException(Exception e) {
+	public BaseResponse signatureException(Exception e) {
 		e.printStackTrace();
 		return new BaseResponse("SignatureException");
 	}

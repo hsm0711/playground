@@ -20,7 +20,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		http.csrf().disable().headers().frameOptions().sameOrigin() // h2 콘솔 보려면켜야함
+		http.csrf().disable().headers().frameOptions().sameOrigin()
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 사용 X
 				.and()
 				.formLogin().disable() // 화면 없으니 설정

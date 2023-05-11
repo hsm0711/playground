@@ -18,6 +18,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
 public class SwaggerConfig {
+	private static final String AUTHORIZATION = "Authorization";
 
 	@Bean
 	public Docket api() {
@@ -29,7 +30,7 @@ public class SwaggerConfig {
 				.select().apis(RequestHandlerSelectors.basePackage("com.member")) // api 스펙이 작성되어 있는 패키지
 				.paths(PathSelectors.any()) // apis 에 위치하는 API 중 특정 path 를 선택
 				.build();
-				
+
 	}
 
 	public ApiInfo apiInfo() {
@@ -39,7 +40,7 @@ public class SwaggerConfig {
 				.version("0.1")
 				.build();
 	}
-	
+
 	// JWT SecurityContext 구성
 	private SecurityContext securityContext() {
 		return SecurityContext.builder().securityReferences(defaultAuth()).build();
@@ -49,12 +50,12 @@ public class SwaggerConfig {
 		AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
 		AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
 		authorizationScopes[0] = authorizationScope;
-		return List.of(new SecurityReference("Authorization", authorizationScopes));
+		return List.of(new SecurityReference(AUTHORIZATION, authorizationScopes));
 	}
 
 	// ApiKey 정의
 	private ApiKey apiKey() {
-		return new ApiKey("Authorization", "Authorization", "header");
+		return new ApiKey(AUTHORIZATION, AUTHORIZATION, "header");
 	}
-	
+
 }

@@ -31,8 +31,8 @@ public class MemberController {
 	 * 회원가입
 	 */
 	@Operation(summary = "회원가입", description = "회원을 가입하기 위한 메소드")
-	@PostMapping("/signup")
-	public ResponseEntity<SignResponse> createMember(@RequestBody SignRequest req) throws Exception {
+	@PostMapping("/public/signup")
+	public ResponseEntity<SignResponse> createMember(@RequestBody SignRequest req) {
 		return ResponseEntity.ok(memberService.createMember(req));
 	}
 
@@ -40,8 +40,8 @@ public class MemberController {
 	 * 로그인
 	 */
 	@Operation(summary = "로그인", description = "로그인을 진행하기 위한 메소드")
-	@PostMapping("/login")
-	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest req) throws Exception {
+	@PostMapping("/public/login")
+	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest req) {
 		return ResponseEntity.ok(memberService.login(req));
 	}
 
@@ -49,8 +49,8 @@ public class MemberController {
 	 * 내 정보 조회
 	 */
 	@Operation(summary = "내 정보 조회", description = "본인의 정보를 조회하기 위한 메소드")
-	@GetMapping("/me")
-	public ResponseEntity<MyInfoResponse> myInfo(@RequestHeader(value = "Authorization") String token) throws Exception {
+	@GetMapping("/api/me")
+	public ResponseEntity<MyInfoResponse> myInfo(@RequestHeader(value = "Authorization") String token) {
 		return ResponseEntity.ok(memberService.myInfo(token));
 	}
 

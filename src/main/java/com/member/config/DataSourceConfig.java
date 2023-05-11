@@ -12,8 +12,8 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 public class DataSourceConfig {
-	private final String MASTER_DATA_SOURCE = "masterDataSource";
-	private final String SLAVE_DATA_SOURCE = "slaveDataSource";
+	private static final String MASTER_DATA_SOURCE = "masterDataSource";
+	private static final String SLAVE_DATA_SOURCE = "slaveDataSource";
 
 	@Primary
 	@Bean(MASTER_DATA_SOURCE)

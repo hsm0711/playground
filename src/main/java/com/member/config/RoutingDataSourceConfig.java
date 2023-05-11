@@ -22,10 +22,10 @@ import com.member.constants.DataSourceType;
 @Configuration
 public class RoutingDataSourceConfig {
 
-	private final String ROUTING_DATA_SOURCE = "routingDataSource";
-	private final String MASTER_DATA_SOURCE = "masterDataSource";
-	private final String SLAVE_DATA_SOURCE = "slaveDataSource";
-	private final String DATA_SOURCE = "dataSource";
+	private static final String ROUTING_DATA_SOURCE = "routingDataSource";
+	private static final String MASTER_DATA_SOURCE = "masterDataSource";
+	private static final String SLAVE_DATA_SOURCE = "slaveDataSource";
+	private static final String DATA_SOURCE = "dataSource";
 
 	@Bean(ROUTING_DATA_SOURCE)
 	public DataSource routingDataSource(@Qualifier(MASTER_DATA_SOURCE) final DataSource masterDataSource,
