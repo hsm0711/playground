@@ -83,7 +83,7 @@ public class MemberService {
 				.build();
 	}
 
-	@Cacheable(cacheManager = CacheType.TEN_MINUTES, cacheNames = "members", key = "#token", unless = "#result == null")
+	@Cacheable(cacheManager = CacheType.ONE_MINUTES, cacheNames = "members", key = "#token", unless = "#result == null")
 	@Transactional(readOnly = true)
 	public MyInfoResponse myInfo(String token) {
 
