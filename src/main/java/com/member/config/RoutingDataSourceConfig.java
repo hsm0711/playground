@@ -18,7 +18,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import com.member.constants.DataSourceType;
 
-@EnableJpaRepositories(basePackages = "com.member.repository", entityManagerFactoryRef = "entityManagerFactory", transactionManagerRef = "transactionManager")
+@EnableJpaRepositories(basePackages = "com.member.api", entityManagerFactoryRef = "entityManagerFactory", transactionManagerRef = "transactionManager")
 @Configuration
 public class RoutingDataSourceConfig {
 
@@ -52,7 +52,7 @@ public class RoutingDataSourceConfig {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier(DATA_SOURCE) DataSource dataSource) {
 		LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactory.setDataSource(dataSource);
-		entityManagerFactory.setPackagesToScan("com.member.entity");
+		entityManagerFactory.setPackagesToScan("com.member.api.*.entity");
 		entityManagerFactory.setJpaVendorAdapter(this.jpaVendorAdapter());
 		entityManagerFactory.setPersistenceUnitName("entityManager");
 

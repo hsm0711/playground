@@ -23,7 +23,7 @@ public class CryptoUtil {
     }
 
 	/*
-	 * SHA-256 단방향 암호화 : 원래 이걸 쓰려 했는데 회원 정보 조회하는 부분에서 복호화가 안되어 아래 AES256으로 변경
+	 * SHA-256 단방향 암호화
 	 */
 	public static String sha256Endcode(String plaintext) {
 		return Hashing.sha256().hashString(plaintext, StandardCharsets.UTF_8).toString();

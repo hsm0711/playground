@@ -37,9 +37,8 @@ public class BaseDto {
 					// Do nothing
 				}
 
-				// TODO 민감정보 마스킹 처리
 				if (annotation != null) {
-
+					// TODO 민감정보 마스킹 처리
 				}
 
 				map.put(fieldName, fieldValue);

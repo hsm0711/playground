@@ -30,7 +30,7 @@ spring:
     username: app_user
     password: ${sm://db-pwd}
     read-only: false
-  slave:
+  slave: # DB replication 적용 후 replica DB로 정보 수정
    hikari:
     driver-class-name: org.postgresql.Driver
     jdbc-url: ${sm://jdbc-url}

@@ -1,6 +1,7 @@
 package com.member.api.member.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import com.member.api.member.entity.MemberEntity;
@@ -26,6 +27,7 @@ public class MemberService {
 
 	private final MemberRepository memberRepository;
 
+	@Transactional(readOnly = false)
 	public SignResponse createMember(SignRequest req) {
 
 		if (ObjectUtils.isEmpty(req.getUserId())) {
@@ -59,6 +61,7 @@ public class MemberService {
 
 	}
 
+	@Transactional(readOnly = true)
 	public LoginResponse login(LoginRequest req) {
 
 		if (ObjectUtils.isEmpty(req.getUserId())) {
@@ -78,6 +81,7 @@ public class MemberService {
 				.build();
 	}
 
+	@Transactional(readOnly = true)
 	public MyInfoResponse myInfo(String token) {
 
 		if (!ObjectUtils.isEmpty(token)) {
