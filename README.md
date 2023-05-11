@@ -5,9 +5,9 @@
 
 # 2. Database Replication 설정
    - Database Replication은 실시간 복제본 데이터베이스 서버를 운용하는 것을 의미함
-   - 기준이 되는 서버가 Master서버 복제된 서버를 Replica서버라 칭함
-   - Replica 서버는 읽기 전용 속성으로 운영되며 이를 이용해 readonly 여부에 따라 DataSource를 변경하여 DB Connection을 변경함
-   - @Transactional annotaion의 readonly 속성을 사용하여 read/write인 경우 Master로 readonly인 경우 Slave로 DataSource를 결정해서 connection함
+   - 기준이 되는 서버가 Master 서버 복제된 서버를 Replica 서버라 칭함
+   - Replica 서버는 읽기 전용 속성으로 운영되며 이를 이용해 readonly 여부에 따라 DataSource 를 변경하여 DB Connection을 변경함
+   - @Transactional annotaion의 readonly 속성을 사용하여 read/write이면 Master로 readonly인 경우 Slave로 DataSource를 결정해서 connection 함
 
 > 관련 소스
    - [application.yml](https://github.com/hsm0711/member/blob/master/src/main/resources/application.yml#L25)
@@ -23,10 +23,10 @@
 
 # 3. secret manager
    - git, svn 등등 형상 관리 되는 프로젝트의 yaml, properties에 서버의 중요 정보가 노출되어있음
-   - yaml, properties에 적용 되야 될 중요정보를 별도의 영역인 cloud에서 관리하고 application runtime 시점에 해당 정보를 조회함
-   - Google Cloud Platform (GCP), Amazon Web Services (AWS)의 Secert Manager, Vault 등이 있음
-   - GCP의 Secret Manager를 적용 함
-   - application.yml의 spring.cloud.gcp.secretmanager.credentials.location 설정이 적용되지 안항서 추후 확인 및 테스트 필요
+   - yaml, properties에 적용 돼야 할 중요 정보를 별도의 영역인 cloud에서 관리하고 application runtime 시점에 해당 정보를 조회함
+   - Google Cloud Platform (GCP), Amazon Web Services (AWS) 의 Secert Manager, Vault 등이 있음
+   - GCP의 Secret Manager를 적용함
+   - application.yml의 spring.cloud.gcp.secretmanager.credentials.location 설정이 적용되지 않아서 추후 확인 및 테스트 필요
    - 임시로 GOOGLE_APPLICATION_CREDENTIALS 시스템 변수 설정이 필요함
      - git repository의 Settings - Secrets and variables - Actions 메뉴에서 Variables탭에 GOOGLE_APPLICATION_CREDENTIALS 항목 복사
 
@@ -47,8 +47,8 @@
 # 4. 로그
    - Spring boot에는 logback이 기본으로 설정되어있음
    - 로그 추적을 위해 JwtFilter에서 userId가 있는 경우 MDC에 put하고 application.yml의 log formatter에 userId 찍도록 추가
-   - 로그에 표출되지 말아야 할 민감정보를 masking처리해서 로그에 표출하도록 BaseEntity, BaseDto에서 ToString 구현
-   - 모든 Entity나 DTO/VO 들은 BaseEntity, BaseDto를 상속 받아야 함
+   - 로그에 표출되지 말아야 할 민감정보를 masking 처리해서 로그에 표출하도록 BaseEntity, BaseDto에서 ToString 구현
+   - 모든 Entity나 DTO/VO들은 BaseEntity, BaseDto를 상속받아야 함
 
 
 > 관련 소스
