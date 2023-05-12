@@ -32,6 +32,8 @@ public class MemberService {
 	@Transactional(readOnly = false)
 	public SignResponse createMember(SignRequest req) {
 
+		log.debug(">>> req : {}", req);
+
 		if (ObjectUtils.isEmpty(req.getUserId())) {
 			throw new CustomException(MessageUtils.INVALID_USER_ID);
 		} else if (ObjectUtils.isEmpty(req.getName())) {

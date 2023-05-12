@@ -1,6 +1,7 @@
 package com.member.api.member.model;
 
 import com.member.annotation.Secret;
+import com.member.model.BaseResponse;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.Setter;
 @Schema(name = "MyInfoResponse", description= "내 정보 조회 응답 데이터")
 @Getter
 @Setter
-public class MyInfoResponse {
+public class MyInfoResponse extends BaseResponse {
 
 	@Schema(description = "사용자ID", defaultValue = "", example = "hong12")
 	private String userId; //아이디

@@ -10,17 +10,15 @@ import javax.crypto.spec.SecretKeySpec;
 import com.google.common.hash.Hashing;
 import com.member.exception.CustomException;
 
+import lombok.experimental.UtilityClass;
+
+// TODO 암호화 유틸 관련다시 설계 필요
+@UtilityClass
 public class CryptoUtil {
 
 	private static final String ALG = "AES/CBC/PKCS5Padding";
 	private static final String KEY = "12345678910111213";
 	private static final byte[] IV = KEY.substring(0, 16).getBytes(); // 16byte
-
-	private CryptoUtil() {
-		// TODO 메시지 체계 정리 후 메시징 처리 수정
-        throw new CustomException("Utility class");
-
-    }
 
 	/*
 	 * SHA-256 단방향 암호화

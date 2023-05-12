@@ -13,17 +13,13 @@ import com.member.exception.CustomException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@UtilityClass
 public class JwtTokenUtil {
 	private static final String USER_ID = "userId";
-
-	private JwtTokenUtil() {
-		// TODO 메시지 체계 정리 후 메시징 처리 수정
-		throw new CustomException("Utility class");
-
-	}
 
 	// 토큰 생성
 	public static String createToken(String userId, String name) {

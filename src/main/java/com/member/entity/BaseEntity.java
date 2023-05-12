@@ -14,6 +14,8 @@ import org.springframework.util.ReflectionUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.member.annotation.Secret;
+import com.member.constants.MemberConstants;
+import com.member.utils.MaskingUtil;
 
 public class BaseEntity {
 	@Override
@@ -37,7 +39,13 @@ public class BaseEntity {
 				}
 
 				if (annotation != null) {
-					// TODO 민감정보 마스킹 처리
+					if (StringUtils.isNotBlank(fieldValue) && fieldValue.matches(MemberConstants.RegexPattern.RESIDENT_FOREIGNER_REGISTRATION_NUMBER)) {
+						fieldValue = MaskingUtil.residentForeignerRegistrationNumber(fieldValue);
+					}
+
+					if (false) {
+						// TODO 전화, 카드, 계좌 등등 마스킹 처리
+					}
 				}
 
 				map.put(fieldName, fieldValue);

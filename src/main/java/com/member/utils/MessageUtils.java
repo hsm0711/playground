@@ -1,14 +1,9 @@
 package com.member.utils;
 
-import com.member.exception.CustomException;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class MessageUtils {
-	private MessageUtils() {
-		// TODO 메시지 체계 정리 후 메시징 처리 수정
-        throw new CustomException("Utility class");
-
-    }
-
 	public static final String SUCCESS = "SUCCESS";
 	public static final String FAIL = "FAIL";
 

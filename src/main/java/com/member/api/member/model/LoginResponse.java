@@ -11,7 +11,7 @@ import lombok.Getter;
 public class LoginResponse extends BaseResponse {
 
 	@Schema(description = "토큰", defaultValue = "", example = "JWT 토큰")
-	private String token; //JWT 토큰
+	private String token;
 
 	@Builder
 	public LoginResponse(String token) {
