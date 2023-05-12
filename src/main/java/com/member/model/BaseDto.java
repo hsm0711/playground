@@ -39,8 +39,8 @@ public class BaseDto {
 					// Do nothing
 				}
 
-				if (annotation != null) {
-					if (StringUtils.isNotBlank(fieldValue) && fieldValue.matches(MemberConstants.RegexPattern.RESIDENT_FOREIGNER_REGISTRATION_NUMBER)) {
+				if (annotation != null && StringUtils.isNotBlank(fieldValue)) {
+					if (fieldValue.matches(MemberConstants.RegexPattern.RESIDENT_FOREIGNER_REGISTRATION_NUMBER)) {
 						fieldValue = MaskingUtil.residentForeignerRegistrationNumber(fieldValue);
 					}
 
