@@ -40,6 +40,8 @@ dependencies {
 	implementation 'com.google.cloud:spring-cloud-gcp-starter-secretmanager'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-cache'
+	implementation 'org.apache.poi:poi:5.2.3'
+	implementation 'org.apache.poi:poi-ooxml:5.2.3'
 }
 
 dependencyManagement {
