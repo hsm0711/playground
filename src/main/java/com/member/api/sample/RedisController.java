@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.member.api.sample.entity.RedisEntity;
 import com.member.api.sample.service.RedisService;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "Redis 샘플", description = "Redis 샘플 Controller")
+@Api(tags = "Redis 샘플 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member/public/sample/redis")
@@ -28,6 +29,7 @@ public class RedisController {
 	/*
 	 * redis 저장
 	 */
+	@ApiOperation(value = "redis 저장", notes = "redis 저장")
 	@PutMapping
 	public ResponseEntity<RedisEntity> put(@RequestBody RedisEntity param) {
 		return ResponseEntity.ok(sampleService.put(param));
@@ -36,6 +38,7 @@ public class RedisController {
 	/*
 	 * redis 조회
 	 */
+	@ApiOperation(value = "redis 조회", notes = "id 파라메터로 redis에 저장된 정보 조회")
 	@GetMapping("{id}")
 	public ResponseEntity<RedisEntity> get(@PathVariable String id) {
 		return ResponseEntity.ok(sampleService.get(id));
@@ -44,6 +47,7 @@ public class RedisController {
 	/*
 	 * redis Count 조회
 	 */
+	@ApiOperation(value = "redis Count 조회", notes = "redis에 저장된 총 count 조회")
 	@GetMapping("count")
 	public ResponseEntity<Long> getCount() {
 		return ResponseEntity.ok(sampleService.getCount());
@@ -52,6 +56,7 @@ public class RedisController {
 	/*
 	 * redis 전체 조회
 	 */
+	@ApiOperation(value = "redis 전체 조회", notes = "redis에 저장된 전체 데이터 조회")
 	@GetMapping
 	public ResponseEntity<List<RedisEntity>> getAll() {
 		return ResponseEntity.ok(sampleService.getAll());
@@ -60,6 +65,7 @@ public class RedisController {
 	/*
 	 * redis 삭제 - Entity
 	 */
+	@ApiOperation(value = "redis 삭제 - Entity", notes = "RedisEntity 파라메터로 redis에 저장된 정보 삭제")
 	@DeleteMapping
 	public ResponseEntity<Void> delete(@RequestBody RedisEntity param) {
 		sampleService.delete(param);
@@ -70,6 +76,7 @@ public class RedisController {
 	/*
 	 * redis 삭제 - id
 	 */
+	@ApiOperation(value = "redis 삭제 - id", notes = "id 파라메터로 redis에 저장된 정보 삭제")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteById(@PathVariable String id) {
 		sampleService.deleteById(id);
