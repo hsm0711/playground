@@ -24,6 +24,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
@@ -190,17 +191,13 @@ public class ExcelDownUtil<T> {
 				if (columnInfo.getCellStyle() != null) {
 					cell.setCellStyle(columnInfo.getCellStyle());
 				} else if (StringUtils.isNotBlank(columnInfo.getDataFormat()) || bodyStyle != null) {
-					CellStyle cellStyle = null;
+					CellStyle cellStyle = workbook.createCellStyle();
 
 					if (bodyStyle != null) {
-						cellStyle = bodyStyle;
+						BeanUtils.copyProperties(bodyStyle, cellStyle);
 					}
 
 					if (StringUtils.isNotBlank(columnInfo.getDataFormat())) {
-						if (cellStyle == null) {
-							cellStyle = workbook.createCellStyle();
-						}
-
 						DataFormat dataFormat = workbook.createDataFormat();
 
 						cellStyle.setDataFormat(dataFormat.getFormat(columnInfo.getDataFormat()));
