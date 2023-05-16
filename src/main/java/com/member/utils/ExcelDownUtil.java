@@ -1,21 +1,35 @@
 package com.member.utils;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.poi.ss.SpreadsheetVersion;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ReflectionUtils;
 
 import com.member.annotation.ExcelDown;
 
@@ -38,6 +52,8 @@ public class ExcelDownUtil<T> {
 	private List<T> dataList;
 	private SXSSFWorkbook workbook;
 	private SXSSFSheet sheet;
+	private CellStyle headerStyle;
+	private CellStyle bodyStyle;
 
 	/**
 	 *
@@ -58,15 +74,13 @@ public class ExcelDownUtil<T> {
 		}
 
 		workbook = new SXSSFWorkbook(FLUSH_ROWS);
+		workbook.setCompressTempFiles(true);
+
 		sheet = workbook.createSheet(sheetName);
 
-		makeColumnInfo();
+		getColumnInfo();
 
-		// header annotation 정보 정리
-		// body annotation 정보 정리
-		// 필수값 validation
-		// makeExcel
-		// download
+		makeExcel();
 	}
 
 	/**
@@ -80,7 +94,7 @@ public class ExcelDownUtil<T> {
 		this(response, fileName, fileName, clazz, dataList);
 	}
 
-	private void makeColumnInfo() {
+	private void getColumnInfo() {
 		List<Field> fieldList = FieldUtils.getFieldsListWithAnnotation(clazz, ExcelDown.class);
 
 		if (CollectionUtils.isEmpty(fieldList)) {
@@ -89,31 +103,128 @@ public class ExcelDownUtil<T> {
 
 		columnList = fieldList.stream().map(field -> {
 			Annotation annotation = field.getAnnotation(ExcelDown.class);
+			Map<String, Object> dtoInfoMap = AnnotationUtils.getAnnotationAttributes(annotation);
+			dtoInfoMap.put("key", field.getName());
 
-			return modelMapper.map(AnnotationUtils.getAnnotationAttributes(annotation), ColumnInfo.class);
-		}).collect(Collectors.toList());
+			return modelMapper.map(dtoInfoMap, ColumnInfo.class);
+		})
+		.sorted(Comparator.comparing(ColumnInfo::getOrder))
+		.collect(Collectors.toList());
+
+		log.debug(">>> columnList : {}", columnList);
+
+		if (CollectionUtils.isEmpty(columnList)) {
+			// TODO 컬럼 목록 없을때 Exception 처리
+		}
 	}
 
 	private void makeExcel() {
-		// setHeader
-		// setBody
-		// with 있으면 처리
+		setHeader();
+
+		if (CollectionUtils.isNotEmpty(dataList)) {
+			setBody();
+		}
+
+		// TODO header 에서 width없으면 auto width 처리
 	}
 
 	private void setHeader() {
-		// header style 체크
-		// header data 처리
-		// dataFormat있으면 처리
+		Row row = sheet.createRow(0);
+
+		for (int i = 0; i < columnList.size(); i++) {
+			Cell cell = row.createCell(i);
+			ColumnInfo columnInfo = columnList.get(i);
+
+			cell.setCellValue(columnInfo.getHeaderName());
+
+			if (headerStyle != null) {
+				cell.setCellStyle(headerStyle);
+			}
+
+			if (columnInfo.getWith() > 0) {
+				sheet.setColumnWidth(i, columnInfo.getWith());
+			}
+		}
 	}
 
 	private void setBody() {
-		// body style 체크
-		// body data 처리, cell 최대 글자 처리
-		// header 에서 width없으면 auto width 처리
+
+		for (int i = 0; i < dataList.size(); i++) {
+			Row row = sheet.createRow(i+1);
+			T dataObj = dataList.get(i);
+
+			log.debug(">>> columnList : {}", columnList);
+
+			for (int j = 0; j < columnList.size(); j++) {
+				Cell cell = row.createCell(j);
+				ColumnInfo columnInfo = columnList.get(j);
+
+				String value = "";
+
+				try {
+					value = StringUtils.defaultString(Objects.toString(FieldUtils.readField(dataObj, columnInfo.getKey(), true)));
+				} catch (IllegalAccessException e) {
+					Method getMethod = ReflectionUtils.findMethod(clazz, "get" + StringUtils.capitalize(columnInfo.getKey()));
+
+					if (getMethod != null) {
+						value = StringUtils.defaultString(Objects.toString(ReflectionUtils.invokeMethod(getMethod, dataObj)));
+					} else {
+						// TODO 이상황까지 오려나.. 일단 나중에 처리 생각 해보기
+					}
+				}
+
+				// TODO cell 최대 글자 처리
+
+				cell.setCellValue(value);
+
+				if (columnInfo.getCellStyle() != null) {
+					cell.setCellStyle(columnInfo.getCellStyle());
+				} else if (StringUtils.isNotBlank(columnInfo.getDataFormat()) || bodyStyle != null) {
+					CellStyle cellStyle = null;
+
+					if (bodyStyle != null) {
+						cellStyle = bodyStyle;
+					}
+
+					if (StringUtils.isNotBlank(columnInfo.getDataFormat())) {
+						if (cellStyle == null) {
+							cellStyle = workbook.createCellStyle();
+						}
+
+						DataFormat dataFormat = workbook.createDataFormat();
+
+						cellStyle.setDataFormat(dataFormat.getFormat(columnInfo.getDataFormat()));
+					}
+
+					if (cellStyle != null) {
+						cell.setCellStyle(cellStyle);
+
+						columnInfo.setCellStyle(cellStyle);
+						columnList.set(i, columnInfo);
+					}
+				}
+			}
+		}
 	}
 
-	public ResponseEntity<HttpServletResponse> download() {
-		return ResponseEntity.ok().body(response);
+	public ResponseEntity<byte[]> download() {
+		byte[] bytes = null;
+
+		try (
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			) {
+			workbook.write(bos);
+			bytes = bos.toByteArray();
+			workbook.dispose();
+		} catch (IOException e) {
+			// TODO Exception 처리
+		}
+
+		return ResponseEntity.ok()
+				.cacheControl(CacheControl.noCache())
+				.header(HttpHeaders.CONTENT_TYPE, "application/ms-excel")
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName + ".xlsx;")
+				.body(bytes);
 		// 파일명 설정
 		// 파일다운
 	}
@@ -122,9 +233,11 @@ public class ExcelDownUtil<T> {
 	@Getter
 	@Setter
 	public static class ColumnInfo {
+		private String key;
         private String headerName;
         private int with;
-        private CellType cellType;
+        private int order;
         private String dataFormat;
+        private CellStyle cellStyle;
     }
 }

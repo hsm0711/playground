@@ -23,7 +23,7 @@ public class ExcelDownController {
 	 * Excel download
 	 */
 	@GetMapping("/download")
-	public ResponseEntity<HttpServletResponse> download(HttpServletResponse response) {
+	public ResponseEntity<byte[]> download(HttpServletResponse response) {
 		return excelService.download(response);
 	}
 }

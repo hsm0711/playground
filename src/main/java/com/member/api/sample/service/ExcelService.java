@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class ExcelService {
 	private final ExcelDownRepository excelDownRepository;
 
-	public ResponseEntity<HttpServletResponse> download(HttpServletResponse response) {
+	public ResponseEntity<byte[]> download(HttpServletResponse response) {
 		List<ExcelDownEntity> list = excelDownRepository.findAll();
 
 		ExcelDownUtil<ExcelDownEntity> excel = new ExcelDownUtil<>(response, "파일명", "Sheet명", ExcelDownEntity.class, list);
