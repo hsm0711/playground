@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.apache.poi.ss.usermodel.CellType;
-
 import com.member.annotation.ExcelDown;
 import com.member.annotation.Secret;
 import com.member.entity.BaseEntity;
@@ -23,20 +21,20 @@ public class ExcelDownEntity extends BaseEntity {
 
 	@Id
 	@Column(name = "user_id")
-	@ExcelDown(headerName = "아이디", cellType = CellType.STRING, dataFormat = "내 아이디는 : @", order = 1, width = 400)
+	@ExcelDown(headerName = "아이디", dataFormat = "내 아이디는 : @", order = 1, width = 400)
 	private String userId;
 
 	@Secret
 	@Column
-	@ExcelDown(headerName = "비밀번호", cellType = CellType.STRING)
+	@ExcelDown(headerName = "비밀번호")
 	private String password;
 
 	@Column
-	@ExcelDown(headerName = "이름", cellType = CellType.STRING, order = 2)
+	@ExcelDown(headerName = "이름", order = 2)
 	private String name;
 
 	@Column(name = "reg_no")
-	@ExcelDown(headerName = "주민등록번호", cellType = CellType.STRING, width = 50)
+	@ExcelDown(headerName = "주민등록번호", width = 50)
 	private String regNo;
 
 	@Builder

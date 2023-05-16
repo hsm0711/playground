@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +21,6 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.poi.ss.SpreadsheetVersion;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
@@ -220,10 +221,13 @@ public class ExcelDownUtil<T> {
 			// TODO Exception 처리
 		}
 
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_TYPE, "application/ms-excel");
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + ".xlsx;");
+
 		return ResponseEntity.ok()
 				.cacheControl(CacheControl.noCache())
-				.header(HttpHeaders.CONTENT_TYPE, "application/ms-excel")
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName + ".xlsx;")
+				.headers(headers)
 				.body(bytes);
 		// 파일명 설정
 		// 파일다운

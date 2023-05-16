@@ -6,8 +6,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.apache.poi.ss.usermodel.CellType;
-
 /**
  * 엑셀 다운로드 시 다운로드 될 Sheet, 컬럼 정보를 포함하는 annotaion
  */
