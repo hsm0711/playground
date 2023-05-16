@@ -21,7 +21,7 @@ public class ExcelDownEntity extends BaseEntity {
 
 	@Id
 	@Column(name = "user_id")
-	@ExcelDown(headerName = "아이디", dataFormat = "내 아이디는 : @", order = 1, width = 400)
+	@ExcelDown(headerName = "아이디", dataFormat = "내 아이디는 : @", order = 1, width = 150)
 	private String userId;
 
 	@Secret
@@ -34,7 +34,7 @@ public class ExcelDownEntity extends BaseEntity {
 	private String name;
 
 	@Column(name = "reg_no")
-	@ExcelDown(headerName = "주민등록번호", width = 50)
+	@ExcelDown(headerName = "주민등록번호", width = 150)
 	private String regNo;
 
 	@Builder

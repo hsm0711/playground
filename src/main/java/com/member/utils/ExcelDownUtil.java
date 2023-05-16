@@ -13,8 +13,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -46,7 +44,6 @@ public class ExcelDownUtil<T> {
 
 	private static final ModelMapper modelMapper = new ModelMapper();
 
-	private HttpServletResponse response;
 	private String fileName;
 	private Class<T> clazz;
 	private List<ColumnInfo> columnList;
@@ -57,15 +54,12 @@ public class ExcelDownUtil<T> {
 	private CellStyle bodyStyle;
 
 	/**
-	 *
-	 * @param response - Download 처리를 위한 HttpServlerResponse
 	 * @param fileName - 다운로드 될 파일 명
 	 * @param sheetName - 시트명
 	 * @param clazz - 다운로드하는 DTO/VO Class
 	 * @param dataList - 다운로드할 data 목록
 	 */
-	public ExcelDownUtil(HttpServletResponse response, String fileName, String sheetName, Class<T> clazz, List<T> dataList) {
-		this.response = response;
+	public ExcelDownUtil(String fileName, String sheetName, Class<T> clazz, List<T> dataList) {
 		this.fileName = fileName;
 		this.clazz = clazz;
 		this.dataList = dataList;
@@ -80,19 +74,27 @@ public class ExcelDownUtil<T> {
 		sheet = workbook.createSheet(sheetName);
 
 		getColumnInfo();
-
-		makeExcel();
 	}
 
 	/**
-	 *
-	 * @param response - Download 처리를 위한 HttpServlerResponse
 	 * @param fileName - 다운로드 될 파일/sheet 명
 	 * @param clazz - 다운로드하는 DTO/VO Class
 	 * @param dataList - 다운로드할 data 목록
 	 */
-	public ExcelDownUtil(HttpServletResponse response, String fileName, Class<T> clazz, List<T> dataList) {
-		this(response, fileName, fileName, clazz, dataList);
+	public ExcelDownUtil(String fileName, Class<T> clazz, List<T> dataList) {
+		this(fileName, fileName, clazz, dataList);
+	}
+
+	public CellStyle getEmptyStyle() {
+		return workbook.createCellStyle();
+	}
+
+	public void setHeaderStyle(CellStyle headerStyle) {
+		this.headerStyle = headerStyle;
+	}
+
+	public void setBodyStyle(CellStyle bodyStyle) {
+		this.bodyStyle = bodyStyle;
 	}
 
 	private void getColumnInfo() {
@@ -112,8 +114,6 @@ public class ExcelDownUtil<T> {
 		.sorted(Comparator.comparing(ColumnInfo::getOrder))
 		.collect(Collectors.toList());
 
-		log.debug(">>> columnList : {}", columnList);
-
 		if (CollectionUtils.isEmpty(columnList)) {
 			// TODO 컬럼 목록 없을때 Exception 처리
 		}
@@ -124,9 +124,16 @@ public class ExcelDownUtil<T> {
 
 		if (CollectionUtils.isNotEmpty(dataList)) {
 			setBody();
-		}
 
-		// TODO header 에서 width없으면 auto width 처리
+			for(int i = 0; i < columnList.size(); i++) {
+				ColumnInfo columnInfo = columnList.get(i);
+
+				if (columnInfo.getWidth() == -1) {
+					sheet.trackColumnForAutoSizing(i);
+			        sheet.autoSizeColumn(i);
+				}
+			}
+		}
 	}
 
 	private void setHeader() {
@@ -142,19 +149,19 @@ public class ExcelDownUtil<T> {
 				cell.setCellStyle(headerStyle);
 			}
 
-			if (columnInfo.getWith() > 0) {
-				sheet.setColumnWidth(i, columnInfo.getWith());
+			if (columnInfo.getWidth() > 0) {
+				sheet.untrackColumnForAutoSizing(i);
+				sheet.setColumnWidth(i, (columnInfo.getWidth() * 256) / 7);
+			} else {
+				sheet.trackColumnForAutoSizing(i);
 			}
 		}
 	}
 
 	private void setBody() {
-
 		for (int i = 0; i < dataList.size(); i++) {
 			Row row = sheet.createRow(i+1);
 			T dataObj = dataList.get(i);
-
-			log.debug(">>> columnList : {}", columnList);
 
 			for (int j = 0; j < columnList.size(); j++) {
 				Cell cell = row.createCell(j);
@@ -174,7 +181,9 @@ public class ExcelDownUtil<T> {
 					}
 				}
 
-				// TODO cell 최대 글자 처리
+				if (StringUtils.length(value) > 32767) {
+					value = StringUtils.substring(value, 0, 32767);
+				}
 
 				cell.setCellValue(value);
 
@@ -209,6 +218,8 @@ public class ExcelDownUtil<T> {
 	}
 
 	public ResponseEntity<byte[]> download() {
+		makeExcel();
+
 		byte[] bytes = null;
 
 		try (
@@ -229,8 +240,6 @@ public class ExcelDownUtil<T> {
 				.cacheControl(CacheControl.noCache())
 				.headers(headers)
 				.body(bytes);
-		// 파일명 설정
-		// 파일다운
 	}
 
 	@ToString
@@ -239,7 +248,7 @@ public class ExcelDownUtil<T> {
 	public static class ColumnInfo {
 		private String key;
         private String headerName;
-        private int with;
+        private int width;
         private int order;
         private String dataFormat;
         private CellStyle cellStyle;

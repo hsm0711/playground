@@ -1,7 +1,5 @@
 package com.member.api.sample;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +21,15 @@ public class ExcelDownController {
 	 * Excel download
 	 */
 	@GetMapping("/download")
-	public ResponseEntity<byte[]> download(HttpServletResponse response) {
-		return excelService.download(response);
+	public ResponseEntity<byte[]> download() {
+		return excelService.download();
+	}
+
+	/**
+	 * Excel download With Style
+	 */
+	@GetMapping("/download-style")
+	public ResponseEntity<byte[]> downloadWithStyle() {
+		return excelService.downloadWithStyle();
 	}
 }
