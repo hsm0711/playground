@@ -18,17 +18,17 @@ import com.member.api.sample.service.RedisService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "샘플", description = "샘플 Controller")
+@Tag(name = "Redis 샘플", description = "Redis 샘플 Controller")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member/sample/public")
+@RequestMapping("/member/public/sample/redis")
 public class RedisController {
 	private final RedisService sampleService;
 
 	/*
 	 * redis 저장
 	 */
-	@PutMapping("/redis")
+	@PutMapping
 	public ResponseEntity<RedisEntity> put(@RequestBody RedisEntity param) {
 		return ResponseEntity.ok(sampleService.put(param));
 	}
@@ -36,7 +36,7 @@ public class RedisController {
 	/*
 	 * redis 조회
 	 */
-	@GetMapping("/redis/{id}")
+	@GetMapping("{id}")
 	public ResponseEntity<RedisEntity> get(@PathVariable String id) {
 		return ResponseEntity.ok(sampleService.get(id));
 	}
@@ -44,7 +44,7 @@ public class RedisController {
 	/*
 	 * redis Count 조회
 	 */
-	@GetMapping("/redis/count")
+	@GetMapping("count")
 	public ResponseEntity<Long> getCount() {
 		return ResponseEntity.ok(sampleService.getCount());
 	}
@@ -52,7 +52,7 @@ public class RedisController {
 	/*
 	 * redis 전체 조회
 	 */
-	@GetMapping("/redis")
+	@GetMapping
 	public ResponseEntity<List<RedisEntity>> getAll() {
 		return ResponseEntity.ok(sampleService.getAll());
 	}
@@ -60,7 +60,7 @@ public class RedisController {
 	/*
 	 * redis 삭제 - Entity
 	 */
-	@DeleteMapping("/redis")
+	@DeleteMapping
 	public ResponseEntity<Void> delete(@RequestBody RedisEntity param) {
 		sampleService.delete(param);
 
@@ -70,7 +70,7 @@ public class RedisController {
 	/*
 	 * redis 삭제 - id
 	 */
-	@DeleteMapping("/redis/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteById(@PathVariable String id) {
 		sampleService.deleteById(id);
 
