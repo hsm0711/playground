@@ -42,6 +42,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-cache'
 	implementation 'org.apache.poi:poi:5.2.3'
 	implementation 'org.apache.poi:poi-ooxml:5.2.3'
+	implementation 'org.modelmapper:modelmapper:3.1.1'
 }
 
 dependencyManagement {
