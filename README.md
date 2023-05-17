@@ -63,14 +63,39 @@
 
 
 # 5. Redis
-   - 내용 작성 중
+   - Redis는 인메모리 데이터 구조 저장소로서 사용
+   - Spring Data Redis에서 제공하는 RedisTemplate을 사용하는 방법과 RedisRepository 인터페이스를 사용하는 방법이 있음
+     - RedisRepository의 장점
+         - 간편한 사용
+             - RedisRepository는 Spring Data Redis 프로젝트의 일부로 제공
+             - Redis와의 상호 작용을 단순화시켜줍니다. CRUD (생성, 읽기, 업데이트, 삭제) 작업을 수행하는 메서드를 제공하므로 Redis와의 상호 작용이 간단하고 직관적
+         - 자동 매핑
+             - RedisRepository는 객체와 Redis 사이의 자동 매핑을 제공 객체를 Redis에 저장하거나 Redis에서 가져올 때, 자동으로 직렬화 및 역직렬화를 처리하여 개발자가 추가적인 작업을 할 필요 없음
+     - RedisRepository의 단점
+         - 제한된 기능
+             - RedisRepository는 간단한 CRUD 작업을 처리하는 데 유용하지만, 고급 Redis 기능을 사용하려는 경우에는 제한적일 수 있음
+             - 더 복잡한 Redis 작업을 수행해야하는 경우에는 RedisTemplate을 사용하는 것이 더 적합
+     - RedisTemplate의 장점
+         - 유연성
+             - RedisTemplate은 Redis의 모든 기능을 사용할 수 있도록 다양한 메서드를 제공
+             - Redis의 데이터 유형에 따라 다양한 작업을 수행할 수 있으며, 개발자가 필요한 작업을 직접 구현할 수 있음
+         - 고급 기능
+             - RedisTemplate은 Redis의 pub/sub (게시/구독) 메커니즘, 트랜잭션, 파이프라이닝 등과 같은 고급 기능을 지원하며 이러한 기능을 사용하여 더 복잡한 Redis 작업을 수행할 수 있음
+     - RedisTemplate의 단점
+         - 사용의 복잡성
+             - RedisTemplate은 더 많은 유연성을 제공하지만, 사용의 복잡성도 높을 수 있음
+             - 개발자는 직접 Redis 데이터 유형 및 직렬화에 대한 처리를 구현해야 하므로, 더 많은 작업과 코드를 작성해야 함
+         - 성능 고려 사항
+             - RedisTemplate은 개발자가 직접 코드를 작성하므로, 최적화 및 성능 고려 사항을 고려해야 할 수 있음
+             - Redis의 성능을 최대로 활용하기 위해 RedisTemplate을 사용할 때는 성능 테스트와 최적화가 필요할 수 있음
+
 
 
 > 관련 소스
    - [application-local.yml](https://github.com/hsm0711/member/blob/master/src/main/resources/application-local.yml#L18)
    : redis 접속 정보 셋팅
    - [RedisConfig.java](https://github.com/hsm0711/member/blob/master/src/main/java/com/member/config/RedisConfig.java)
-   : LettuceConnectionFactory를 활용해 redis 접속 환경 구성
+   : 기본 client로 Lettuce를 사용하기 위해 LettuceConnectionFactory를 활용해 redis 접속 환경 구성
    - [CacheConfig.java](https://github.com/hsm0711/member/blob/master/src/main/java/com/member/config/CacheConfig.java)
    : redis를 Cache로 활용하기 위해 CacheManager 설정 구성
    - [RedisController.java](https://github.com/hsm0711/member/blob/master/src/main/java/com/member/api/sample/RedisController.java)
