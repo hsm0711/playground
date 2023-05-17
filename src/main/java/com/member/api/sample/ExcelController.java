@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member/public/sample/excel")
-public class ExcelDownController {
+public class ExcelController {
 	private final ExcelService excelService;
 
 	/**

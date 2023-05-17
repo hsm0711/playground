@@ -60,10 +60,38 @@
    - [BaseDto.java](https://github.com/hsm0711/member/blob/master/src/main/java/com/member/model/BaseDto.java)
    : 민감정보 로그에 표출되지 않도록 마스킹 처리를 위해 ToString Override
 
+
+
 # 5. Redis
+   - 내용 작성 중
+
+
+> 관련 소스
+   - [application-local.yml](https://github.com/hsm0711/member/blob/master/src/main/resources/application-local.yml#L18)
+   : redis 접속 정보 셋팅
+   - [RedisConfig.java](https://github.com/hsm0711/member/blob/master/src/main/java/com/member/config/RedisConfig.java)
+   : LettuceConnectionFactory를 활용해 redis 접속 환경 구성
+   - [CacheConfig.java](https://github.com/hsm0711/member/blob/master/src/main/java/com/member/config/CacheConfig.java)
+   : redis를 Cache로 활용하기 위해 CacheManager 설정 구성
+   - [RedisController.java](https://github.com/hsm0711/member/blob/master/src/main/java/com/member/api/sample/RedisController.java)
+   : redis 활용 샘플 api
+   - [MemberService.java](https://github.com/hsm0711/member/blob/master/src/main/java/com/member/api/member/service/MemberService.java#L88)
+   : redis 활용 캐싱 api
+
+
 
 
 # 6. Excel 다운로드
+   - 내용 작성 중
+
+
+> 관련 소스
+   - [ExcelDown.java](https://github.com/hsm0711/member/blob/master/src/main/java/com/member/annotation/ExcelDown.java)
+   : Excel 다운로드를 위해 해더, width, 순서 등 설정
+   - [ExcelDownUtil.java](https://github.com/hsm0711/member/blob/master/src/main/java/com/member/utils/ExcelDownUtil.java)
+   : Excel 다운로드를 처리를 하는 Util
+   - [ExcelController.java](https://github.com/hsm0711/member/blob/master/src/main/java/com/member/api/sample/ExcelController.java)
+   : Excel 다운로드를 샘플 api
 
 
 

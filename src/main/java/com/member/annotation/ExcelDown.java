@@ -18,7 +18,7 @@ public @interface ExcelDown {
 	String headerName();
 
 	/**
-	 * Column의 withd를 설정한다.
+	 * Column의 width를 설정한다.
 	 *
 	 * default: -1
 	 */
