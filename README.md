@@ -82,7 +82,11 @@
 
 
 # 6. Excel 다운로드
-   - 내용 작성 중
+   - Excel 다운로드를 위해 Apache POI를 사용함
+   - Workbook은 SXSSFWorkbook을 사용함
+   - SXSSFWorkbook은 스트림 기반으로 동작하며 데이터를 메모리에 모두 로드하지 않고 생성자 생성 시 설정 한 rowAccessWindowSize만 메모리에서 작업을 수행하기 때문에 Out of Memory(OOM)를 방지함
+   - rowAccessWindowSize가 넘어가는 경우 임시 파일에 flush 처리를 함
+   - Mybatis를 사용 할 경우 Mybatis에서 제공하는 ResultHandler를 활용하면 전체 데이터의 List<VO>를 생성하지 않기 때문에 성능상의 이점이 있음
 
 
 > 관련 소스
