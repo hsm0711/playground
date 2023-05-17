@@ -13,6 +13,11 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
+import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.member.constants.CacheType;
 
 @EnableCaching
@@ -26,7 +31,7 @@ public class CacheConfig {
 				.serializeKeysWith(
 						RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
 				.serializeValuesWith(RedisSerializationContext.SerializationPair
-						.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+						.fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper())));
 
 		return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory)
 				.cacheDefaults(redisCacheConfiguration).build();
@@ -39,7 +44,7 @@ public class CacheConfig {
 				.serializeKeysWith(
 						RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
 				.serializeValuesWith(RedisSerializationContext.SerializationPair
-						.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+						.fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper())));
 
 		return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory)
 				.cacheDefaults(redisCacheConfiguration).build();
@@ -47,14 +52,30 @@ public class CacheConfig {
 
 	@Bean(CacheType.ONE_HOUR)
 	public RedisCacheManager onHourCacheManager(RedisConnectionFactory redisConnectionFactory) {
+
+
 		RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
 				.entryTtl(Duration.ofHours(1)).disableCachingNullValues()
 				.serializeKeysWith(
 						RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
 				.serializeValuesWith(RedisSerializationContext.SerializationPair
-						.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+						.fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper())));
 
 		return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory)
 				.cacheDefaults(redisCacheConfiguration).build();
+	}
+
+	private ObjectMapper objectMapper() {
+		PolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator
+				.builder()
+				.allowIfSubType(Object.class)
+				.build();
+		ObjectMapper objectMapper = new ObjectMapper();
+
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        objectMapper.activateDefaultTyping(ptv, ObjectMapper.DefaultTyping.NON_FINAL);
+
+        return objectMapper;
 	}
 }

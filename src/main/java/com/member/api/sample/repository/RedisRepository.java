@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.member.api.sample.entity.RedisEntity;
+import com.member.api.sample.entity.RedisRepositoryEntity;
 
-public interface RedisRepository extends CrudRepository<RedisEntity, String> {
+public interface RedisRepository extends CrudRepository<RedisRepositoryEntity, String> {
 	@Override
-	List<RedisEntity> findAll();
+	List<RedisRepositoryEntity> findAll();
 }

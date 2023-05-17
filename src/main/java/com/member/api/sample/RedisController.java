@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.member.api.sample.entity.RedisEntity;
+import com.member.api.sample.entity.RedisRepositoryEntity;
+import com.member.api.sample.entity.RedisTemplateEntity;
 import com.member.api.sample.service.RedisService;
 
 import io.swagger.annotations.Api;
@@ -27,59 +28,119 @@ public class RedisController {
 	private final RedisService sampleService;
 
 	/*
-	 * redis 저장
+	 * redis 저장 - redisRepository
 	 */
-	@ApiOperation(value = "redis 저장", notes = "redis 저장")
-	@PutMapping
-	public ResponseEntity<RedisEntity> put(@RequestBody RedisEntity param) {
-		return ResponseEntity.ok(sampleService.put(param));
+	@ApiOperation(value = "redis 저장 - redisRepository", notes = "redis 저장")
+	@PutMapping("/repository")
+	public ResponseEntity<RedisRepositoryEntity> putRepository(@RequestBody RedisRepositoryEntity param) {
+		return ResponseEntity.ok(sampleService.putRepository(param));
 	}
 
 	/*
-	 * redis 조회
+	 * redis 조회 - redisRepository
 	 */
-	@ApiOperation(value = "redis 조회", notes = "id 파라메터로 redis에 저장된 정보 조회")
-	@GetMapping("{id}")
-	public ResponseEntity<RedisEntity> get(@PathVariable String id) {
-		return ResponseEntity.ok(sampleService.get(id));
+	@ApiOperation(value = "redis 조회 - redisRepository", notes = "id 파라메터로 redis에 저장된 정보 조회")
+	@GetMapping("/repository/{id}")
+	public ResponseEntity<RedisRepositoryEntity> getRepository(@PathVariable String id) {
+		return ResponseEntity.ok(sampleService.getRepository(id));
 	}
 
 	/*
-	 * redis Count 조회
+	 * redis Count 조회 - redisRepository
 	 */
-	@ApiOperation(value = "redis Count 조회", notes = "redis에 저장된 총 count 조회")
-	@GetMapping("count")
-	public ResponseEntity<Long> getCount() {
-		return ResponseEntity.ok(sampleService.getCount());
+	@ApiOperation(value = "redis Count 조회 - redisRepository", notes = "redis에 저장된 총 count 조회")
+	@GetMapping("/repository/count")
+	public ResponseEntity<Long> getCountRepository() {
+		return ResponseEntity.ok(sampleService.getCountRepository());
 	}
 
 	/*
-	 * redis 전체 조회
+	 * redis 전체 조회 - redisRepository
 	 */
-	@ApiOperation(value = "redis 전체 조회", notes = "redis에 저장된 전체 데이터 조회")
-	@GetMapping
-	public ResponseEntity<List<RedisEntity>> getAll() {
-		return ResponseEntity.ok(sampleService.getAll());
+	@ApiOperation(value = "redis 전체 조회 - redisRepository", notes = "redis에 저장된 전체 데이터 조회")
+	@GetMapping("/repository")
+	public ResponseEntity<List<RedisRepositoryEntity>> getAllRepository() {
+		return ResponseEntity.ok(sampleService.getAllRepository());
 	}
 
 	/*
-	 * redis 삭제 - Entity
+	 * redis 삭제 - Entity - redisRepository
 	 */
-	@ApiOperation(value = "redis 삭제 - Entity", notes = "RedisEntity 파라메터로 redis에 저장된 정보 삭제")
-	@DeleteMapping
-	public ResponseEntity<Void> delete(@RequestBody RedisEntity param) {
-		sampleService.delete(param);
+	@ApiOperation(value = "redis 삭제 - Entity - redisRepository", notes = "RedisEntity 파라메터로 redis에 저장된 정보 삭제")
+	@DeleteMapping("/repository")
+	public ResponseEntity<Void> deleteRepository(@RequestBody RedisRepositoryEntity param) {
+		sampleService.deleteRepository(param);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	/*
-	 * redis 삭제 - id
+	 * redis 삭제 - id - redisRepository
 	 */
-	@ApiOperation(value = "redis 삭제 - id", notes = "id 파라메터로 redis에 저장된 정보 삭제")
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteById(@PathVariable String id) {
-		sampleService.deleteById(id);
+	@ApiOperation(value = "redis 삭제 - id - redisRepository", notes = "id 파라메터로 redis에 저장된 정보 삭제")
+	@DeleteMapping("/repository/{id}")
+	public ResponseEntity<Void> deleteByIdRepository(@PathVariable String id) {
+		sampleService.deleteByIdRepository(id);
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	/*
+	 * redis 저장 - redisTemplate
+	 */
+	@ApiOperation(value = "redis 저장 - redisTemplate", notes = "redis 저장")
+	@PutMapping("/template")
+	public ResponseEntity<Void> putTemplate(@RequestBody RedisTemplateEntity param) {
+		sampleService.putTemplate(param);
+
+		return ResponseEntity.ok().build();
+	}
+
+	/*
+	 * redis 조회 - redisTemplate
+	 */
+	@ApiOperation(value = "redis 조회 - redisTemplate", notes = "id 파라메터로 redis에 저장된 정보 조회")
+	@GetMapping("/template/{id}")
+	public ResponseEntity<RedisTemplateEntity> getTemplate(@PathVariable String id) {
+		return ResponseEntity.ok(sampleService.getTemplate(id));
+	}
+
+	/*
+	 * redis Count 조회 - redisTemplate
+	 */
+	@ApiOperation(value = "redis Count 조회 - redisTemplate", notes = "redis에 저장된 총 count 조회")
+	@GetMapping("/template/count")
+	public ResponseEntity<Long> getCountTemplate() {
+		return ResponseEntity.ok(sampleService.getCountTemplate());
+	}
+
+	/*
+	 * redis 전체 조회 - redisTemplate
+	 */
+	@ApiOperation(value = "redis 전체 조회 - redisTemplate", notes = "redis에 저장된 전체 데이터 조회")
+	@GetMapping("/template")
+	public ResponseEntity<List<RedisTemplateEntity>> getAllTemplate() {
+		return ResponseEntity.ok(sampleService.getAllTemplate());
+	}
+
+	/*
+	 * redis 삭제 - Entity - redisTemplate
+	 */
+	@ApiOperation(value = "redis 삭제 - Entity - redisTemplate", notes = "RedisEntity 파라메터로 redis에 저장된 정보 삭제")
+	@DeleteMapping("/template")
+	public ResponseEntity<Void> deleteTemplate(@RequestBody RedisTemplateEntity param) {
+		sampleService.deleteTemplate(param);
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	/*
+	 * redis 삭제 - id - redisTemplate
+	 */
+	@ApiOperation(value = "redis 삭제 - id - redisTemplate", notes = "id 파라메터로 redis에 저장된 정보 삭제")
+	@DeleteMapping("/template/{id}")
+	public ResponseEntity<Void> deleteByIdTemplate(@PathVariable String id) {
+		sampleService.deleteByIdTemplate(id);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

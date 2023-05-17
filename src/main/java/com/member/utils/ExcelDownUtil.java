@@ -36,9 +36,7 @@ import com.member.annotation.ExcelDown;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class ExcelDownUtil<T> {
 	private static final int MAX_ROWS = SpreadsheetVersion.EXCEL2007.getMaxRows();
 	private static final int FLUSH_ROWS = 10000;

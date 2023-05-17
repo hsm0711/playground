@@ -13,6 +13,7 @@ import org.springframework.util.ReflectionUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.member.annotation.Secret;
 import com.member.constants.MemberConstants;
 import com.member.utils.MaskingUtil;
@@ -22,7 +23,8 @@ public class BaseEntity {
 	public String toString() {
 		Map<String, Object> map = new HashMap<>();
 		Field[] fields = FieldUtils.getAllFields(getClass());
-		ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
 
 		if (ObjectUtils.isNotEmpty(fields)) {
 			for(Field field : fields) {
@@ -53,7 +55,7 @@ public class BaseEntity {
 		}
 
 		try {
-			return mapper.writeValueAsString(map);
+			return objectMapper.writeValueAsString(map);
 		} catch (JsonProcessingException e) {
 			return getClass().getName() + "@" + Integer.toHexString(hashCode());
 		}

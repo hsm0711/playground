@@ -12,10 +12,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 //@RedisHash(value = keyspace값, timeToLive = 만료시간(초))
-@RedisHash(value = "RedisEntity")
+@RedisHash(value = "RedisRepositoryEntity")
 @Getter
 @Setter
-public class RedisEntity extends BaseEntity {
+public class RedisRepositoryEntity extends BaseEntity {
 
 	@Id
 	private String id;

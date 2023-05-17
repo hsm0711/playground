@@ -12,11 +12,11 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 public class ObjectMapperConfig {
     @Bean
     public ObjectMapper objectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JavaTimeModule javaTimeModule = new JavaTimeModule();
+    	ObjectMapper objectMapper = new ObjectMapper();
 
-        objectMapper.registerModule(javaTimeModule);
-        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+    	objectMapper.findAndRegisterModules();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         return objectMapper;
