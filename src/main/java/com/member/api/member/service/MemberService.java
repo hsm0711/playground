@@ -48,6 +48,7 @@ public class MemberService {
 
 		String encRegNo = CryptoUtil.encrypt(req.getRegNo());
 
+		// TODO 암호화 알고리즘 변경사항 반영 - 암호화 할 때 마다 암호화 값 변경
 		// 회원가입이 되어있는 것 체크
 		MemberEntity rstMember = memberRepository.findMemberByNmReg(req.getName(), encRegNo);
 
@@ -56,7 +57,7 @@ public class MemberService {
 		}
 
 		MemberEntity saveMember = memberRepository.save(MemberEntity.builder().userId(req.getUserId())
-				.password(CryptoUtil.encrypt(req.getPassword())).name(req.getName()).regNo(encRegNo).build());
+				.password(CryptoUtil.encodePassword(req.getPassword())).name(req.getName()).regNo(encRegNo).build());
 
 		rst.setName(saveMember.getName());
 		rst.setUserId(saveMember.getUserId());
@@ -74,9 +75,11 @@ public class MemberService {
 			throw new CustomException(MessageUtils.INVALID_PASSWORD);
 		}
 
-		String encPwd = CryptoUtil.encrypt(req.getPassword());
-		MemberEntity rstMember = memberRepository.findMemberByIdPw(req.getUserId(), encPwd)
-				.orElseThrow(() -> new CustomException(MessageUtils.INVALID_USER));
+		MemberEntity rstMember = memberRepository.findById(req.getUserId()).orElseThrow(() -> new CustomException(MessageUtils.INVALID_USER));
+
+		if (!CryptoUtil.comparePassword(req.getPassword(), rstMember.getPassword())) {
+			throw new CustomException(MessageUtils.INVALID_PASSWORD);
+		}
 
 		log.debug(">>> rstMember : {}", rstMember);
 
@@ -98,10 +101,9 @@ public class MemberService {
 					.orElseThrow(() -> new CustomException(MessageUtils.INVALID_USER)); // 토큰 claims에 담겨 있는 userId로 회원
 																						// 정보 조회
 
-			// TODO 비밀번호, 주민번호 암호화 해서 가야하는지 확인 필요
 			MyInfoResponse result = new MyInfoResponse();
 			result.setName(memberEntity.getName());
-			result.setPassword(CryptoUtil.decrypt(memberEntity.getPassword()));
+			result.setPassword(memberEntity.getPassword());
 			result.setRegNo(CryptoUtil.decrypt(memberEntity.getRegNo()));
 			result.setUserId(memberEntity.getUserId());
 

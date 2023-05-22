@@ -19,37 +19,37 @@ public class ExceptionControllerAdvice {
 
 	@ExceptionHandler(UnsupportedJwtException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public BaseResponse unsupportedJwtException(Exception e) {
-		return new BaseResponse("UnsupportedJwtException");
+	public BaseResponse<Void> unsupportedJwtException(Exception e) {
+		return new BaseResponse<>("UnsupportedJwtException");
 	}
 
 	@ExceptionHandler(MalformedJwtException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public BaseResponse malformedJwtException(Exception e) {
-		return new BaseResponse("MalformedJwtException");
+	public BaseResponse<Void> malformedJwtException(Exception e) {
+		return new BaseResponse<>("MalformedJwtException");
 	}
 
 	@ExceptionHandler(ExpiredJwtException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public BaseResponse expiredJwtException(Exception e) {
-		return new BaseResponse("ExpiredJwtException");
+	public BaseResponse<Void> expiredJwtException(Exception e) {
+		return new BaseResponse<>("ExpiredJwtException");
 	}
 
 	@ExceptionHandler(SignatureException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public BaseResponse signatureException(Exception e) {
-		return new BaseResponse("SignatureException");
+	public BaseResponse<Void> signatureException(Exception e) {
+		return new BaseResponse<>("SignatureException");
 	}
 
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-	public BaseResponse httpRequestMethodNotSupportedException(Exception e) {
-		return new BaseResponse("HttpRequestMethodNotSupportedException");
+	public BaseResponse<Void> httpRequestMethodNotSupportedException(Exception e) {
+		return new BaseResponse<>("HttpRequestMethodNotSupportedException");
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public BaseResponse noHandlerFoundException(Exception e) {
-		return new BaseResponse("NoHandlerFoundException");
+	public BaseResponse<Void> noHandlerFoundException(Exception e) {
+		return new BaseResponse<>("NoHandlerFoundException");
 	}
 }

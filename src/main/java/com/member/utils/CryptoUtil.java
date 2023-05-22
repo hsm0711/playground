@@ -82,7 +82,7 @@ public class CryptoUtil {
 	 * @return String - 해싱된 비밀번호
 	 */
 	public static String encodePassword(String password) {
-		return passwordEncoder.encode(password);
+		return Base64.getEncoder().encodeToString(passwordEncoder.encode(password).getBytes());
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class CryptoUtil {
 	 * @return boolean - 비밀번호 일치 여부
 	 */
 	public static boolean comparePassword(String password, String encodedPassword) {
-		return passwordEncoder.matches(password, encodedPassword);
+		return passwordEncoder.matches(password, new String(Base64.getDecoder().decode(encodedPassword)));
 	}
 
 	private static class Base64EncodingTextEncryptor implements TextEncryptor {

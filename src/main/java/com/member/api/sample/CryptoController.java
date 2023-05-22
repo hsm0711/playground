@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.member.api.sample.model.CryptoRequest;
 import com.member.api.sample.model.CryptoResponse;
+import com.member.model.BaseResponse;
 import com.member.utils.CryptoUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -17,45 +18,53 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/member/public/sample/crypto")
 public class CryptoController {
 	@PostMapping("/encrypt")
-	public ResponseEntity<CryptoResponse> encrypt(@RequestBody CryptoRequest request) {
+	public ResponseEntity<BaseResponse<CryptoResponse>> encrypt(@RequestBody CryptoRequest request) {
 		String input = request.getPlainText();
 
 		return ResponseEntity.ok(
-					CryptoResponse.builder()
-					.inputStr(input)
-					.resultStr(CryptoUtil.encrypt(input))
-					.build()
+				new BaseResponse<>(
+						CryptoResponse.builder()
+						.inputStr(input)
+						.resultStr(CryptoUtil.encrypt(input))
+						.build()
+					)
 				);
 	}
 
 	@PostMapping("/decrypt")
-	public ResponseEntity<CryptoResponse> decrypt(@RequestBody CryptoRequest request) {
+	public ResponseEntity<BaseResponse<CryptoResponse>> decrypt(@RequestBody CryptoRequest request) {
 		String input = request.getEncryptedText();
 
 		return ResponseEntity.ok(
-					CryptoResponse.builder()
-					.inputStr(input)
-					.resultStr(CryptoUtil.decrypt(input))
-					.build()
+				new BaseResponse<>(
+						CryptoResponse.builder()
+						.inputStr(input)
+						.resultStr(CryptoUtil.decrypt(input))
+						.build()
+					)
 				);
 	}
 
 	@PostMapping("/password")
-	public ResponseEntity<CryptoResponse> password(@RequestBody CryptoRequest request) {
+	public ResponseEntity<BaseResponse<CryptoResponse>> password(@RequestBody CryptoRequest request) {
 		String input = request.getPlainText();
 
 		return ResponseEntity.ok(
-					CryptoResponse.builder()
-					.inputStr(input)
-					.resultStr(CryptoUtil.encodePassword(input))
-					.build()
+				new BaseResponse<>(
+						CryptoResponse.builder()
+						.inputStr(input)
+						.resultStr(CryptoUtil.encodePassword(input))
+						.build()
+					)
 				);
 	}
 
 	@PostMapping("/password-compare")
-	public ResponseEntity<Boolean> passwordCompare(@RequestBody CryptoRequest request) {
+	public ResponseEntity<BaseResponse<Boolean>> passwordCompare(@RequestBody CryptoRequest request) {
 		return ResponseEntity.ok(
-				CryptoUtil.comparePassword(request.getPlainText(), request.getEncryptedText())
+				new BaseResponse<>(
+						CryptoUtil.comparePassword(request.getPlainText(), request.getEncryptedText())
+					)
 				);
 	}
 }

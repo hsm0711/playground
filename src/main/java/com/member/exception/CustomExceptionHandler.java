@@ -11,8 +11,7 @@ import com.member.model.BaseResponse;
 public class CustomExceptionHandler {
 
 	@ExceptionHandler(CustomException.class)
-	protected ResponseEntity<BaseResponse> customException(CustomException e) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BaseResponse(e.getMessage()));
+	protected ResponseEntity<BaseResponse<Void>> customException(CustomException e) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BaseResponse<>(e.getMessage()));
 	}
-
 }
