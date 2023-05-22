@@ -13,7 +13,7 @@ public class MessageUtils {
 	public static final String INVALID_USER_ID = "ID를 확인해주세요.";
 	public static final String INVALID_NAME = "이름을 확인해주세요.";
 	public static final String INVALID_PASSWORD = "비밀번호를 확인해주세요.";
-	public static final String INVALID_REG_NO = "주민번호를 확인해주세요.";
+	public static final String INVALID_EMAIL = "이메일을 확인해주세요.";
 	public static final String INVALID_TOKEN = "토큰을 확인해주세요.";
 	public static final String NOT_EXIST_DATA = "데이터가 존재하지 않습니다.";
 	public static final String NOT_VERIFICATION_TOKEN = "토큰이 유효하지 않습니다.";

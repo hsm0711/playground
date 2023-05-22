@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.member.api.member.model.LoginRequest;
-import com.member.api.member.model.LoginResponse;
-import com.member.api.member.model.MyInfoResponse;
-import com.member.api.member.model.SignRequest;
-import com.member.api.member.model.SignResponse;
+import com.member.api.member.model.SignInRequest;
+import com.member.api.member.model.SignInResponse;
+import com.member.api.member.model.MemberInfoResponse;
+import com.member.api.member.model.SignUpRequest;
+import com.member.api.member.model.SignUpResponse;
 import com.member.api.member.service.MemberService;
 import com.member.model.BaseResponse;
 
@@ -33,7 +33,7 @@ public class MemberController {
 	 */
 	@ApiOperation(value = "회원가입", notes = "회원 가입하기")
 	@PostMapping("/public/signup")
-	public ResponseEntity<BaseResponse<SignResponse>> createMember(@RequestBody SignRequest req) {
+	public ResponseEntity<BaseResponse<SignUpResponse>> createMember(@RequestBody SignUpRequest req) {
 		return ResponseEntity.ok(new BaseResponse<>(memberService.createMember(req)));
 	}
 
@@ -42,7 +42,7 @@ public class MemberController {
 	 */
 	@ApiOperation(value = "로그인", notes = "로그인 처리")
 	@PostMapping("/public/login")
-	public ResponseEntity<BaseResponse<LoginResponse>> login(@RequestBody LoginRequest req) {
+	public ResponseEntity<BaseResponse<SignInResponse>> login(@RequestBody SignInRequest req) {
 		return ResponseEntity.ok(new BaseResponse<>(memberService.login(req)));
 	}
 
@@ -51,7 +51,7 @@ public class MemberController {
 	 */
 	@ApiOperation(value = "내 정보 조회", notes = "본인의 정보를 조회")
 	@GetMapping("/api/me")
-	public ResponseEntity<BaseResponse<MyInfoResponse>> myInfo(@RequestHeader(value = "Authorization") String token) {
+	public ResponseEntity<BaseResponse<MemberInfoResponse>> myInfo(@RequestHeader(value = "Authorization") String token) {
 		return ResponseEntity.ok(new BaseResponse<>(memberService.myInfo(token)));
 	}
 

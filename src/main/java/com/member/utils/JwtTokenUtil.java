@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.springframework.util.StringUtils;
 
-import com.member.api.member.model.Member;
+import com.member.api.member.model.MemberInfoResponse;
 import com.member.constants.MemberConstants;
 import com.member.exception.CustomException;
 
@@ -105,9 +105,9 @@ public class JwtTokenUtil {
 		return getExpirationDate(token).before(new Date());
 	}
 
-	public static Member autholriztionCheckUser(String token) {
+	public static MemberInfoResponse autholriztionCheckUser(String token) {
 		String authorization = token;
-		Member rs = new Member();
+		MemberInfoResponse rs = new MemberInfoResponse();
 
 		if (StringUtils.hasText(token) && token.startsWith(MemberConstants.TOKEN_PREFIX)) {
 			authorization = authorization.replaceAll(MemberConstants.TOKEN_PREFIX, "");
@@ -116,6 +116,7 @@ public class JwtTokenUtil {
 
 			rs.setName((String) claims.get("name"));
 			rs.setUserId((String) claims.get(USER_ID));
+
 			return rs;
 		}
 

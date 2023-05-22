@@ -10,7 +10,7 @@ import lombok.Setter;
 @Schema(name = "LoginRequest", description= "로그인 요청 데이터")
 @Getter
 @Setter
-public class LoginRequest extends BaseDto {
+public class SignInRequest extends BaseDto {
 
 	@Schema(description = "사용자ID", defaultValue = "", example = "hong12")
 	private String userId; //아이디

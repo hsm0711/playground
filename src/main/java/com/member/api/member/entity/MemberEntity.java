@@ -18,27 +18,39 @@ import lombok.NoArgsConstructor;
 @Table(name="member")
 public class MemberEntity extends BaseEntity {
 
+	/**
+	 * 아이디
+	 */
 	@Id
 	@Column(name = "user_id")
-	private String userId; //아이디
+	private String userId;
 
+	/**
+	 * 비밀번호
+	 */
 	@Secret
 	@Column
-	private String password; //패스워드
+	private String password;
 
+	/**
+	 * 이름
+	 */
 	@Column
-	private String name; //이름
+	private String name;
 
-	@Column(name = "reg_no")
-	private String regNo; //주민등록번호
+	/**
+	 * 이메일
+	 */
+	@Column
+	private String email;
 
 	@Builder
-	public MemberEntity(String userId, String password, String name, String regNo) {
+	public MemberEntity(String userId, String password, String name, String email) {
 		super();
 		this.userId = userId;
 		this.password = password;
 		this.name = name;
-		this.regNo = regNo;
+		this.email = email;
 	}
 
 }

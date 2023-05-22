@@ -7,22 +7,21 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
-@Schema(name = "SignRequest", description= "회원 가입 시 요청 데이터")
+@Schema(name = "MyInfoResponse", description= "내 정보 조회 응답 데이터")
 @Getter
 @Setter
-public class SignRequest extends BaseDto {
+public class MemberInfoResponse extends BaseDto {
 
 	@Schema(description = "사용자ID", defaultValue = "", example = "hong12")
-	private String userId; //아이	디
+	private String userId;
 
 	@Secret
 	@Schema(description = "비밀번호", defaultValue = "", example = "1111")
-	private String password; //패스워드
+	private String password;
 
 	@Schema(description = "이름", defaultValue = "", example = "홍길동")
-	private String name; //이름
+	private String name;
 
-	@Secret
-	@Schema(description = "주민등록번호", defaultValue = "", example = "900101-1234567")
-	private String regNo; //주민등록번호
+	@Schema(description = "이메일", defaultValue = "", example = "emailId@gmail.com")
+	private String email;
 }

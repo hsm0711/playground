@@ -8,13 +8,13 @@ import lombok.Getter;
 
 @Getter
 @Schema(name = "LoginResponse", description= "로그인 응답 데이터")
-public class LoginResponse extends BaseDto {
+public class SignInResponse extends BaseDto {
 
 	@Schema(description = "토큰", defaultValue = "", example = "JWT 토큰")
 	private String token;
 
 	@Builder
-	public LoginResponse(String token) {
+	public SignInResponse(String token) {
 		super();
 		this.token = token;
 	}
