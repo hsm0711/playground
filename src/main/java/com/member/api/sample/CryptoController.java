@@ -39,4 +39,23 @@ public class CryptoController {
 					.build()
 				);
 	}
+
+	@PostMapping("/password")
+	public ResponseEntity<CryptoResponse> password(@RequestBody CryptoRequest request) {
+		String input = request.getPlainText();
+
+		return ResponseEntity.ok(
+					CryptoResponse.builder()
+					.inputStr(input)
+					.resultStr(CryptoUtil.encodePassword(input))
+					.build()
+				);
+	}
+
+	@PostMapping("/password-compare")
+	public ResponseEntity<Boolean> passwordCompare(@RequestBody CryptoRequest request) {
+		return ResponseEntity.ok(
+				CryptoUtil.comparePassword(request.getPlainText(), request.getEncryptedText())
+				);
+	}
 }

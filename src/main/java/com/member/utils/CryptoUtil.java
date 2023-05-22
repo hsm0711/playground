@@ -19,7 +19,7 @@ public class CryptoUtil {
 	private static String pwd;
 	private static String salt;
 
-	private static BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(16);
+	private static BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	private CryptoUtil() {}
 
@@ -93,7 +93,7 @@ public class CryptoUtil {
 	 *
 	 * @return boolean - 비밀번호 일치 여부
 	 */
-	public static boolean matchPassword(String password, String encodedPassword) {
+	public static boolean comparePassword(String password, String encodedPassword) {
 		return passwordEncoder.matches(password, encodedPassword);
 	}
 
