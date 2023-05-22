@@ -71,3 +71,5 @@ logging:
     com:
      member: debug
 
+CRYPTO_PWD: ${sm://crypto-pwd}
+CRYPTO_SALT: ${sm://crypto-pwd}

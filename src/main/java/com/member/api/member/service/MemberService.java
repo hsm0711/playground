@@ -46,7 +46,7 @@ public class MemberService {
 
 		SignResponse rst = new SignResponse();
 
-		String encRegNo = CryptoUtil.encryptAES256(req.getRegNo());
+		String encRegNo = CryptoUtil.encrypt(req.getRegNo());
 
 		// 회원가입이 되어있는 것 체크
 		MemberEntity rstMember = memberRepository.findMemberByNmReg(req.getName(), encRegNo);
@@ -56,7 +56,7 @@ public class MemberService {
 		}
 
 		MemberEntity saveMember = memberRepository.save(MemberEntity.builder().userId(req.getUserId())
-				.password(CryptoUtil.encryptAES256(req.getPassword())).name(req.getName()).regNo(encRegNo).build());
+				.password(CryptoUtil.encrypt(req.getPassword())).name(req.getName()).regNo(encRegNo).build());
 
 		rst.setName(saveMember.getName());
 		rst.setUserId(saveMember.getUserId());
@@ -74,7 +74,7 @@ public class MemberService {
 			throw new CustomException(MessageUtils.INVALID_PASSWORD);
 		}
 
-		String encPwd = CryptoUtil.encryptAES256(req.getPassword());
+		String encPwd = CryptoUtil.encrypt(req.getPassword());
 		MemberEntity rstMember = memberRepository.findMemberByIdPw(req.getUserId(), encPwd)
 				.orElseThrow(() -> new CustomException(MessageUtils.INVALID_USER));
 
@@ -101,8 +101,8 @@ public class MemberService {
 			// TODO 비밀번호, 주민번호 암호화 해서 가야하는지 확인 필요
 			MyInfoResponse result = new MyInfoResponse();
 			result.setName(memberEntity.getName());
-			result.setPassword(CryptoUtil.decryptAES256(memberEntity.getPassword()));
-			result.setRegNo(CryptoUtil.decryptAES256(memberEntity.getRegNo()));
+			result.setPassword(CryptoUtil.decrypt(memberEntity.getPassword()));
+			result.setRegNo(CryptoUtil.decrypt(memberEntity.getRegNo()));
 			result.setUserId(memberEntity.getUserId());
 
 			return result;
