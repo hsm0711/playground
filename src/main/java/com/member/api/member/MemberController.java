@@ -1,5 +1,7 @@
 package com.member.api.member;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.member.api.member.model.MemberInfoResponse;
 import com.member.api.member.model.SignInRequest;
 import com.member.api.member.model.SignInResponse;
-import com.member.api.member.model.MemberInfoResponse;
 import com.member.api.member.model.SignUpRequest;
 import com.member.api.member.model.SignUpResponse;
 import com.member.api.member.service.MemberService;
@@ -32,18 +34,18 @@ public class MemberController {
 	 * 회원가입
 	 */
 	@ApiOperation(value = "회원가입", notes = "회원 가입하기")
-	@PostMapping("/public/signup")
-	public ResponseEntity<BaseResponse<SignUpResponse>> createMember(@RequestBody SignUpRequest req) {
-		return ResponseEntity.ok(new BaseResponse<>(memberService.createMember(req)));
+	@PostMapping("/public/sign-up")
+	public ResponseEntity<BaseResponse<SignUpResponse>> signUp(@RequestBody @Valid SignUpRequest req) {
+		return ResponseEntity.ok(new BaseResponse<>(memberService.signUp(req)));
 	}
 
 	/*
 	 * 로그인
 	 */
-	@ApiOperation(value = "로그인", notes = "로그인 처리")
-	@PostMapping("/public/login")
-	public ResponseEntity<BaseResponse<SignInResponse>> login(@RequestBody SignInRequest req) {
-		return ResponseEntity.ok(new BaseResponse<>(memberService.login(req)));
+	@ApiOperation(value = "인증", notes = "인증 처리")
+	@PostMapping("/public/sign-in")
+	public ResponseEntity<BaseResponse<SignInResponse>> signIn(@RequestBody @Valid SignInRequest req) {
+		return ResponseEntity.ok(new BaseResponse<>(memberService.signIn(req)));
 	}
 
 	/*

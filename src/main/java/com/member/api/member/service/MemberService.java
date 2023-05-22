@@ -31,39 +31,28 @@ public class MemberService {
 	private final ModelMapper modelMapper;
 
 	@Transactional(readOnly = false)
-	public SignUpResponse createMember(SignUpRequest req) {
+	public SignUpResponse signUp(SignUpRequest req) {
 		log.debug(">>> req : {}", req);
-
-		if (ObjectUtils.isEmpty(req.getUserId())) {
-			throw new CustomException(MessageUtils.INVALID_USER_ID);
-		} else if (ObjectUtils.isEmpty(req.getName())) {
-			throw new CustomException(MessageUtils.INVALID_NAME);
-		} else if (ObjectUtils.isEmpty(req.getPassword())) {
-			throw new CustomException(MessageUtils.INVALID_PASSWORD);
-		} else if (ObjectUtils.isEmpty(req.getEmail())) {
-			throw new CustomException(MessageUtils.INVALID_EMAIL);
-		}
-
 		MemberEntity rstMember = memberRepository.findByUserIdOrEmail(req.getUserId(), req.getEmail());
 
 		if (!ObjectUtils.isEmpty(rstMember)) {
 			throw new CustomException(MessageUtils.DUPLICATE_USER);
 		}
 
-		MemberEntity saveMember = memberRepository.save(MemberEntity.builder().userId(req.getUserId())
-				.password(CryptoUtil.encodePassword(req.getPassword())).name(req.getName()).email(req.getEmail()).build());
+		MemberEntity saveMember = memberRepository.save(
+					MemberEntity.builder()
+					.userId(req.getUserId())
+					.password(CryptoUtil.encodePassword(req.getPassword()))
+					.name(req.getName())
+					.email(req.getEmail())
+					.build()
+				);
 
 		return modelMapper.map(saveMember, SignUpResponse.class);
 	}
 
 	@Transactional(readOnly = true)
-	public SignInResponse login(SignInRequest req) {
-		if (ObjectUtils.isEmpty(req.getUserId())) {
-			throw new CustomException(MessageUtils.INVALID_USER_ID);
-		} else if (ObjectUtils.isEmpty(req.getPassword())) {
-			throw new CustomException(MessageUtils.INVALID_PASSWORD);
-		}
-
+	public SignInResponse signIn(SignInRequest req) {
 		MemberEntity rstMember = memberRepository.findById(req.getUserId()).orElseThrow(() -> new CustomException(MessageUtils.INVALID_USER));
 
 		if (!CryptoUtil.comparePassword(req.getPassword(), rstMember.getPassword())) {
