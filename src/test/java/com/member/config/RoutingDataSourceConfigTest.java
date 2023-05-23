@@ -18,43 +18,43 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootTest
 class RoutingDataSourceConfigTest {
 
-	private static final String DETERMINE_CURRENT_LOOKUP_KEY = "determineCurrentLookupKey";
+  private static final String DETERMINE_CURRENT_LOOKUP_KEY = "determineCurrentLookupKey";
 
-	@Transactional(readOnly = false)
-	@DisplayName("MasterDataSource Replication 설정 테스트")
-	@Test
-	void testMasterDataSourceReplication() throws Exception {
+  @Transactional(readOnly = false)
+  @DisplayName("MasterDataSource Replication 설정 테스트")
+  @Test
+  void testMasterDataSourceReplication() throws Exception {
 
-		// Given
-		RoutingDataSource routingDataSource = new RoutingDataSource();
+    // Given
+    RoutingDataSource routingDataSource = new RoutingDataSource();
 
-		// When
-		Method declaredMethod = ReflectionUtils.findMethod(RoutingDataSource.class, DETERMINE_CURRENT_LOOKUP_KEY);
-		ReflectionUtils.makeAccessible(declaredMethod);
+    // When
+    Method declaredMethod = ReflectionUtils.findMethod(RoutingDataSource.class, DETERMINE_CURRENT_LOOKUP_KEY);
+    ReflectionUtils.makeAccessible(declaredMethod);
 
-		Object object = ReflectionUtils.invokeMethod(declaredMethod, routingDataSource);
+    Object object = ReflectionUtils.invokeMethod(declaredMethod, routingDataSource);
 
-		// Then
-		log.debug(">>> invokeMethod : [{}]", object);
-		assertEquals(DataSourceType.MASTER.toString(), object.toString());
-	}
+    // Then
+    log.debug(">>> invokeMethod : [{}]", object);
+    assertEquals(DataSourceType.MASTER.toString(), object.toString());
+  }
 
-	@Transactional(readOnly = true)
-	@DisplayName("SlaveDataSource Replication 설정 테스트")
-	@Test
-	void testSlaveDataSourceReplication() throws Exception {
+  @Transactional(readOnly = true)
+  @DisplayName("SlaveDataSource Replication 설정 테스트")
+  @Test
+  void testSlaveDataSourceReplication() throws Exception {
 
-		// Given
-		RoutingDataSource routingDataSource = new RoutingDataSource();
+    // Given
+    RoutingDataSource routingDataSource = new RoutingDataSource();
 
-		// When
-		Method declaredMethod = ReflectionUtils.findMethod(RoutingDataSource.class, DETERMINE_CURRENT_LOOKUP_KEY);
-		ReflectionUtils.makeAccessible(declaredMethod);
+    // When
+    Method declaredMethod = ReflectionUtils.findMethod(RoutingDataSource.class, DETERMINE_CURRENT_LOOKUP_KEY);
+    ReflectionUtils.makeAccessible(declaredMethod);
 
-		Object object = ReflectionUtils.invokeMethod(declaredMethod, routingDataSource);
+    Object object = ReflectionUtils.invokeMethod(declaredMethod, routingDataSource);
 
-		// Then
-		log.debug(">>> invokeMethod : [{}]", object);
-		assertEquals(DataSourceType.SLAVE.toString(), object.toString());
-	}
+    // Then
+    log.debug(">>> invokeMethod : [{}]", object);
+    assertEquals(DataSourceType.SLAVE.toString(), object.toString());
+  }
 }

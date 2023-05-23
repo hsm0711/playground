@@ -16,48 +16,48 @@ import org.springframework.core.env.Environment;
 @SpringBootTest
 class DataSourceConfigTest {
 
-	@Autowired
-	private Environment environment;
+  @Autowired
+  private Environment environment;
 
-	@DisplayName("MasterDataSource 설정 테스트")
-	@Test
-	void masterDataSourceTest(@Qualifier("masterDataSource") final DataSource masterDataSource) {
-		// Given
-		String driverClassName = environment.getProperty("spring.datasource.master.hikari.driver-class-name");
-		String jdbcUrl = environment.getProperty("spring.datasource.master.hikari.jdbc-url");
-		Boolean readOnly = Boolean.valueOf(environment.getProperty("spring.datasource.master.hikari.read-only"));
-		String username = environment.getProperty("spring.datasource.master.hikari.username");
+  @DisplayName("MasterDataSource 설정 테스트")
+  @Test
+  void masterDataSourceTest(@Qualifier("masterDataSource") final DataSource masterDataSource) {
+    // Given
+    String driverClassName = environment.getProperty("spring.datasource.master.hikari.driver-class-name");
+    String jdbcUrl = environment.getProperty("spring.datasource.master.hikari.jdbc-url");
+    Boolean readOnly = Boolean.valueOf(environment.getProperty("spring.datasource.master.hikari.read-only"));
+    String username = environment.getProperty("spring.datasource.master.hikari.username");
 
-		// When
-		try (HikariDataSource hikariDataSource = (HikariDataSource) masterDataSource) {
+    // When
+    try (HikariDataSource hikariDataSource = (HikariDataSource) masterDataSource) {
 
-			// Then
-			log.debug(">>> hikariDataSource : [{}]", hikariDataSource);
-			assertEquals(hikariDataSource.getDriverClassName(), driverClassName);
-			assertEquals(hikariDataSource.getJdbcUrl(), jdbcUrl);
-			assertEquals(hikariDataSource.isReadOnly(), readOnly);
-			assertEquals(hikariDataSource.getUsername(), username);
-		}
-	}
+      // Then
+      log.debug(">>> hikariDataSource : [{}]", hikariDataSource);
+      assertEquals(hikariDataSource.getDriverClassName(), driverClassName);
+      assertEquals(hikariDataSource.getJdbcUrl(), jdbcUrl);
+      assertEquals(hikariDataSource.isReadOnly(), readOnly);
+      assertEquals(hikariDataSource.getUsername(), username);
+    }
+  }
 
-	@DisplayName("SlaveDataSource 설정 테스트")
-	@Test
-	void slaveDataSourceTest(@Qualifier("slaveDataSource") final DataSource slaveDataSource) {
-		// Given
-		String driverClassName = environment.getProperty("spring.datasource.slave.hikari.driver-class-name");
-		String jdbcUrl = environment.getProperty("spring.datasource.slave.hikari.jdbc-url");
-		Boolean readOnly = Boolean.valueOf(environment.getProperty("spring.datasource.slave.hikari.read-only"));
-		String username = environment.getProperty("spring.datasource.slave.hikari.username");
+  @DisplayName("SlaveDataSource 설정 테스트")
+  @Test
+  void slaveDataSourceTest(@Qualifier("slaveDataSource") final DataSource slaveDataSource) {
+    // Given
+    String driverClassName = environment.getProperty("spring.datasource.slave.hikari.driver-class-name");
+    String jdbcUrl = environment.getProperty("spring.datasource.slave.hikari.jdbc-url");
+    Boolean readOnly = Boolean.valueOf(environment.getProperty("spring.datasource.slave.hikari.read-only"));
+    String username = environment.getProperty("spring.datasource.slave.hikari.username");
 
-		// When
-		try (HikariDataSource hikariDataSource = (HikariDataSource) slaveDataSource) {
+    // When
+    try (HikariDataSource hikariDataSource = (HikariDataSource) slaveDataSource) {
 
-			// Then
-			log.debug(">>> hikariDataSource : [{}]", hikariDataSource);
-			assertEquals(hikariDataSource.getDriverClassName(), driverClassName);
-			assertEquals(hikariDataSource.getJdbcUrl(), jdbcUrl);
-			assertEquals(hikariDataSource.isReadOnly(), readOnly);
-			assertEquals(hikariDataSource.getUsername(), username);
-		}
-	}
+      // Then
+      log.debug(">>> hikariDataSource : [{}]", hikariDataSource);
+      assertEquals(hikariDataSource.getDriverClassName(), driverClassName);
+      assertEquals(hikariDataSource.getJdbcUrl(), jdbcUrl);
+      assertEquals(hikariDataSource.isReadOnly(), readOnly);
+      assertEquals(hikariDataSource.getUsername(), username);
+    }
+  }
 }
