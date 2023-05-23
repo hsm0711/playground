@@ -12,31 +12,29 @@ import java.lang.annotation.Target;
 @Target(FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExcelDown {
-	/**
-	 * Column의 해더 이름을 설정한다.
-	 */
-	String headerName();
+  /**
+   * Column의 해더 이름을 설정한다.
+   */
+  String headerName();
 
-	/**
-	 * Column의 width를 설정한다.
-	 *
-	 * default: -1
-	 */
-	int width() default -1;
+  /**
+   * Column의 width를 설정한다.
+   *
+   * default: -1
+   */
+  int width() default -1;
 
-	/**
-	 * Column이 표시될 순서를 설정한다.
-	 * 순서가 지정되지 않은 경우 order설정 된 Column들 뒤에 VO/DTO에 선언한 순서로 표시된다.
-	 *
-	 * default: Integer.MAX_VALUE(2147483647)
-	 */
-	int order() default Integer.MAX_VALUE;
+  /**
+   * Column이 표시될 순서를 설정한다. 순서가 지정되지 않은 경우 order설정 된 Column들 뒤에 VO/DTO에 선언한 순서로 표시된다.
+   *
+   * default: Integer.MAX_VALUE(2147483647)
+   */
+  int order() default Integer.MAX_VALUE;
 
-	/**
-	 * 해당 Cell Data의 Format을 설정한다.
-	 * ex: "#,##", "yyyy-MM-dd"
-	 *
-	 * default: Empty String
-	 */
-	String dataFormat() default "";
+  /**
+   * 해당 Cell Data의 Format을 설정한다. ex: "#,##", "yyyy-MM-dd"
+   *
+   * default: Empty String
+   */
+  String dataFormat() default "";
 }

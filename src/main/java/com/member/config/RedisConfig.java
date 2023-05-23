@@ -21,53 +21,50 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 @EnableRedisRepositories
 public class RedisConfig {
 
-	@Value("${spring.redis.host}")
-	private String redisHost;
+  @Value("${spring.redis.host}")
+  private String redisHost;
 
-	@Value("${spring.redis.port}")
-	private int redisPort;
+  @Value("${spring.redis.port}")
+  private int redisPort;
 
-	@Value("${spring.redis.password}")
-	private String redisPassword;
+  @Value("${spring.redis.password}")
+  private String redisPassword;
 
-	@Bean
-	public RedisConnectionFactory redisConnectionFactory() {
-		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+  @Bean
+  public RedisConnectionFactory redisConnectionFactory() {
+    RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
 
-        redisStandaloneConfiguration.setHostName(redisHost);
-        redisStandaloneConfiguration.setPort(redisPort);
-        redisStandaloneConfiguration.setPassword(redisPassword);
+    redisStandaloneConfiguration.setHostName(redisHost);
+    redisStandaloneConfiguration.setPort(redisPort);
+    redisStandaloneConfiguration.setPassword(redisPassword);
 
-        return new LettuceConnectionFactory(redisStandaloneConfiguration);
-	}
+    return new LettuceConnectionFactory(redisStandaloneConfiguration);
+  }
 
-	@Bean
-    public RedisTemplate<String, Object> redisTemplate() {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-        GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer(objectMapper());
+  @Bean
+  public RedisTemplate<String, Object> redisTemplate() {
+    RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+    StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+    GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer(objectMapper());
 
 
-        redisTemplate.setConnectionFactory(redisConnectionFactory());
-        redisTemplate.setKeySerializer(stringRedisSerializer);
-        redisTemplate.setValueSerializer(genericJackson2JsonRedisSerializer);
-        redisTemplate.setHashKeySerializer(stringRedisSerializer);
-        redisTemplate.setHashValueSerializer(genericJackson2JsonRedisSerializer);
+    redisTemplate.setConnectionFactory(redisConnectionFactory());
+    redisTemplate.setKeySerializer(stringRedisSerializer);
+    redisTemplate.setValueSerializer(genericJackson2JsonRedisSerializer);
+    redisTemplate.setHashKeySerializer(stringRedisSerializer);
+    redisTemplate.setHashValueSerializer(genericJackson2JsonRedisSerializer);
 
-        return redisTemplate;
-    }
+    return redisTemplate;
+  }
 
-	private ObjectMapper objectMapper() {
-		PolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator
-				.builder()
-				.allowIfSubType(Object.class)
-				.build();
-		ObjectMapper objectMapper = new ObjectMapper();
+  private ObjectMapper objectMapper() {
+    PolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build();
+    ObjectMapper objectMapper = new ObjectMapper();
 
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        objectMapper.activateDefaultTyping(ptv, ObjectMapper.DefaultTyping.NON_FINAL);
+    objectMapper.registerModule(new JavaTimeModule());
+    objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    objectMapper.activateDefaultTyping(ptv, ObjectMapper.DefaultTyping.NON_FINAL);
 
-        return objectMapper;
-	}
+    return objectMapper;
+  }
 }

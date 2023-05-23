@@ -20,41 +20,41 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ExcelService {
-	private final ExcelDownRepository excelDownRepository;
+  private final ExcelDownRepository excelDownRepository;
 
-	public ResponseEntity<byte[]> download() {
-		List<ExcelDownEntity> list = excelDownRepository.findAll();
+  public ResponseEntity<byte[]> download() {
+    List<ExcelDownEntity> list = excelDownRepository.findAll();
 
-		ExcelDownUtil<ExcelDownEntity> excel = new ExcelDownUtil<>("파일명", "Sheet명", ExcelDownEntity.class, list);
+    ExcelDownUtil<ExcelDownEntity> excel = new ExcelDownUtil<>("파일명", "Sheet명", ExcelDownEntity.class, list);
 
-		return excel.download();
-	}
+    return excel.download();
+  }
 
-	public ResponseEntity<byte[]> downloadWithStyle() {
-		List<ExcelDownEntity> list = excelDownRepository.findAll();
+  public ResponseEntity<byte[]> downloadWithStyle() {
+    List<ExcelDownEntity> list = excelDownRepository.findAll();
 
-		ExcelDownUtil<ExcelDownEntity> excel = new ExcelDownUtil<>("스타일 적용", "스타일 적용한 Sheet", ExcelDownEntity.class, list);
+    ExcelDownUtil<ExcelDownEntity> excel = new ExcelDownUtil<>("스타일 적용", "스타일 적용한 Sheet", ExcelDownEntity.class, list);
 
-		CellStyle headerStyle = excel.getEmptyStyle();
-		headerStyle.setAlignment(HorizontalAlignment.CENTER);
-		headerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-		headerStyle.setBorderTop(BorderStyle.THICK);
-		headerStyle.setBorderRight(BorderStyle.THICK);
-		headerStyle.setBorderBottom(BorderStyle.THICK);
-		headerStyle.setBorderLeft(BorderStyle.THICK);
-		headerStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
-		headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+    CellStyle headerStyle = excel.getEmptyStyle();
+    headerStyle.setAlignment(HorizontalAlignment.CENTER);
+    headerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+    headerStyle.setBorderTop(BorderStyle.THICK);
+    headerStyle.setBorderRight(BorderStyle.THICK);
+    headerStyle.setBorderBottom(BorderStyle.THICK);
+    headerStyle.setBorderLeft(BorderStyle.THICK);
+    headerStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+    headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-		excel.setHeaderStyle(headerStyle);
+    excel.setHeaderStyle(headerStyle);
 
-		CellStyle bodyStyle = excel.getEmptyStyle();
-		bodyStyle.setBorderTop(BorderStyle.THICK);
-		bodyStyle.setBorderRight(BorderStyle.THICK);
-		bodyStyle.setBorderBottom(BorderStyle.THICK);
-		bodyStyle.setBorderLeft(BorderStyle.THICK);
+    CellStyle bodyStyle = excel.getEmptyStyle();
+    bodyStyle.setBorderTop(BorderStyle.THICK);
+    bodyStyle.setBorderRight(BorderStyle.THICK);
+    bodyStyle.setBorderBottom(BorderStyle.THICK);
+    bodyStyle.setBorderLeft(BorderStyle.THICK);
 
-		excel.setBodyStyle(bodyStyle);
+    excel.setBodyStyle(bodyStyle);
 
-		return excel.download();
-	}
+    return excel.download();
+  }
 }

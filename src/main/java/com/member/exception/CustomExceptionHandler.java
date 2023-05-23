@@ -10,8 +10,8 @@ import com.member.model.BaseResponse;
 @ControllerAdvice
 public class CustomExceptionHandler {
 
-	@ExceptionHandler(CustomException.class)
-	protected ResponseEntity<BaseResponse<Void>> customException(CustomException e) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BaseResponse<>(e.getMessage()));
-	}
+  @ExceptionHandler(CustomException.class)
+  protected ResponseEntity<BaseResponse<Void>> customException(CustomException e) {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BaseResponse<>(e.getMessage()));
+  }
 }

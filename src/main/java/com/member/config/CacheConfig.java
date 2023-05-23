@@ -23,59 +23,44 @@ import com.member.constants.CacheType;
 @EnableCaching
 @Configuration
 public class CacheConfig {
-	@Primary
-	@Bean(CacheType.ONE_MINUTES)
-	public RedisCacheManager oneMinutesCacheManager(RedisConnectionFactory redisConnectionFactory) {
-		RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-				.entryTtl(Duration.ofMinutes(1)).disableCachingNullValues()
-				.serializeKeysWith(
-						RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-				.serializeValuesWith(RedisSerializationContext.SerializationPair
-						.fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper())));
+  @Primary
+  @Bean(CacheType.ONE_MINUTES)
+  public RedisCacheManager oneMinutesCacheManager(RedisConnectionFactory redisConnectionFactory) {
+    RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(1))
+        .disableCachingNullValues().serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+        .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper())));
 
-		return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory)
-				.cacheDefaults(redisCacheConfiguration).build();
-	}
+    return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory).cacheDefaults(redisCacheConfiguration).build();
+  }
 
-	@Bean(CacheType.TEN_MINUTES)
-	public RedisCacheManager tenMinutesCacheManager(RedisConnectionFactory redisConnectionFactory) {
-		RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-				.entryTtl(Duration.ofMinutes(10)).disableCachingNullValues()
-				.serializeKeysWith(
-						RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-				.serializeValuesWith(RedisSerializationContext.SerializationPair
-						.fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper())));
+  @Bean(CacheType.TEN_MINUTES)
+  public RedisCacheManager tenMinutesCacheManager(RedisConnectionFactory redisConnectionFactory) {
+    RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(10))
+        .disableCachingNullValues().serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+        .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper())));
 
-		return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory)
-				.cacheDefaults(redisCacheConfiguration).build();
-	}
+    return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory).cacheDefaults(redisCacheConfiguration).build();
+  }
 
-	@Bean(CacheType.ONE_HOUR)
-	public RedisCacheManager onHourCacheManager(RedisConnectionFactory redisConnectionFactory) {
+  @Bean(CacheType.ONE_HOUR)
+  public RedisCacheManager onHourCacheManager(RedisConnectionFactory redisConnectionFactory) {
 
 
-		RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-				.entryTtl(Duration.ofHours(1)).disableCachingNullValues()
-				.serializeKeysWith(
-						RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-				.serializeValuesWith(RedisSerializationContext.SerializationPair
-						.fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper())));
+    RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(1))
+        .disableCachingNullValues().serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+        .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper())));
 
-		return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory)
-				.cacheDefaults(redisCacheConfiguration).build();
-	}
+    return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory).cacheDefaults(redisCacheConfiguration).build();
+  }
 
-	private ObjectMapper objectMapper() {
-		PolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator
-				.builder()
-				.allowIfSubType(Object.class)
-				.build();
-		ObjectMapper objectMapper = new ObjectMapper();
+  private ObjectMapper objectMapper() {
+    PolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build();
+    ObjectMapper objectMapper = new ObjectMapper();
 
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        objectMapper.activateDefaultTyping(ptv, ObjectMapper.DefaultTyping.NON_FINAL);
+    objectMapper.registerModule(new JavaTimeModule());
+    objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    objectMapper.activateDefaultTyping(ptv, ObjectMapper.DefaultTyping.NON_FINAL);
 
-        return objectMapper;
-	}
+    return objectMapper;
+  }
 }

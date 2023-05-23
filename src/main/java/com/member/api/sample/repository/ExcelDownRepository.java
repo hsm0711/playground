@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.member.api.sample.entity.ExcelDownEntity;
 
 @Repository
-public interface ExcelDownRepository extends JpaRepository<ExcelDownEntity, String>{
+public interface ExcelDownRepository extends JpaRepository<ExcelDownEntity, String> {
 }

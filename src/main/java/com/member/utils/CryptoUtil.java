@@ -16,102 +16,102 @@ import com.google.common.hash.Hashing;
 
 @Component
 public class CryptoUtil {
-	private static String pwd;
-	private static String salt;
+  private static String pwd;
+  private static String salt;
 
-	private static BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+  private static BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-	private CryptoUtil() {}
+  private CryptoUtil() {}
 
-	@Value("${CRYPTO_PWD}")
-	synchronized void setPwd(String cryptoPwd) {
-		pwd = cryptoPwd;
-	}
-
-
-	@Value("${CRYPTO_SALT}")
-	synchronized void setSalt(String cryptoSalt) {
-		salt = cryptoSalt;
-	}
+  @Value("${CRYPTO_PWD}")
+  synchronized void setPwd(String cryptoPwd) {
+    pwd = cryptoPwd;
+  }
 
 
-	/**
-	 * SHA-256 해싱
-	 *
-	 * @param password - 해싱할 평문
-	 *
-	 * @return String - 해싱된 문자열
-	 */
-	public static String encodeSha256(String plaintext) {
-		return Hashing.sha256().hashString(plaintext, StandardCharsets.UTF_8).toString();
-	}
+  @Value("${CRYPTO_SALT}")
+  synchronized void setSalt(String cryptoSalt) {
+    salt = cryptoSalt;
+  }
 
-	/**
-	 * 평문 암호화 - AES
-	 *
-	 * @param plainText - 암호화할 평문
-	 *
-	 * @return String - 암호화된 문자열
-	 */
-	public static String encrypt(String plainText) {
-		BytesEncryptor byteEncryptor = Encryptors.standard(Hex.toHexString(pwd.getBytes()), Hex.toHexString(salt.getBytes()));
-		Base64EncodingTextEncryptor encryptor = new Base64EncodingTextEncryptor(byteEncryptor);
 
-		return encryptor.encrypt(plainText);
-	}
+  /**
+   * SHA-256 해싱
+   *
+   * @param password - 해싱할 평문
+   *
+   * @return String - 해싱된 문자열
+   */
+  public static String encodeSha256(String plaintext) {
+    return Hashing.sha256().hashString(plaintext, StandardCharsets.UTF_8).toString();
+  }
 
-	/**
-	 * 평문 복호화 - AES
-	 *
-	 * @param encryptedText - 복호화할 평문
-	 *
-	 * @return String - 복호화된 문자열
-	 */
-	public static String decrypt(String encryptedText) {
-		BytesEncryptor byteEncryptor = Encryptors.standard(Hex.toHexString(pwd.getBytes()), Hex.toHexString(salt.getBytes()));
-		Base64EncodingTextEncryptor encryptor = new Base64EncodingTextEncryptor(byteEncryptor);
+  /**
+   * 평문 암호화 - AES
+   *
+   * @param plainText - 암호화할 평문
+   *
+   * @return String - 암호화된 문자열
+   */
+  public static String encrypt(String plainText) {
+    BytesEncryptor byteEncryptor = Encryptors.standard(Hex.toHexString(pwd.getBytes()), Hex.toHexString(salt.getBytes()));
+    Base64EncodingTextEncryptor encryptor = new Base64EncodingTextEncryptor(byteEncryptor);
 
-		return encryptor.decrypt(encryptedText);
-	}
+    return encryptor.encrypt(plainText);
+  }
 
-	/**
-	 * 평문 비밀번호 해싱
-	 *
-	 * @param password - 해싱할 평문 비밀번호
-	 *
-	 * @return String - 해싱된 비밀번호
-	 */
-	public static String encodePassword(String password) {
-		return Base64.getEncoder().encodeToString(passwordEncoder.encode(password).getBytes());
-	}
+  /**
+   * 평문 복호화 - AES
+   *
+   * @param encryptedText - 복호화할 평문
+   *
+   * @return String - 복호화된 문자열
+   */
+  public static String decrypt(String encryptedText) {
+    BytesEncryptor byteEncryptor = Encryptors.standard(Hex.toHexString(pwd.getBytes()), Hex.toHexString(salt.getBytes()));
+    Base64EncodingTextEncryptor encryptor = new Base64EncodingTextEncryptor(byteEncryptor);
 
-	/**
-	 * 평문 비밀번호와 해싱된 비밀번호가 같은지 검증
-	 *
-	 * @param password - 비교할 평문 비밀번호
-	 * @param encodedPassword - 해싱된 비밀번호
-	 *
-	 * @return boolean - 비밀번호 일치 여부
-	 */
-	public static boolean comparePassword(String password, String encodedPassword) {
-		return passwordEncoder.matches(password, new String(Base64.getDecoder().decode(encodedPassword)));
-	}
+    return encryptor.decrypt(encryptedText);
+  }
 
-	private static class Base64EncodingTextEncryptor implements TextEncryptor {
-		private final BytesEncryptor encryptor;
+  /**
+   * 평문 비밀번호 해싱
+   *
+   * @param password - 해싱할 평문 비밀번호
+   *
+   * @return String - 해싱된 비밀번호
+   */
+  public static String encodePassword(String password) {
+    return Base64.getEncoder().encodeToString(passwordEncoder.encode(password).getBytes());
+  }
 
-		Base64EncodingTextEncryptor(BytesEncryptor encryptor) {
-			this.encryptor = encryptor;
-		}
+  /**
+   * 평문 비밀번호와 해싱된 비밀번호가 같은지 검증
+   *
+   * @param password - 비교할 평문 비밀번호
+   * @param encodedPassword - 해싱된 비밀번호
+   *
+   * @return boolean - 비밀번호 일치 여부
+   */
+  public static boolean comparePassword(String password, String encodedPassword) {
+    return passwordEncoder.matches(password, new String(Base64.getDecoder().decode(encodedPassword)));
+  }
 
-		@Override
-		public String encrypt(String text) {
-			return Base64.getEncoder().encodeToString(this.encryptor.encrypt(Utf8.encode(text)));
-		}
+  private static class Base64EncodingTextEncryptor implements TextEncryptor {
+    private final BytesEncryptor encryptor;
 
-		@Override
-		public String decrypt(String encryptedText) {
-			return Utf8.decode(this.encryptor.decrypt(Base64.getDecoder().decode(encryptedText)));
-		}
-	}
+    Base64EncodingTextEncryptor(BytesEncryptor encryptor) {
+      this.encryptor = encryptor;
+    }
+
+    @Override
+    public String encrypt(String text) {
+      return Base64.getEncoder().encodeToString(this.encryptor.encrypt(Utf8.encode(text)));
+    }
+
+    @Override
+    public String decrypt(String encryptedText) {
+      return Utf8.decode(this.encryptor.decrypt(Base64.getDecoder().decode(encryptedText)));
+    }
+  }
 }

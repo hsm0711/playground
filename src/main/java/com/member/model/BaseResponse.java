@@ -11,24 +11,24 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BaseResponse<T> extends BaseDto {
-	private String result;
+  private String result;
 
-	@JsonInclude(Include.NON_NULL)
-	private String errorMessage;
+  @JsonInclude(Include.NON_NULL)
+  private String errorMessage;
 
-	private T data;
+  private T data;
 
-	public BaseResponse() {
-		this.result = MessageUtils.SUCCESS;
-	}
+  public BaseResponse() {
+    this.result = MessageUtils.SUCCESS;
+  }
 
-	public BaseResponse(T data) {
-		this.result = MessageUtils.SUCCESS;
-		this.data = data;
-	}
+  public BaseResponse(T data) {
+    this.result = MessageUtils.SUCCESS;
+    this.data = data;
+  }
 
-	public BaseResponse(String errorMessage) {
-		this.result = MessageUtils.FAIL;
-		this.errorMessage = errorMessage;
-	}
+  public BaseResponse(String errorMessage) {
+    this.result = MessageUtils.FAIL;
+    this.errorMessage = errorMessage;
+  }
 }

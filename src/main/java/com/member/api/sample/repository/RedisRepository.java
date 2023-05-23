@@ -7,6 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import com.member.api.sample.entity.RedisRepositoryEntity;
 
 public interface RedisRepository extends CrudRepository<RedisRepositoryEntity, String> {
-	@Override
-	List<RedisRepositoryEntity> findAll();
+  @Override
+  List<RedisRepositoryEntity> findAll();
 }

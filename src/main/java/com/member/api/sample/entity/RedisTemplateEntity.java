@@ -13,12 +13,12 @@ import lombok.Setter;
 @Setter
 public class RedisTemplateEntity extends BaseEntity {
 
-	@Id
-	private String id;
+  @Id
+  private String id;
 
-	private String name;
+  private String name;
 
-	private Integer age;
+  private Integer age;
 
-	private LocalDateTime createdAt;
+  private LocalDateTime createdAt;
 }

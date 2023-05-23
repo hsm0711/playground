@@ -16,23 +16,23 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/member/public/sample/excel")
 public class ExcelController {
-	private final ExcelService excelService;
+  private final ExcelService excelService;
 
-	/**
-	 * Excel download
-	 */
-	@ApiOperation(value = "Excel download", notes = "Excel 다운로드 샘플")
-	@GetMapping("/download")
-	public ResponseEntity<byte[]> download() {
-		return excelService.download();
-	}
+  /**
+   * Excel download
+   */
+  @ApiOperation(value = "Excel download", notes = "Excel 다운로드 샘플")
+  @GetMapping("/download")
+  public ResponseEntity<byte[]> download() {
+    return excelService.download();
+  }
 
-	/**
-	 * Excel download With Style
-	 */
-	@ApiOperation(value = "Excel download With Style", notes = "Cell에 스타일이 적용된 Excel 다운로드 샘플")
-	@GetMapping("/download-style")
-	public ResponseEntity<byte[]> downloadWithStyle() {
-		return excelService.downloadWithStyle();
-	}
+  /**
+   * Excel download With Style
+   */
+  @ApiOperation(value = "Excel download With Style", notes = "Cell에 스타일이 적용된 Excel 다운로드 샘플")
+  @GetMapping("/download-style")
+  public ResponseEntity<byte[]> downloadWithStyle() {
+    return excelService.downloadWithStyle();
+  }
 }
