@@ -12,7 +12,7 @@ import lombok.Setter;
 public class EncryptRequest extends BaseDto {
 
   @NotBlank(message = "암호화 할 문자열은 필수 값 입니다.")
-  @Schema(description = "암호화 할 문자열", nullable = false, example = "테스트문자열123!@#")
+  @Schema(description = "암호화 할 문자열", required = true, nullable = false, example = "테스트문자열123!@#")
   private String plainText;
 
 }

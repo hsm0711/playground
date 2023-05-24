@@ -10,10 +10,10 @@ import lombok.Setter;
 @Setter
 public class PasswordCompareRequest extends BaseDto {
 
-  @Schema(description = "비교 할 평문 비밀번호", nullable = false, example = "비밀번호1234!@#$")
+  @Schema(description = "비교 할 평문 비밀번호", required = true, nullable = false, example = "비밀번호1234!@#$")
   private String plainText;
 
-  @Schema(description = "비교 할 암호화 비밀번호", nullable = false,
+  @Schema(description = "비교 할 암호화 비밀번호", required = true, nullable = false,
       example = "JDJhJDEwJHFsSlR6VGpIcjcwSUtZbjBlZXJkRC56SEZVTGVhY2s2a3NNOVVpZTdYWXdwWWx2UnJMUkhX")
   private String encryptedText;
 
