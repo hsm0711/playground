@@ -37,7 +37,7 @@ public class CryptoController {
   /*
    * 복호화 - AES
    */
-  @ApiOperation(value = "복호화 - AES", notes = "AED 복호화")
+  @ApiOperation(value = "복호화 - AES", notes = "AES 복호화")
   @PostMapping("/decrypt")
   public ResponseEntity<BaseResponse<DecryptResponse>> decrypt(@RequestBody DecryptRequest request) {
     String input = request.getEncryptedText();
