@@ -1,7 +1,6 @@
 package com.member.api.sample;
 
 import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,11 +10,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.member.api.sample.entity.RedisRepositoryEntity;
 import com.member.api.sample.entity.RedisTemplateEntity;
 import com.member.api.sample.service.RedisService;
-
+import com.member.model.BaseResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +30,8 @@ public class RedisController {
    */
   @ApiOperation(value = "redis 저장 - redisRepository", notes = "redis 저장")
   @PutMapping("/repository")
-  public ResponseEntity<RedisRepositoryEntity> putRepository(@RequestBody RedisRepositoryEntity param) {
-    return ResponseEntity.ok(sampleService.putRepository(param));
+  public ResponseEntity<BaseResponse<RedisRepositoryEntity>> putRepository(@RequestBody RedisRepositoryEntity param) {
+    return ResponseEntity.ok(new BaseResponse<>(sampleService.putRepository(param)));
   }
 
   /*
@@ -41,8 +39,8 @@ public class RedisController {
    */
   @ApiOperation(value = "redis 조회 - redisRepository", notes = "id 파라메터로 redis에 저장된 정보 조회")
   @GetMapping("/repository/{id}")
-  public ResponseEntity<RedisRepositoryEntity> getRepository(@PathVariable String id) {
-    return ResponseEntity.ok(sampleService.getRepository(id));
+  public ResponseEntity<BaseResponse<RedisRepositoryEntity>> getRepository(@PathVariable String id) {
+    return ResponseEntity.ok(new BaseResponse<>(sampleService.getRepository(id)));
   }
 
   /*
@@ -50,8 +48,8 @@ public class RedisController {
    */
   @ApiOperation(value = "redis Count 조회 - redisRepository", notes = "redis에 저장된 총 count 조회")
   @GetMapping("/repository/count")
-  public ResponseEntity<Long> getCountRepository() {
-    return ResponseEntity.ok(sampleService.getCountRepository());
+  public ResponseEntity<BaseResponse<Long>> getCountRepository() {
+    return ResponseEntity.ok(new BaseResponse<>(sampleService.getCountRepository()));
   }
 
   /*
@@ -59,8 +57,8 @@ public class RedisController {
    */
   @ApiOperation(value = "redis 전체 조회 - redisRepository", notes = "redis에 저장된 전체 데이터 조회")
   @GetMapping("/repository")
-  public ResponseEntity<List<RedisRepositoryEntity>> getAllRepository() {
-    return ResponseEntity.ok(sampleService.getAllRepository());
+  public ResponseEntity<BaseResponse<List<RedisRepositoryEntity>>> getAllRepository() {
+    return ResponseEntity.ok(new BaseResponse<>(sampleService.getAllRepository()));
   }
 
   /*
@@ -101,8 +99,8 @@ public class RedisController {
    */
   @ApiOperation(value = "redis 조회 - redisTemplate", notes = "id 파라메터로 redis에 저장된 정보 조회")
   @GetMapping("/template/{id}")
-  public ResponseEntity<RedisTemplateEntity> getTemplate(@PathVariable String id) {
-    return ResponseEntity.ok(sampleService.getTemplate(id));
+  public ResponseEntity<BaseResponse<RedisTemplateEntity>> getTemplate(@PathVariable String id) {
+    return ResponseEntity.ok(new BaseResponse<>(sampleService.getTemplate(id)));
   }
 
   /*
@@ -110,8 +108,8 @@ public class RedisController {
    */
   @ApiOperation(value = "redis Count 조회 - redisTemplate", notes = "redis에 저장된 총 count 조회")
   @GetMapping("/template/count")
-  public ResponseEntity<Long> getCountTemplate() {
-    return ResponseEntity.ok(sampleService.getCountTemplate());
+  public ResponseEntity<BaseResponse<Long>> getCountTemplate() {
+    return ResponseEntity.ok(new BaseResponse<>(sampleService.getCountTemplate()));
   }
 
   /*
@@ -119,8 +117,8 @@ public class RedisController {
    */
   @ApiOperation(value = "redis 전체 조회 - redisTemplate", notes = "redis에 저장된 전체 데이터 조회")
   @GetMapping("/template")
-  public ResponseEntity<List<RedisTemplateEntity>> getAllTemplate() {
-    return ResponseEntity.ok(sampleService.getAllTemplate());
+  public ResponseEntity<BaseResponse<List<RedisTemplateEntity>>> getAllTemplate() {
+    return ResponseEntity.ok(new BaseResponse<>(sampleService.getAllTemplate()));
   }
 
   /*
