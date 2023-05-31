@@ -34,22 +34,22 @@ public class RequestMappingResponse extends BaseDto {
   private String className;
 
   @Schema(description = "Class명", example = "RequestMappingController")
-  @ExcelDown(headerName = "Class명", order = 3)
+  @ExcelDown(headerName = "Class명", order = 5)
   private String classNameSimple;
 
   @Schema(description = "Method명", example = "getRequestMappings")
-  @ExcelDown(headerName = "Method명", order = 4)
+  @ExcelDown(headerName = "Method명", order = 6)
   private String methodName;
 
   @Schema(description = "Method 설명", example = "requestMapping 정보 조회")
   @JsonInclude(JsonInclude.Include.NON_NULL)
-  @ExcelDown(headerName = "Method 설명", order = 5)
+  @ExcelDown(headerName = "Method 설명", order = 7)
   private String methodDescription;
 
   @Schema(description = "Method 설명 상세",
       example = "RequestMappingHandlerMapping를 활용해서 request의 url, http method, class명, method, parameter, return type등 정보를 조회")
   @JsonInclude(JsonInclude.Include.NON_NULL)
-  @ExcelDown(headerName = "Method 설명 상세", order = 6)
+  @ExcelDown(headerName = "Method 설명 상세", order = 8)
   private String methodDescriptionDetail;
 
   @Schema(description = "parameter 상세", example = "[\"java.lang.String id\", \"java.lang.String pwd\"]")
@@ -59,16 +59,16 @@ public class RequestMappingResponse extends BaseDto {
 
   @Schema(description = "parameter", example = "[\"String id\", \"String pwd\"]")
   @JsonInclude(JsonInclude.Include.NON_NULL)
-  @ExcelDown(headerName = "parameter", order = 7)
+  @ExcelDown(headerName = "parameter", order = 3)
   private List<String> paramsSimple;
 
   @Schema(description = "return 상세",
       example = "org.springframework.http.ResponseEntity<com.member.model.BaseResponse<java.util.Map<java.lang.String, com.member.api.sample.model.RequestMappingInfoResponse>>>")
-  @ExcelDown(headerName = "return 상세", order = 5)
+  @ExcelDown(headerName = "return 상세", order = 11)
   private String returnType;
 
   @Schema(description = "return", example = "ResponseEntity<BaseResponse<Map<String, RequestMappingInfoResponse>>>")
-  @ExcelDown(headerName = "return", order = 8)
+  @ExcelDown(headerName = "return", order = 4)
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private String returnTypeSimple;
 }
