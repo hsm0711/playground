@@ -313,16 +313,18 @@ public class RequestMappingController {
 
       PatternsRequestCondition patternsRequestCondition = key.getPatternsCondition();
 
-      Set<String> urls = patternsRequestCondition.getPatterns();
+      if (patternsRequestCondition != null) {
+        Set<String> urls = patternsRequestCondition.getPatterns();
 
-      for (String url : urls) {
-        RequestMappingExcelDownResponse result = new RequestMappingExcelDownResponse();
+        for (String url : urls) {
+          RequestMappingExcelDownResponse result = new RequestMappingExcelDownResponse();
 
-        BeanUtils.copyProperties(requestMappingResponse, result);
+          BeanUtils.copyProperties(requestMappingResponse, result);
 
-        result.setUrl(url);
+          result.setUrl(url);
 
-        resultList.add(result);
+          resultList.add(result);
+        }
       }
     }
 
@@ -394,7 +396,4 @@ public class RequestMappingController {
       return type.getTypeName();
     }
   }
-
-  @GetMapping({"/test1", "/test2", "/test3"})
-  public void test() {}
 }
