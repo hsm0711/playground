@@ -7,9 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import com.member.filter.JwtFilter;
-
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -26,11 +24,10 @@ public class SecurityConfig {
         .and().formLogin().disable() // 화면 없으니 설정
         .httpBasic().disable().authorizeRequests().antMatchers("/szs/me", "/szs/scrap", "szs/refund").authenticated().anyRequest().permitAll() // 위
                                                                                                                                                // 3개의
-                                                                                                                                               // urㅣ을
+                                                                                                                                               // url을
                                                                                                                                                // 제외한
                                                                                                                                                // 나머지는
-                                                                                                                                               // 다
-                                                                                                                                               // 접근
+                                                                                                                                               // 다 접근
                                                                                                                                                // 가능
                                                                                                                                                // 설정
         .and().addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class);

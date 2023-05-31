@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class RedisController {
   private final RedisService sampleService;
 
-  /*
+  /**
    * redis 저장 - redisRepository
    */
   @ApiOperation(value = "redis 저장 - redisRepository", notes = "redis 저장")
@@ -34,7 +34,7 @@ public class RedisController {
     return ResponseEntity.ok(new BaseResponse<>(sampleService.putRepository(param)));
   }
 
-  /*
+  /**
    * redis 조회 - redisRepository
    */
   @ApiOperation(value = "redis 조회 - redisRepository", notes = "id 파라메터로 redis에 저장된 정보 조회")
@@ -43,7 +43,7 @@ public class RedisController {
     return ResponseEntity.ok(new BaseResponse<>(sampleService.getRepository(id)));
   }
 
-  /*
+  /**
    * redis Count 조회 - redisRepository
    */
   @ApiOperation(value = "redis Count 조회 - redisRepository", notes = "redis에 저장된 총 count 조회")
@@ -52,7 +52,7 @@ public class RedisController {
     return ResponseEntity.ok(new BaseResponse<>(sampleService.getCountRepository()));
   }
 
-  /*
+  /**
    * redis 전체 조회 - redisRepository
    */
   @ApiOperation(value = "redis 전체 조회 - redisRepository", notes = "redis에 저장된 전체 데이터 조회")
@@ -61,7 +61,7 @@ public class RedisController {
     return ResponseEntity.ok(new BaseResponse<>(sampleService.getAllRepository()));
   }
 
-  /*
+  /**
    * redis 삭제 - Entity - redisRepository
    */
   @ApiOperation(value = "redis 삭제 - Entity - redisRepository", notes = "RedisEntity 파라메터로 redis에 저장된 정보 삭제")
@@ -72,7 +72,7 @@ public class RedisController {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  /*
+  /**
    * redis 삭제 - id - redisRepository
    */
   @ApiOperation(value = "redis 삭제 - id - redisRepository", notes = "id 파라메터로 redis에 저장된 정보 삭제")
@@ -83,7 +83,7 @@ public class RedisController {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  /*
+  /**
    * redis 저장 - redisTemplate
    */
   @ApiOperation(value = "redis 저장 - redisTemplate", notes = "redis 저장")
@@ -94,7 +94,7 @@ public class RedisController {
     return ResponseEntity.ok().build();
   }
 
-  /*
+  /**
    * redis 조회 - redisTemplate
    */
   @ApiOperation(value = "redis 조회 - redisTemplate", notes = "id 파라메터로 redis에 저장된 정보 조회")
@@ -103,7 +103,7 @@ public class RedisController {
     return ResponseEntity.ok(new BaseResponse<>(sampleService.getTemplate(id)));
   }
 
-  /*
+  /**
    * redis Count 조회 - redisTemplate
    */
   @ApiOperation(value = "redis Count 조회 - redisTemplate", notes = "redis에 저장된 총 count 조회")
@@ -112,7 +112,7 @@ public class RedisController {
     return ResponseEntity.ok(new BaseResponse<>(sampleService.getCountTemplate()));
   }
 
-  /*
+  /**
    * redis 전체 조회 - redisTemplate
    */
   @ApiOperation(value = "redis 전체 조회 - redisTemplate", notes = "redis에 저장된 전체 데이터 조회")
@@ -121,7 +121,7 @@ public class RedisController {
     return ResponseEntity.ok(new BaseResponse<>(sampleService.getAllTemplate()));
   }
 
-  /*
+  /**
    * redis 삭제 - Entity - redisTemplate
    */
   @ApiOperation(value = "redis 삭제 - Entity - redisTemplate", notes = "RedisEntity 파라메터로 redis에 저장된 정보 삭제")
@@ -132,7 +132,7 @@ public class RedisController {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  /*
+  /**
    * redis 삭제 - id - redisTemplate
    */
   @ApiOperation(value = "redis 삭제 - id - redisTemplate", notes = "id 파라메터로 redis에 저장된 정보 삭제")

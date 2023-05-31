@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class PagingController {
   private final PagingService pagingService;
 
-  /*
+  /**
    * paging list 조회
    */
   @ApiOperation(value = "paging list 조회", notes = "paging list 조회")
@@ -32,7 +32,7 @@ public class PagingController {
     return ResponseEntity.ok(new BaseResponse<>(pagingService.getPagingList(pageable)));
   }
 
-  /*
+  /**
    * paging page 조회
    */
   @ApiOperation(value = "paging page 조회", notes = "paging page 조회")
@@ -41,7 +41,7 @@ public class PagingController {
     return ResponseEntity.ok(new BaseResponse<>(pagingService.getPagingPage(pageable)));
   }
 
-  /*
+  /**
    * paging slice 조회
    */
   @ApiOperation(value = "paging slice 조회", notes = "paging slice 조회")
@@ -50,7 +50,7 @@ public class PagingController {
     return ResponseEntity.ok(new BaseResponse<>(pagingService.getPagingSlice(pageable)));
   }
 
-  /*
+  /**
    * paging list 조회
    */
   @ApiOperation(value = "paging list 조회", notes = "paging list 조회")
@@ -59,7 +59,7 @@ public class PagingController {
     return ResponseEntity.ok(new BaseResponse<>(pagingService.getPagingList(pageable)));
   }
 
-  /*
+  /**
    * paging page 조회
    */
   @ApiOperation(value = "paging page 조회", notes = "paging page 조회")
@@ -68,7 +68,7 @@ public class PagingController {
     return ResponseEntity.ok(new BaseResponse<>(pagingService.getPagingPage(pageable)));
   }
 
-  /*
+  /**
    * paging slice 조회
    */
   @ApiOperation(value = "paging slice 조회", notes = "paging slice 조회")
