@@ -14,9 +14,9 @@ import lombok.Setter;
 @Setter
 public class DecryptResponse extends BaseDto {
 
-  @Schema(description = "복호화 요청 문자열", example = "qwer1234/5uKD75cYuiNPZReQp36J..")
+  @Schema(description = "복호화 요청 문자열", example = "4+uZCvlFjkikD3+E3ESZF2uYpf3/ZpcOEd2pksSvvFr3VtzFU780JNyWT7rcHHRj")
   private String inputStr;
 
-  @Schema(description = "복호화 결과 문자열", example = "hong12/5uKD75cYuiNPZReQp36J..")
+  @Schema(description = "복호화 결과 문자열", example = "테스트문자열123!@#")
   private String resultStr;
 }
