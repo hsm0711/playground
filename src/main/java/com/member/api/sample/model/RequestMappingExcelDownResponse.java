@@ -13,17 +13,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(name = "RequestMappingResponse", description = "RequestMapping 정보 응답 데이터")
+@Schema(name = "RequestMappingExcelDownResponse", description = "RequestMapping 정보 Excel Down 데이터")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class RequestMappingResponse extends BaseDto {
+public class RequestMappingExcelDownResponse extends BaseDto {
 
-  @Schema(description = "request url과 동일한 메소드에 mapping된 url 목록", example = "[\"/member/public/sample/request-mapping\"]")
+  @Schema(description = "request url과 동일한 메소드에 mapping된 url", example = "[\"/member/public/sample/request-mapping\"]")
   @ExcelDown(headerName = "request url", order = 1)
-  private Set<String> urls;
+  private String url;
 
   @Schema(description = "http method 목록", example = "[\"GET\", \"POST\"]")
   @ExcelDown(headerName = "http methods", order = 2)

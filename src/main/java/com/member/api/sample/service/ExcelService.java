@@ -1,20 +1,18 @@
 package com.member.api.sample.service;
 
 import java.util.List;
-
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import com.member.api.sample.entity.ExcelDownEntity;
 import com.member.api.sample.repository.ExcelDownRepository;
 import com.member.utils.ExcelDownUtil;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -38,20 +36,23 @@ public class ExcelService {
     CellStyle headerStyle = excel.getEmptyStyle();
     headerStyle.setAlignment(HorizontalAlignment.CENTER);
     headerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-    headerStyle.setBorderTop(BorderStyle.THICK);
-    headerStyle.setBorderRight(BorderStyle.THICK);
-    headerStyle.setBorderBottom(BorderStyle.THICK);
-    headerStyle.setBorderLeft(BorderStyle.THICK);
+    headerStyle.setBorderTop(BorderStyle.THIN);
+    headerStyle.setBorderRight(BorderStyle.THIN);
+    headerStyle.setBorderBottom(BorderStyle.THIN);
+    headerStyle.setBorderLeft(BorderStyle.THIN);
     headerStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
     headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+    Font headerFont = excel.getFont();
+    headerFont.setBold(true);
 
     excel.setHeaderStyle(headerStyle);
 
     CellStyle bodyStyle = excel.getEmptyStyle();
-    bodyStyle.setBorderTop(BorderStyle.THICK);
-    bodyStyle.setBorderRight(BorderStyle.THICK);
-    bodyStyle.setBorderBottom(BorderStyle.THICK);
-    bodyStyle.setBorderLeft(BorderStyle.THICK);
+    bodyStyle.setBorderTop(BorderStyle.THIN);
+    bodyStyle.setBorderRight(BorderStyle.THIN);
+    bodyStyle.setBorderBottom(BorderStyle.THIN);
+    bodyStyle.setBorderLeft(BorderStyle.THIN);
 
     excel.setBodyStyle(bodyStyle);
 

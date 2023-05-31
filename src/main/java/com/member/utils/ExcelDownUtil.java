@@ -7,12 +7,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -20,6 +21,7 @@ import org.apache.poi.ss.SpreadsheetVersion;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -30,9 +32,7 @@ import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ReflectionUtils;
-
 import com.member.annotation.ExcelDown;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -59,7 +59,10 @@ public class ExcelDownUtil<T> {
    * @param dataList - 다운로드할 data 목록
    */
   public ExcelDownUtil(String fileName, String sheetName, Class<T> clazz, List<T> dataList) {
-    this.fileName = fileName;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+    String timestamp = LocalDateTime.now().format(formatter);
+
+    this.fileName = fileName + "_" + timestamp;
     this.clazz = clazz;
     this.dataList = dataList;
 
@@ -70,7 +73,12 @@ public class ExcelDownUtil<T> {
     workbook = new SXSSFWorkbook(FLUSH_ROWS);
     workbook.setCompressTempFiles(true);
 
-    sheet = workbook.createSheet(sheetName);
+    if (StringUtils.isBlank(sheetName)) {
+      sheet = workbook.createSheet(fileName);
+    } else {
+      sheet = workbook.createSheet(sheetName);
+    }
+
 
     getColumnInfo();
   }
@@ -82,6 +90,14 @@ public class ExcelDownUtil<T> {
    */
   public ExcelDownUtil(String fileName, Class<T> clazz, List<T> dataList) {
     this(fileName, fileName, clazz, dataList);
+  }
+
+  public SXSSFWorkbook getWorkbook() {
+    return workbook;
+  }
+
+  public Font getFont() {
+    return workbook.createFont();
   }
 
   public CellStyle getEmptyStyle() {
@@ -178,11 +194,13 @@ public class ExcelDownUtil<T> {
           }
         }
 
-        if (StringUtils.length(value) > 32767) {
-          value = StringUtils.substring(value, 0, 32767);
-        }
+        if (StringUtils.isNoneBlank(value) && !StringUtils.equals("null", value)) {
+          if (StringUtils.length(value) > 32767) {
+            value = StringUtils.substring(value, 0, 32767);
+          }
 
-        cell.setCellValue(value);
+          cell.setCellValue(value);
+        }
 
         if (columnInfo.getCellStyle() != null) {
           cell.setCellStyle(columnInfo.getCellStyle());
@@ -224,7 +242,8 @@ public class ExcelDownUtil<T> {
     }
 
     HttpHeaders headers = new HttpHeaders();
-    headers.add(HttpHeaders.CONTENT_TYPE, "application/ms-excel");
+    // headers.add(HttpHeaders.CONTENT_TYPE, "application/ms-excel");
+    headers.add(HttpHeaders.CONTENT_TYPE, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
     headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + ".xlsx;");
 
     return ResponseEntity.ok().cacheControl(CacheControl.noCache()).headers(headers).body(bytes);
