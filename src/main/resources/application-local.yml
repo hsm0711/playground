@@ -34,22 +34,10 @@ spring:
     username: app_user
     password: ${sm://db-pwd}
     read-only: true
- sql:
-  init:
-   mode: EMBEDDED
  jpa:
   database: postgresql
   database-platform: org.hibernate.dialect.PostgreSQLDialect
   defer-datasource-initialization: true
-  show-sql: true
-  properties:
-   hibernate:
-    show_sql: true
-    format_sql: true
-    use_sql_comments: true
-    highlight_sql: true
-  hibernate:
-   ddl-auto: validate
  mvc:
   pathmatch:
    matching-strategy: ANT_PATH_MATCHER
@@ -62,14 +50,14 @@ logging:
   pattern.console: "%clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr([${LOG_LEVEL_PATTERN:%5p}]) %clr([%10.10X{userId}]){magenta} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
   level:
     root: info
-    org:
-     hibernate:
-      SQL: debug
-      type:
-       descriptor:
-        sql: trace
     com:
      member: debug
+
+decorator:
+  datasource:
+    exclude-beans: dataSource
+    p6spy:
+      enable-logging: true
 
 CRYPTO_PWD: ${sm://crypto-pwd}
 CRYPTO_SALT: ${sm://crypto-pwd}

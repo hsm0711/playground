@@ -24,12 +24,6 @@ spring:
  sql:
   init:
    mode: EMBEDDED
- jpa:
-  database: postgresql
-  database-platform: org.hibernate.dialect.PostgreSQLDialect
-  defer-datasource-initialization: true
-  hibernate:
-   ddl-auto: validate
  mvc:
   pathmatch:
    matching-strategy: ANT_PATH_MATCHER
