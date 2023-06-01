@@ -130,8 +130,7 @@
 ------------------------------------------------------------
 
 
-> DB접속정보 등 기타 정보는
-  Settings - Secrets and variables - Actions에 메뉴에서 Variables탭에 기록함
+> DB접속정보 등 기타 정보는 Confluence 개발환경 페이지에 기록함
 
 
 
