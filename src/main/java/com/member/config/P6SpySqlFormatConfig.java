@@ -1,10 +1,11 @@
 package com.member.config;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Stack;
 import java.util.function.Predicate;
 import org.hibernate.engine.jdbc.internal.FormatStyle;
 import org.springframework.context.annotation.Configuration;
@@ -62,14 +63,14 @@ public class P6SpySqlFormatConfig implements MessageFormattingStrategy {
   }
 
   private StringBuilder getStackBuilder() {
-    Stack<String> callStack = new Stack<>();
+    List<String> callStack = new ArrayList<>();
     StringBuilder callStackBuilder = new StringBuilder();
     int order = 1;
 
-    Arrays.stream(new Throwable().getStackTrace()).map(StackTraceElement::toString).filter(isExcludeWords()).forEach(callStack::push);
+    Arrays.stream(new Throwable().getStackTrace()).map(StackTraceElement::toString).filter(isExcludeWords()).forEach(callStack::add);
 
-    while (!callStack.empty()) {
-      callStackBuilder.append(MessageFormat.format("{0}\t\t{1}. {2}", NEW_LINE, order++, callStack.pop()));
+    for (String stack : callStack) {
+      callStackBuilder.append(MessageFormat.format("{0}\t\t{1}. {2}", NEW_LINE, order++, stack));
     }
 
     return callStackBuilder;
