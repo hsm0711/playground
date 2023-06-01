@@ -1,9 +1,6 @@
 package com.member.config;
 
-import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -19,6 +16,8 @@ public class P6SpySqlFormatConfig implements MessageFormattingStrategy {
   private static final String CREATE = "create";
   private static final String ALTER = "alter";
   private static final String COMMENT = "comment";
+  private static final String SEPARATOR = "----------------------------------------------------------------------------------------------------";
+  private static final String TAB = "    ";
 
   @Override
   public String formatMessage(final int connectionId, final String now, final long elapsed, final String category, final String prepared,
@@ -31,9 +30,8 @@ public class P6SpySqlFormatConfig implements MessageFormattingStrategy {
       return "";
     }
 
-    return new StringBuilder()
-        // .append(NEW_LINE)
-        .append(sqlFormatToUpper(sql, category)).append(message).toString();
+    return new StringBuilder().append(NEW_LINE).append(SEPARATOR).append(NEW_LINE).append(" Query").append(NEW_LINE).append(SEPARATOR)
+        .append(sqlFormatToUpper(sql, category)).append(";").append(message).toString();
   }
 
   private String sqlFormatToUpper(final String sql, final String category) {
@@ -56,22 +54,17 @@ public class P6SpySqlFormatConfig implements MessageFormattingStrategy {
   }
 
   private String getMessage(final int connectionId, final long elapsed, final StringBuilder callStackBuilder) {
-    return new StringBuilder().append(NEW_LINE).append(NEW_LINE).append("\t").append(String.format("Connection ID: %s", connectionId))
-        .append(NEW_LINE).append("\t").append(String.format("Execution Time: %s ms", elapsed)).append(NEW_LINE).append(NEW_LINE).append("\t")
-        .append(String.format("Call Stack (number 1 is entry point): %s", callStackBuilder)).append(NEW_LINE).append(NEW_LINE)
-        .append("----------------------------------------------------------------------------------------------------").toString();
+    return new StringBuilder().append(NEW_LINE).append(SEPARATOR).append(NEW_LINE).append(" Info").append(NEW_LINE).append(SEPARATOR).append(NEW_LINE)
+        .append(TAB).append(String.format("Connection ID : %s", connectionId)).append(NEW_LINE).append(TAB)
+        .append(String.format("Execution Time : %s ms", elapsed)).append(NEW_LINE).append(NEW_LINE).append(TAB)
+        .append(String.format("Call Stack : %s", callStackBuilder)).append(NEW_LINE).append(SEPARATOR).toString();
   }
 
   private StringBuilder getStackBuilder() {
-    List<String> callStack = new ArrayList<>();
     StringBuilder callStackBuilder = new StringBuilder();
-    int order = 1;
 
-    Arrays.stream(new Throwable().getStackTrace()).map(StackTraceElement::toString).filter(isExcludeWords()).forEach(callStack::add);
-
-    for (String stack : callStack) {
-      callStackBuilder.append(MessageFormat.format("{0}\t\t{1}. {2}", NEW_LINE, order++, stack));
-    }
+    Arrays.stream(new Throwable().getStackTrace()).map(StackTraceElement::toString).filter(isExcludeWords())
+        .forEach(stack -> callStackBuilder.append(NEW_LINE).append(TAB).append(TAB).append(stack));
 
     return callStackBuilder;
   }
