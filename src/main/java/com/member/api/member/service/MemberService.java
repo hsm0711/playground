@@ -61,19 +61,11 @@ public class MemberService {
   @Transactional(readOnly = true)
   public MemberInfoResponse myInfo(String token) {
     if (!ObjectUtils.isEmpty(token)) {
-      MemberInfoResponse member = JwtTokenUtil.autholriztionCheckUser(token); // 넘겨받은 토큰 값으로 토큰에 있는
-                                                                              // 값 꺼내기
+      MemberInfoResponse member = JwtTokenUtil.autholriztionCheckUser(token); // 넘겨받은 토큰 값으로 토큰에 있는 값 꺼내기
 
       log.debug("szs/me : {}", member);
 
-      MemberEntity memberEntity = memberRepository.findById(member.getUserId()).orElseThrow(() -> new CustomException(MessageUtils.INVALID_USER)); // 토큰
-                                                                                                                                                   // claims에
-                                                                                                                                                   // 담겨
-                                                                                                                                                   // 있는
-                                                                                                                                                   // userId로
-                                                                                                                                                   // 회원
-                                                                                                                                                   // 정보
-                                                                                                                                                   // 조회
+      MemberEntity memberEntity = memberRepository.findById(member.getUserId()).orElseThrow(() -> new CustomException(MessageUtils.INVALID_USER)); // 토큰 claims에 담겨 있는 userId로 회원 정보 조회
 
       return modelMapper.map(memberEntity, MemberInfoResponse.class);
     } else {
