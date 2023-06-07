@@ -1,16 +1,16 @@
 package com.member.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import com.zaxxer.hikari.HikariDataSource;
 import javax.sql.DataSource;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
+import com.github.gavlyukovskiy.boot.jdbc.decorator.DecoratedDataSource;
+import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootTest
@@ -29,14 +29,28 @@ class DataSourceConfigTest {
     String username = environment.getProperty("spring.datasource.master.hikari.username");
 
     // When
-    try (HikariDataSource hikariDataSource = (HikariDataSource) masterDataSource) {
+    if (masterDataSource instanceof DecoratedDataSource) {
+      DecoratedDataSource decoratedDataSource = (DecoratedDataSource) masterDataSource;
 
-      // Then
-      log.debug(">>> hikariDataSource : [{}]", hikariDataSource);
-      assertEquals(hikariDataSource.getDriverClassName(), driverClassName);
-      assertEquals(hikariDataSource.getJdbcUrl(), jdbcUrl);
-      assertEquals(hikariDataSource.isReadOnly(), readOnly);
-      assertEquals(hikariDataSource.getUsername(), username);
+      try (HikariDataSource hikariDataSource = (HikariDataSource) decoratedDataSource.getRealDataSource()) {
+
+        // Then
+        log.debug(">>> hikariDataSource : [{}]", hikariDataSource);
+        assertEquals(hikariDataSource.getDriverClassName(), driverClassName);
+        assertEquals(hikariDataSource.getJdbcUrl(), jdbcUrl);
+        assertEquals(hikariDataSource.isReadOnly(), readOnly);
+        assertEquals(hikariDataSource.getUsername(), username);
+      }
+    } else {
+      try (HikariDataSource hikariDataSource = (HikariDataSource) masterDataSource) {
+
+        // Then
+        log.debug(">>> hikariDataSource : [{}]", hikariDataSource);
+        assertEquals(hikariDataSource.getDriverClassName(), driverClassName);
+        assertEquals(hikariDataSource.getJdbcUrl(), jdbcUrl);
+        assertEquals(hikariDataSource.isReadOnly(), readOnly);
+        assertEquals(hikariDataSource.getUsername(), username);
+      }
     }
   }
 
@@ -50,14 +64,28 @@ class DataSourceConfigTest {
     String username = environment.getProperty("spring.datasource.slave.hikari.username");
 
     // When
-    try (HikariDataSource hikariDataSource = (HikariDataSource) slaveDataSource) {
+    if (slaveDataSource instanceof DecoratedDataSource) {
+      DecoratedDataSource decoratedDataSource = (DecoratedDataSource) slaveDataSource;
 
-      // Then
-      log.debug(">>> hikariDataSource : [{}]", hikariDataSource);
-      assertEquals(hikariDataSource.getDriverClassName(), driverClassName);
-      assertEquals(hikariDataSource.getJdbcUrl(), jdbcUrl);
-      assertEquals(hikariDataSource.isReadOnly(), readOnly);
-      assertEquals(hikariDataSource.getUsername(), username);
+      try (HikariDataSource hikariDataSource = (HikariDataSource) decoratedDataSource.getRealDataSource()) {
+
+        // Then
+        log.debug(">>> hikariDataSource : [{}]", hikariDataSource);
+        assertEquals(hikariDataSource.getDriverClassName(), driverClassName);
+        assertEquals(hikariDataSource.getJdbcUrl(), jdbcUrl);
+        assertEquals(hikariDataSource.isReadOnly(), readOnly);
+        assertEquals(hikariDataSource.getUsername(), username);
+      }
+    } else {
+      try (HikariDataSource hikariDataSource = (HikariDataSource) slaveDataSource) {
+
+        // Then
+        log.debug(">>> hikariDataSource : [{}]", hikariDataSource);
+        assertEquals(hikariDataSource.getDriverClassName(), driverClassName);
+        assertEquals(hikariDataSource.getJdbcUrl(), jdbcUrl);
+        assertEquals(hikariDataSource.isReadOnly(), readOnly);
+        assertEquals(hikariDataSource.getUsername(), username);
+      }
     }
   }
 }
