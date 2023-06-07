@@ -22,6 +22,10 @@ ext {
 	set('springCloudGcpVersion', "3.4.9")
 }
 
+jar {
+    enabled = false
+}
+
 dependencies {
 	implementation 'com.auth0:java-jwt:4.2.1'
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
@@ -46,6 +50,8 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+	testCompileOnly 'org.projectlombok:lombok'
 }
 
 dependencyManagement {
