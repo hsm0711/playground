@@ -7,16 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
+import com.member.api.sample.entity.RedisPublishEntity;
 import com.member.api.sample.entity.RedisRepositoryEntity;
 import com.member.api.sample.entity.RedisTemplateEntity;
 import com.member.api.sample.repository.RedisRepository;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -93,5 +91,9 @@ public class RedisService {
 
   public void deleteByIdTemplate(String id) {
     redisTemplate.opsForHash().delete(TEMPLATE_KEY, id);
+  }
+
+  public void publishTopic(RedisPublishEntity redisPublishEntity) {
+    redisTemplate.convertAndSend(redisPublishEntity.getTopic(), redisPublishEntity.getMessage());
   }
 }

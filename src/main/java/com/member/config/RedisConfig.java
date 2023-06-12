@@ -7,15 +7,19 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
+import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.member.constants.RedisSubscibeChannel;
+import com.member.listener.RedisMessageSubscriber;
 
 @Configuration
 @EnableRedisRepositories
@@ -55,6 +59,25 @@ public class RedisConfig {
     redisTemplate.setHashValueSerializer(genericJackson2JsonRedisSerializer);
 
     return redisTemplate;
+  }
+
+  @Bean
+  public RedisMessageListenerContainer redisContainer() {
+    RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+    container.setConnectionFactory(redisConnectionFactory());
+    container.addMessageListener(messageListener(), getTopic(RedisSubscibeChannel.TOPIC_01));
+
+    return container;
+  }
+
+  @Bean
+  public MessageListenerAdapter messageListener() {
+    return new MessageListenerAdapter(new RedisMessageSubscriber());
+  }
+
+  @Bean
+  public ChannelTopic getTopic(RedisSubscibeChannel topic) {
+    return new ChannelTopic(topic.name());
   }
 
   private ObjectMapper objectMapper() {
