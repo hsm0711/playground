@@ -20,9 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
@@ -45,26 +43,20 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
       public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
-        if (accessor != null) {
-          log.debug(">>> accessor : {}", accessor);
+        if (accessor != null && StompCommand.CONNECT.equals(accessor.getCommand())) {
+          String user = accessor.getFirstNativeHeader("user");
 
-          if (StompCommand.CONNECT.equals(accessor.getCommand())) {
-            String user = accessor.getFirstNativeHeader("user");
-
-            // 우선 simple sessionId로 사용자 식별
-            if (StringUtils.isBlank(user)) {
-              user = accessor.getSessionId();
-              accessor.setNativeHeader("user", user);
-            }
-
-            List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-            Authentication auth = new UsernamePasswordAuthenticationToken(user, user, authorities);
-            SecurityContextHolder.getContext().setAuthentication(auth);
-            accessor.setUser(auth);
-
-            log.debug(">>> auth : {}", auth);
+          // 우선 simple sessionId로 사용자 식별
+          if (StringUtils.isBlank(user)) {
+            user = accessor.getSessionId();
+            accessor.setNativeHeader("user", user);
           }
+
+          List<GrantedAuthority> authorities = new ArrayList<>();
+          authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+          Authentication auth = new UsernamePasswordAuthenticationToken(user, user, authorities);
+          SecurityContextHolder.getContext().setAuthentication(auth);
+          accessor.setUser(auth);
         }
 
         return message;
