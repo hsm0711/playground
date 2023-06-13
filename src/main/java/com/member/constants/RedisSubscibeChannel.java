@@ -1,5 +1,5 @@
 package com.member.constants;
 
 public enum RedisSubscibeChannel {
-  TOPIC_01
+  WEBSOCKET_TOPIC
 }

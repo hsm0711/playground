@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.member.constants.RedisSubscibeChannel;
 import com.member.listener.RedisMessageSubscriber;
+import com.member.listener.RedisWebSocketMessageSubscriber;
 
 @Configuration
 @EnableRedisRepositories
@@ -62,10 +63,11 @@ public class RedisConfig {
   }
 
   @Bean
-  public RedisMessageListenerContainer redisContainer() {
+  public RedisMessageListenerContainer redisContainer(MessageListenerAdapter websocketMessageListener) {
     RedisMessageListenerContainer container = new RedisMessageListenerContainer();
     container.setConnectionFactory(redisConnectionFactory());
-    container.addMessageListener(messageListener(), getTopic(RedisSubscibeChannel.TOPIC_01));
+    // container.addMessageListener(messageListener(), getTopic(RedisSubscibeChannel.TOPIC_01));
+    container.addMessageListener(websocketMessageListener, webSocketTopic());
 
     return container;
   }
@@ -76,8 +78,13 @@ public class RedisConfig {
   }
 
   @Bean
-  public ChannelTopic getTopic(RedisSubscibeChannel topic) {
-    return new ChannelTopic(topic.name());
+  public MessageListenerAdapter websocketMessageListener(RedisWebSocketMessageSubscriber redisWebSocketMessageSubscriber) {
+    return new MessageListenerAdapter(redisWebSocketMessageSubscriber);
+  }
+
+  @Bean
+  public ChannelTopic webSocketTopic() {
+    return new ChannelTopic(RedisSubscibeChannel.WEBSOCKET_TOPIC.name());
   }
 
   private ObjectMapper objectMapper() {
