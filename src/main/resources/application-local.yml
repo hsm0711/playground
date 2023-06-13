@@ -52,6 +52,7 @@ logging:
     root: info
     com:
      member: debug
+    org.springframework.messaging: debug
 
 decorator:
   datasource:

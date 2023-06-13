@@ -22,18 +22,18 @@ public class RedisWebSocketMessageSubscriber implements MessageListener {
    */
   @Override
   public void onMessage(Message message, byte[] pattern) {
-    try {
-      WebSocketDto messageDto = (WebSocketDto) redisTemplate.getHashValueSerializer().deserialize(message.getBody());
+    WebSocketDto messageDto = (WebSocketDto) redisTemplate.getHashValueSerializer().deserialize(message.getBody());
 
-      if (messageDto != null) {
-        if (WebSocketTargetType.ALL.equals(messageDto.getTargetType())) {
-          messagingTemplate.convertAndSend("/sub/all", messageDto);
-        } else if (WebSocketTargetType.USER.equals(messageDto.getTargetType())) {
-          messagingTemplate.convertAndSendToUser(messageDto.getReceiverId(), "/sub/user/", messageDto);
-        }
+    log.debug(">>> messageingTemplate : {}", messagingTemplate);
+
+    if (messageDto != null) {
+      if (WebSocketTargetType.ALL.equals(messageDto.getTargetType())) {
+        messageDto.setTargetType(null);
+        messagingTemplate.convertAndSend("/sub", messageDto);
+      } else if (WebSocketTargetType.USER.equals(messageDto.getTargetType())) {
+        messageDto.setTargetType(null);
+        messagingTemplate.convertAndSendToUser(messageDto.getReceiverId(), "/direct", messageDto);
       }
-    } catch (Exception e) {
-      log.error(e.getMessage());
     }
   }
 }
