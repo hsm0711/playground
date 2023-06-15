@@ -19,8 +19,8 @@ import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.member.constants.RedisSubscibeChannel;
-import com.member.listener.RedisMessageSubscriber;
-import com.member.listener.RedisWebSocketMessageSubscriber;
+import com.member.listener.RedisSeverSentEventsMessageSubscribeListener;
+import com.member.listener.RedisWebSocketMessageSubscribeListener;
 
 @Configuration
 @EnableRedisRepositories
@@ -63,28 +63,35 @@ public class RedisConfig {
   }
 
   @Bean
-  public RedisMessageListenerContainer redisContainer(MessageListenerAdapter websocketMessageListener) {
+  public RedisMessageListenerContainer redisContainer(MessageListenerAdapter websocketMessageListener,
+      MessageListenerAdapter serverSentEventsMessageListener) {
     RedisMessageListenerContainer container = new RedisMessageListenerContainer();
     container.setConnectionFactory(redisConnectionFactory());
-    // container.addMessageListener(messageListener(), getTopic(RedisSubscibeChannel.TOPIC_01));
     container.addMessageListener(websocketMessageListener, webSocketTopic());
+    container.addMessageListener(serverSentEventsMessageListener, serverSentEventsTopic());
 
     return container;
   }
 
   @Bean
-  public MessageListenerAdapter messageListener() {
-    return new MessageListenerAdapter(new RedisMessageSubscriber());
+  public MessageListenerAdapter websocketMessageListener(RedisWebSocketMessageSubscribeListener redisWebSocketMessageSubscribeListener) {
+    return new MessageListenerAdapter(redisWebSocketMessageSubscribeListener);
   }
 
   @Bean
-  public MessageListenerAdapter websocketMessageListener(RedisWebSocketMessageSubscriber redisWebSocketMessageSubscriber) {
-    return new MessageListenerAdapter(redisWebSocketMessageSubscriber);
+  public MessageListenerAdapter serverSentEventsMessageListener(
+      RedisSeverSentEventsMessageSubscribeListener redisSeverSentEventsMessageSubscribeListener) {
+    return new MessageListenerAdapter(redisSeverSentEventsMessageSubscribeListener);
   }
 
   @Bean
   public ChannelTopic webSocketTopic() {
     return new ChannelTopic(RedisSubscibeChannel.WEBSOCKET_TOPIC.name());
+  }
+
+  @Bean
+  public ChannelTopic serverSentEventsTopic() {
+    return new ChannelTopic(RedisSubscibeChannel.SSE_TOPIC.name());
   }
 
   private ObjectMapper objectMapper() {

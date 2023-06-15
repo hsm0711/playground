@@ -49,13 +49,18 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
           // 우선 simple sessionId로 사용자 식별
           if (StringUtils.isBlank(user)) {
             user = accessor.getSessionId();
+
             accessor.setNativeHeader("user", user);
           }
 
           List<GrantedAuthority> authorities = new ArrayList<>();
+
           authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+
           Authentication auth = new UsernamePasswordAuthenticationToken(user, user, authorities);
+
           SecurityContextHolder.getContext().setAuthentication(auth);
+
           accessor.setUser(auth);
         }
 

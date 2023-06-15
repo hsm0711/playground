@@ -8,12 +8,10 @@ import org.springframework.stereotype.Service;
 import com.member.api.sample.model.WebSocketDto;
 import com.member.constants.WebSocketTargetType;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RequiredArgsConstructor
 @Service
-public class RedisWebSocketMessageSubscriber implements MessageListener {
+public class RedisWebSocketMessageSubscribeListener implements MessageListener {
   private final RedisTemplate<String, Object> redisTemplate;
   private final SimpMessageSendingOperations messagingTemplate;
 
@@ -23,8 +21,6 @@ public class RedisWebSocketMessageSubscriber implements MessageListener {
   @Override
   public void onMessage(Message message, byte[] pattern) {
     WebSocketDto messageDto = (WebSocketDto) redisTemplate.getHashValueSerializer().deserialize(message.getBody());
-
-    log.debug(">>> messageingTemplate : {}", messagingTemplate);
 
     if (messageDto != null) {
       if (WebSocketTargetType.ALL.equals(messageDto.getTargetType())) {
