@@ -17,20 +17,13 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ServerSentEventsService {
-  // private static final Long DEFAULT_TIMEOUT = 60L * 1000 * 60;
-  private static final Long DEFAULT_TIMEOUT = 1000L * 10;
+  private static final Long DEFAULT_TIMEOUT = 60L * 1000 * 60;
 
   private final SeverSentEventsInMemoryRepository sseRepository;
 
   private final RedisTemplate<String, Object> redisTemplate;
 
   public void sendMessage(SseDto sseDto) {
-    sseDto.setSendDate(System.currentTimeMillis());
-
-    redisTemplate.convertAndSend(RedisSubscibeChannel.SSE_TOPIC.name(), sseDto);
-  }
-
-  public void sendAllMessage(SseDto sseDto) {
     sseDto.setSendDate(System.currentTimeMillis());
 
     redisTemplate.convertAndSend(RedisSubscibeChannel.SSE_TOPIC.name(), sseDto);
