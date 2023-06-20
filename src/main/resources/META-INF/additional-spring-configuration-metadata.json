@@ -1,0 +1,62 @@
+{"properties": [
+  {
+    "name": "CRYPTO_PWD",
+    "type": "java.lang.String",
+    "description": "암호화 유틸 pwd"
+  },
+  {
+    "name": "CRYPTO_SALT",
+    "type": "java.lang.String",
+    "description": "암호화 유틸 salt"
+  },
+  {
+    "name": "spring.datasource.master.hikari.read-only",
+    "type": "java.lang.String",
+    "description": "Reflication 설정을 위한 master hikari.read-only'"
+  },
+  {
+    "name": "spring.datasource.master.hikari.password",
+    "type": "java.lang.String",
+    "description": "Reflication 설정을 위한 master hikari.password'"
+  },
+  {
+    "name": "spring.datasource.master.hikari.username",
+    "type": "java.lang.String",
+    "description": "Reflication 설정을 위한 master hikari.username'"
+  },
+  {
+    "name": "spring.datasource.master.hikari.jdbc-url",
+    "type": "java.lang.String",
+    "description": "Reflication 설정을 위한 master hikari.jdbc-url'"
+  },
+  {
+    "name": "spring.datasource.master.hikari.driver-class-name",
+    "type": "java.lang.String",
+    "description": "Reflication 설정을 위한 master hikari.driver-class-name'"
+  },
+  {
+    "name": "spring.datasource.slave.hikari.read-only",
+    "type": "java.lang.String",
+    "description": "Reflication 설정을 위한 slave hikari.read-only'"
+  },
+  {
+    "name": "spring.datasource.slave.hikari.password",
+    "type": "java.lang.String",
+    "description": "Reflication 설정을 위한 slave hikari.password'"
+  },
+  {
+    "name": "spring.datasource.slave.hikari.username",
+    "type": "java.lang.String",
+    "description": "Reflication 설정을 위한 slave hikari.username'"
+  },
+  {
+    "name": "spring.datasource.slave.hikari.jdbc-url",
+    "type": "java.lang.String",
+    "description": "Reflication 설정을 위한 slave hikari.jdbc-url'"
+  },
+  {
+    "name": "spring.datasource.slave.hikari.driver-class-name",
+    "type": "java.lang.String",
+    "description": "Reflication 설정을 위한 slave hikari.driver-class-name'"
+  }
+]}
