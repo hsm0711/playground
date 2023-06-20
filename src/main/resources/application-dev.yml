@@ -58,7 +58,7 @@ logging:
     rollingpolicy:
       max-history: 90
   pattern:
-    file: "%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}} [${LOG_LEVEL_PATTERN:%5p}] [%10.10X{userId}]) [%15.15t]) %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+    file: "%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}} [${LOG_LEVEL_PATTERN:%5p}] [%10.10X{userId}] [%15.15t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
   level:
     root: info
     com:
