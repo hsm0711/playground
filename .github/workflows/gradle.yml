@@ -43,10 +43,10 @@ jobs:
         credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
-    #- id: gcloud
-    #  name: gcloud
-    #  run: |-
-    #    gcloud secrets versions access "latest" --secret "my-secret"
+    - id: gcloud
+      name: gcloud
+      run: |-
+        gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "sudo systemctl restart my-application.service"
     #- name: Deploy to Compute Engine
     #  run: |
     #    gcloud compute scp build/libs/playground.jar ${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.DEPLOY_DIR }}
