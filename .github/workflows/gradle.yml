@@ -23,6 +23,8 @@ jobs:
       GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
     steps:
+    - name: echo env
+      run: echo $GOOGLE_APPLICATION_CREDENTIALS
     - name: Checkout
       uses: actions/checkout@v3
     - name: Set up JDK 11
