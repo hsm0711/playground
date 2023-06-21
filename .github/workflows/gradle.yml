@@ -41,6 +41,12 @@ jobs:
       uses: google-github-actions/auth@v1
       with:
         credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+    #- id: gcloud
+    #  name: gcloud
+    #  run: |-
+    #    gcloud secrets versions access "latest" --secret "my-secret"
     #- name: Deploy to Compute Engine
     #  run: |
     #    gcloud compute scp build/libs/playground.jar ${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.DEPLOY_DIR }}
