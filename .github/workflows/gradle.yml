@@ -23,10 +23,6 @@ jobs:
       GOOGLE_APPLICATION_CREDENTIALS: '~/service.json'
 
     steps:
-    - name: make GOOGLE_APPLICATION_CREDENTIALS
-      run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > ~/service.json
-    - name: ll
-      run: ls -al ~
     - name: Checkout
       uses: actions/checkout@v3
     - name: Set up JDK 11
@@ -34,6 +30,10 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+    - name: make GOOGLE_APPLICATION_CREDENTIALS
+      run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > ~/service.json
+    - name: ll
+      run: ls -al ~
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
