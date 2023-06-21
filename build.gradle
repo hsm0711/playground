@@ -24,6 +24,9 @@ ext {
 
 bootJar {
     exclude('**/test/**')
+    archivesBaseName = 'playground'
+    archiveFileName = 'playground.jar'
+    archiveVersion = "0.0.1"
 }
 
 jar {
