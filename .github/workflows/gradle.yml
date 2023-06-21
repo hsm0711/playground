@@ -24,7 +24,7 @@ jobs:
 
     steps:
     - name: echo env
-      run: echo $GOOGLE_APPLICATION_CREDENTIALS
+      run: env
     - name: Checkout
       uses: actions/checkout@v3
     - name: Set up JDK 11
@@ -35,7 +35,7 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew build --debug
+      run: ./gradlew build
     - name: Authenticate with GCP
       id: auth
       uses: google-github-actions/setup-gcloud@v1
