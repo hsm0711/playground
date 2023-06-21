@@ -20,7 +20,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      GOOGLE_APPLICATION_CREDENTIALS: '~/service.json'
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
     steps:
     - name: Checkout
@@ -32,10 +32,8 @@ jobs:
         distribution: 'temurin'
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: set env
-      run: echo "GOOGLE_APPLICATION_CREDENTIALS=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" >> ~/service.json
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew test --debug
     - name: Authenticate with GCP
       id: auth
       uses: google-github-actions/setup-gcloud@v1
