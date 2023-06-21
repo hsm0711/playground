@@ -23,18 +23,10 @@ jobs:
       GOOGLE_APPLICATION_CREDENTIALS: '~/service.json'
 
     steps:
-    - name: echo 0
-      run: echo "$GOOGLE_APPLICATION_CREDENTIALS"
-    - name: echo 1
-      run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
-    - name: echo 2
-      run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' | sed 's/./& /g' 
     - name: make GOOGLE_APPLICATION_CREDENTIALS
       run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > ~/service.json
-    - name: cat 1
-      run: cat ~/service.json
-    - name: cat 2
-      run: cat ~/service.json | sed 's/./& /g' 
+    - name: ll
+      run: ls -al ~
     - name: Checkout
       uses: actions/checkout@v3
     - name: Set up JDK 11
