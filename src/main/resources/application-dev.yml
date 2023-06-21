@@ -52,8 +52,7 @@ spring:
 
 logging:
   file:
-    path: ../logs/
-    name: console.log
+    name: ../logs/console.log
   logback:
     rollingpolicy:
       max-history: 90
