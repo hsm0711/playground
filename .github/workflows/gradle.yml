@@ -20,7 +20,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      GOOGLE_APPLICATION_CREDENTIALS: '~/service.json'
+      GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
 
     steps:
     - name: Checkout
@@ -33,7 +33,7 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: make service.json
-      run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > ~/service.json
+      run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > /home/runner/work/playground/playground/service.json
     - name: pwd
       run: pwd
     - name: ll
