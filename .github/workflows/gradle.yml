@@ -34,10 +34,6 @@ jobs:
       run: chmod +x gradlew
     - name: make service.json
       run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > /home/runner/work/playground/playground/service.json
-    - name: pwd
-      run: pwd
-    - name: ll
-      run: ls -al
     - name: Build with Gradle
       run: ./gradlew build
     - name: Authenticate with GCP
