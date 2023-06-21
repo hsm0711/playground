@@ -34,8 +34,8 @@ jobs:
       run: chmod +x gradlew
     - name: make service.json
       run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > /home/runner/work/playground/playground/service.json
-    - name: Build with Gradle
-      run: ./gradlew build
+    #- name: Build with Gradle
+    #  run: ./gradlew build
     - id: auth
       name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
