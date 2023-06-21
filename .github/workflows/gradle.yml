@@ -36,9 +36,9 @@ jobs:
       run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > /home/runner/work/playground/playground/service.json
     - name: Build with Gradle
       run: ./gradlew build
-    - name: Authenticate with GCP
-      id: auth
-      uses: google-github-actions/setup-gcloud@v1
+    - id: auth
+      name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v1
       with:
         credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
     #- name: Deploy to Compute Engine
