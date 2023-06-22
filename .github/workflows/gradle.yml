@@ -54,7 +54,7 @@ jobs:
     - id: gcloud
       name: gcloud
       run: |-
-        gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "~/test.sh"
+        gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "/home/${{ GCP_USER }}/test.sh"
     #- name: Deploy to Compute Engine
     #  run: |
     #    gcloud compute scp build/libs/playground.jar ${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.DEPLOY_DIR }}
