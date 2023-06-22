@@ -57,8 +57,8 @@ jobs:
     
     runs-on: ubuntu-latest
     
-    env:
-      GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
+    #env:
+    #  GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
     
     steps:
     - name: Checkout
@@ -87,18 +87,11 @@ jobs:
     needs: build
     
     runs-on: ubuntu-latest
-    
-    #env:
-    #  GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
 
     steps:
     - uses: actions/download-artifact@v3
       with:
         name: playground-artifact
-        
-    - run: pwd
-    
-    - run: ls -al
         
     - id: auth
       name: Authenticate to Google Cloud
@@ -109,10 +102,11 @@ jobs:
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
       
-    - id: gcloud
+    - id: Deploy and Start Spring Boot
       name: gcloud
       run: |-
         gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "/home/${{ secrets.GCP_USER }}/test.sh"
+        
     #- name: Deploy to Compute Engine
     #  run: |
     #    gcloud compute scp playground.jar ${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.DEPLOY_DIR }}
