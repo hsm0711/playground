@@ -103,9 +103,9 @@ jobs:
       run: |
         gcloud compute scp playground.jar ${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.GCP_DEPLOY_DIR }} --zone "us-west1-b"
       
-    #- name: Run Deploy Script
-    #  run: |
-    #    gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "${{ secrets.GCP_DEPLOY_DIR }}/shell/deploy.sh"
+    - name: Run Deploy Script
+      run: |
+        gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "sudo -u ${{ secrets.GCP_USER }} ${{ secrets.GCP_DEPLOY_DIR }}/shell/deploy.sh"
         
     #- name: Deploy to Compute Engine
     #  run: |
