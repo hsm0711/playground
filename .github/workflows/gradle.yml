@@ -78,6 +78,7 @@ jobs:
       with:
         name: playground-artifact
         path: build/libs/playground.jar
+        retention-days: 14
 
   deploy:
     needs: build
