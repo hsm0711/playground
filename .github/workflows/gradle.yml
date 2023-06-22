@@ -105,7 +105,7 @@ jobs:
       
     - name: Run Deploy Script
       run: |
-        gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "echo ${{ secrets.GCP_RUNNER_PASSWORD }} | sudo -S -u ${{ secrets.GCP_USER }} ${{ secrets.GCP_WORK_DIR }}/shell/deploy.sh"
+        gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "echo ${{ secrets.GCP_RUNNER_PASSWORD }} | sudo -S -u ${{ secrets.GCP_USER }} sh ${{ secrets.GCP_WORK_DIR }}/shell/deploy.sh"
         
     #- name: Deploy to Compute Engine
     #  run: |
