@@ -93,8 +93,7 @@ jobs:
       with:
         name: playground-artifact
         
-    - id: auth
-      name: Authenticate to Google Cloud
+    - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
         credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
@@ -102,8 +101,7 @@ jobs:
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
       
-    - id: Deploy and Start Spring Boot
-      name: gcloud
+    - name: Deploy and Start Spring Boot
       run: |-
         gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "/home/${{ secrets.GCP_USER }}/test.sh"
         
