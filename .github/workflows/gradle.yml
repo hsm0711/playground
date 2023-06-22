@@ -90,6 +90,9 @@ jobs:
     #  uses: actions/download-artifact@v3
     #  with:
     #    name: playground-artifact
+    #    path: playground_${GITHUB_SHA::7}.jar
+    
+    - run: echo ${GITHUB_SHA::7}
         
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
