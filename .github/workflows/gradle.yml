@@ -101,7 +101,7 @@ jobs:
       
     - name: Deploy Jar File
       run: |
-         gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "ls -al ${{ secrets.GCP_DEPLOY_DIR }}"
+         gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "touch ${{ secrets.GCP_DEPLOY_DIR }}/test"
     #    gcloud compute scp playground.jar ${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.GCP_DEPLOY_DIR }} --zone "us-west1-b"
       
     #- name: Run Deploy Script
