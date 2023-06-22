@@ -95,6 +95,11 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: playground-artifact
+        
+    - run: pwd
+    
+    - run: ls -al
+        
     - id: auth
       name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
