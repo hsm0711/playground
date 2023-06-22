@@ -46,10 +46,10 @@ jobs:
     - id: compute-ssh
       uses: google-github-actions/ssh-compute@v0
       with:
-        instance_name: ${{ secrets.GCP_INSTANCE_NAME }}
-        zone: us-west1-b
-        user: ${{ secrets.GCP_USER }}
-        ssh_private_key: ${{ secrets.GCP_SSH_KEY }}
+        instance_name: '${{ secrets.GCP_INSTANCE_NAME }}'
+        zone: 'us-west1-b'
+        user: '${{ secrets.GCP_USER }}'
+        ssh_private_key: '${{ secrets.GCP_SSH_KEY }}'
         command: ~/test.sh
     - id: gcloud
       name: gcloud
