@@ -88,8 +88,8 @@ jobs:
     
     runs-on: ubuntu-latest
     
-    env:
-      GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
+    #env:
+    #  GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
 
     steps:
     - uses: actions/download-artifact@v3
