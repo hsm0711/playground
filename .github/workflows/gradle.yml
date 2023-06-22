@@ -82,16 +82,16 @@ jobs:
     
     runs-on: ubuntu-latest
     
-    env:
-      GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
+    #env:
+    #  GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
 
     steps:
-    - id: auth
-      name: Authenticate to Google Cloud
-      uses: google-github-actions/auth@v1
-      with:
-        credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-        create_credentials_file: false
+    #- id: auth
+    #  name: Authenticate to Google Cloud
+    #  uses: google-github-actions/auth@v1
+    #  with:
+    #    credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+    #    create_credentials_file: false
         
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
