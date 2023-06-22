@@ -76,22 +76,27 @@ jobs:
       
     - name: Build with Gradle
       run: ./gradlew build -x test
+      
+    - name: Upload Jar
+      uses: actions/upload-artifact@v3
+      with:
+        name: playground-artifact
+        path: build/libs/playground.jar app/build/outputs/apk/release # 폴더 지정 : 이 폴더 아래의 모든 파일들이 하나의 artifact로 저장된다.
 
   deploy:
     needs: build
     
     runs-on: ubuntu-latest
     
-    #env:
-    #  GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
+    env:
+      GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
 
     steps:
-    #- id: auth
-    #  name: Authenticate to Google Cloud
-    #  uses: google-github-actions/auth@v1
-    #  with:
-    #    credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-    #    create_credentials_file: false
+    - id: auth
+      name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
         
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
