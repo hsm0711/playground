@@ -73,7 +73,7 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build -x test
       
-    - name: Upload Jar
+    - name: Artifact Upload Jar
       uses: actions/upload-artifact@v3
       with:
         name: playground-artifact
@@ -86,7 +86,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/download-artifact@v3
+    - name: Artifact Download Jar
+      uses: actions/download-artifact@v3
       with:
         name: playground-artifact
         
@@ -100,6 +101,7 @@ jobs:
       
     - name: Deploy and Start Spring Boot
       run: |-
+        gcloud compute scp playground.jar ${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.DEPLOY_DIR }}
         gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "/home/${{ secrets.GCP_USER }}/test.sh"
         
     #- name: Deploy to Compute Engine
