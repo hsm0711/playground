@@ -99,14 +99,13 @@ jobs:
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
       
-    - name: Deploy Jar File
+    - name: Copy Jar File
       run: |
-         gcloud compute ssh ${{ secrets.GCP_USER }}@${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "whoami >> ${{ secrets.GCP_DEPLOY_DIR }}/test"
-    #    gcloud compute scp playground.jar ${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.GCP_DEPLOY_DIR }} --zone "us-west1-b"
+        gcloud compute scp playground.jar ${{ secrets.GCP_USER }}@${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.GCP_DEPLOY_DIR }} --zone "us-west1-b"
       
     #- name: Run Deploy Script
     #  run: |
-    #    gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "/home/${{ secrets.GCP_USER }}/test.sh"
+    #    gcloud compute ssh ${{ secrets.GCP_USER }}@${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "/home/${{ secrets.GCP_USER }}/test.sh"
         
     #- name: Deploy to Compute Engine
     #  run: |
