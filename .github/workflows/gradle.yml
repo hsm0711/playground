@@ -51,6 +51,7 @@ jobs:
       
     - name: Test with Gradle
       run: ./gradlew test
+      
   build:
     needs: test
     
@@ -75,7 +76,13 @@ jobs:
       
     - name: Build with Gradle
       run: ./gradlew build -x test
+
+  deploy:
+    needs: test
     
+    runs-on: ubuntu-latest
+
+    steps:
     - id: auth
       name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
