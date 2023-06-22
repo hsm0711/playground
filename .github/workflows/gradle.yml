@@ -81,6 +81,9 @@ jobs:
     needs: build
     
     runs-on: ubuntu-latest
+    
+    env:
+      GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
 
     steps:
     - id: auth
