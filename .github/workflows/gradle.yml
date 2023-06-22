@@ -43,6 +43,13 @@ jobs:
         credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
+    - id: compute-ssh
+      uses: google-github-actions/ssh-compute@v0
+      with:
+        instance_name: ${{ secrets.GCP_INSTANCE_NAME }}
+        zone: 'us-west1-b'
+        ssh_private_key: '${{ secrets.GCP_SSH_KEY }}'
+        command: '~/test.sh'
     - id: gcloud
       name: gcloud
       run: |-
