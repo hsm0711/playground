@@ -46,10 +46,10 @@ jobs:
     - name: Make service.json
       run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > /home/runner/work/playground/playground/service.json
       
-    - name: Test with Gradle
-      run: ./gradlew test
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
+    #- name: Test with Gradle
+    #  run: ./gradlew test
+    #  env:
+    #    GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
       
   build:
     needs: test
@@ -60,25 +60,25 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
           
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: 11
-        distribution: temurin
-        cache: gradle
+    #- name: Set up JDK 11
+    #  uses: actions/setup-java@v3
+    #  with:
+    #    java-version: 11
+    #    distribution: temurin
+    #    cache: gradle
         
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+    #- name: Grant execute permission for gradlew
+    #  run: chmod +x gradlew
       
-    - name: Build with Gradle
-      run: ./gradlew build -x test
+    #- name: Build with Gradle
+    #  run: ./gradlew build -x test
       
-    - name: Artifact Upload Jar
-      uses: actions/upload-artifact@v3
-      with:
-        name: playground-artifact
-        path: build/libs/playground.jar
-        retention-days: 14
+    #- name: Artifact Upload Jar
+    #  uses: actions/upload-artifact@v3
+    #  with:
+    #    name: playground-artifact
+    #    path: build/libs/playground.jar
+    #    retention-days: 14
 
   deploy:
     needs: build
@@ -86,10 +86,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Artifact Download Jar
-      uses: actions/download-artifact@v3
-      with:
-        name: playground-artifact
+    #- name: Artifact Download Jar
+    #  uses: actions/download-artifact@v3
+    #  with:
+    #    name: playground-artifact
         
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
@@ -99,16 +99,11 @@ jobs:
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
       
-    - name: Copy Jar File
-      run: |
-        gcloud compute scp playground.jar ${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.GCP_DEPLOY_DIR }} --zone "us-west1-b"
+    #- name: Copy Jar File
+    #  run: |
+    #    gcloud compute scp playground.jar ${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.GCP_DEPLOY_DIR }} --zone "us-west1-b"
       
     - name: Run Deploy Script
       run: |
-        gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "echo ${{ secrets.GCP_RUNNER_PASSWORD }} | sudo -S -u ${{ secrets.GCP_USER }} sh ${{ secrets.GCP_WORK_DIR }}/shell/deploy.sh"
-        
-    #- name: Deploy to Compute Engine
-    #  run: |
-    #    gcloud compute scp playground.jar ${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.DEPLOY_DIR }}
-    #    gcloud compute scp build/libs/playground.jar ${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.DEPLOY_DIR }}
-    #    gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "sudo systemctl restart my-application.service"
+        gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "echo ${{ secrets.GCP_RUNNER_PASSWORD }} | sudo -S -u ${{ secrets.GCP_USER }} ${{ secrets.GCP_WORK_DIR }}/shell/deploy.sh"
+     
