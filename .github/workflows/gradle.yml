@@ -20,9 +20,6 @@ jobs:
 
     runs-on: ubuntu-latest
     
-    env:
-      GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
-
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -51,14 +48,13 @@ jobs:
       
     - name: Test with Gradle
       run: ./gradlew test
+      env:
+        GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
       
   build:
     needs: test
     
     runs-on: ubuntu-latest
-    
-    #env:
-    #  GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
     
     steps:
     - name: Checkout
