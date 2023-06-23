@@ -1,5 +1,5 @@
 # 1. Swagger
- * [Swagger UI 바로가기](https://bingo-playground.duckdns.org:8080/swagger-ui/index.html)
+ * [Swagger UI 바로가기](https://bingo-playground.duckdns.org:8080/swagger-ui/index.html){:target="_blank"}
 
 
 
