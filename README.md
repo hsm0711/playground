@@ -1,5 +1,5 @@
 # 1. Swagger
- * <a href="https://bingo-playground.duckdns.org:8080/swagger-ui/index.html" target="_blank">Swagger UI 바로가기</a>
+ * [Swagger UI 바로가기](https://bingo-playground.duckdns.org:8080/swagger-ui/index.html)
 
 
 
