@@ -86,8 +86,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set Timezone
-      run: sudo timedatectl set-timezone Asia/Seoul
+    #- name: Set Timezone
+    #  run: sudo timedatectl set-timezone Asia/Seoul
       
     - name: Get current date
       id: date
@@ -99,9 +99,8 @@ jobs:
     #    path: playground_${GITHUB_SHA::7}.jar
     
     - run: echo ${GITHUB_SHA::7}
-    - run: echo ${{ steps.date.outputs.now }}
-    - run: echo ${{ env.now }}
     - run: echo $(date +'%Y%m%d%H%M%S%N')
+    - run: echo $(TZ="Asia/Seoul" date +'%Y%m%d%H%M%S%N')
         
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
