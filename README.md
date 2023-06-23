@@ -1,5 +1,5 @@
 # 1. Swagger
- * [Swagger UI 바로가기](http://bingo8.duckdns.org:8080/swagger-ui/index.html)
+ * [Swagger UI 바로가기](https://bingo-playground.duckdns.org:8080/swagger-ui/index.html)
 
 
 
@@ -28,8 +28,7 @@
    - GCP의 Secret Manager를 적용함
    - application.yml의 spring.cloud.gcp.secretmanager.credentials.location 설정이 적용되지 않아서 추후 확인 및 테스트 필요
    - 임시로 GOOGLE_APPLICATION_CREDENTIALS 시스템 변수 설정이 필요함
-     - git repository의 Settings - Secrets and variables - Actions 메뉴에서 Variables탭에 GOOGLE_APPLICATION_CREDENTIALS 항목 복사
-     - PC의 특정 영역에 json파일로 저장한 후 해당 파일을 GOOGLE_APPLICATION_CREDENTIALS 환경변수로 등록
+     - Confluence에 개발 환경 - Google Secret Manager 환경 변수 참조
 
 > 관련 소스
    - [application.yml](https://github.com/hsm0711/playground/blob/master/src/main/resources/application.yml#L21)
