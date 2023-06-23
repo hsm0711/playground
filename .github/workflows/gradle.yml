@@ -50,6 +50,19 @@ jobs:
       run: ./gradlew test
       env:
         GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
+        
+    - name: PR Comment test result
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: always()
+      with:
+        files: '**/build/test-results/test/TEST-*.xml'
+
+    - name: Fail test check comment
+      uses: mikepenz/action-junit-report@v3
+      if: always()
+      with:
+        report_paths: '**/build/test-results/test/TEST-*.xml'
+        token: ${{ github.token }}
       
   build:
     name: Build
