@@ -86,7 +86,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set jar file name
+    - id: file-name
+      name: Set jar file name
       run: echo "JAR_FILE_NAME=playground_$(TZ=Asia/Seoul date +'%Y%m%d%H%M%S%3N')_${GITHUB_SHA::7}.jar" >> $GITHUB_OUTPUT
       
     #- name: Artifact Download Jar
@@ -96,7 +97,7 @@ jobs:
     #    path: ${{ env.JAR_FILE_NAME }}
         
     - run: ls -al
-    - run: echo ${{ env.JAR_FILE_NAME }}
+    - run: echo ${{ steps.file-name.outputs.JAR_FILE_NAME }}
         
     #- name: Authenticate to Google Cloud
     #  uses: google-github-actions/auth@v1
