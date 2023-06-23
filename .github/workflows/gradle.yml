@@ -97,6 +97,7 @@ jobs:
         path: ${{ steps.file-name.outputs.JAR_FILE_NAME }}
         
     - run: ls -al
+    - run: pwd
         
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
@@ -108,7 +109,7 @@ jobs:
       
     - name: Copy Jar File
       run: |
-        gcloud compute scp ${{ steps.file-name.outputs.JAR_FILE_NAME }} ${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.GCP_DEPLOY_DIR }} --zone "us-west1-b"
+        gcloud compute scp /home/runner/${{ steps.file-name.outputs.JAR_FILE_NAME }} ${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.GCP_DEPLOY_DIR }} --zone "us-west1-b"
       
     - name: Run Deploy Script
       run: |
