@@ -91,9 +91,6 @@ jobs:
       with:
         name: playground-artifact
         path: playground_$(TZ="Asia/Seoul" date +'%Y%m%d%H%M%S%3N')_${GITHUB_SHA::7}.jar
-    
-    - run: echo ${GITHUB_SHA::7}
-    - run: echo $(TZ="Asia/Seoul" date +'%Y%m%d%H%M%S%3N')
         
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
