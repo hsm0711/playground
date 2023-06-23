@@ -10,6 +10,8 @@ name: Build & Deploy
 on:
   push:
     branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 permissions:
   contents: read
@@ -58,9 +60,7 @@ jobs:
       if: always()
       with:
         files: |
-          test-results/**/*.xml
-          test-results/**/*.trx
-          test-results/**/*.json
+          build/test-results/**/*.xml
 
     - name: Check comment fail test 
       uses: mikepenz/action-junit-report@v3
