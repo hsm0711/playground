@@ -100,7 +100,7 @@ jobs:
     
     - run: echo ${GITHUB_SHA::7}
     - run: echo ${{ steps.date.outputs.now }}
-    - run: echo ${GITHUB_OUTPUT}
+    - run: echo ${{ env.now }}
     - run: echo $(date +'%Y%m%d%H%M%S%N')
         
     - name: Authenticate to Google Cloud
