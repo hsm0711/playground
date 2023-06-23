@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   test:
-
+    name: Test
     runs-on: ubuntu-latest
     
     steps:
@@ -52,8 +52,8 @@ jobs:
         GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
       
   build:
+    name: Build
     needs: test
-    
     runs-on: ubuntu-latest
     
     steps:
@@ -81,8 +81,8 @@ jobs:
         retention-days: 14
 
   deploy:
+    name: Deploy & Restart
     needs: build
-    
     runs-on: ubuntu-latest
 
     steps:
