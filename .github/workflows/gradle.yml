@@ -107,7 +107,7 @@ jobs:
       uses: google-github-actions/setup-gcloud@v1
       
     - name: Copy Jar File
-      run: gcloud compute scp /home/runner/${{ steps.file-name.outputs.JAR_FILE_NAME }} ${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.GCP_DEPLOY_DIR }} --zone "us-west1-b"
+      run: gcloud compute scp ${{ steps.file-name.outputs.JAR_FILE_NAME }} ${{ secrets.GCP_INSTANCE_NAME }}:${{ secrets.GCP_DEPLOY_DIR }} --zone "us-west1-b"
       
     - name: Run Deploy Script
       run: gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "echo ${{ secrets.GCP_RUNNER_PASSWORD }} | sudo -S -u ${{ secrets.GCP_USER }} ${{ secrets.GCP_WORK_DIR }}/shell/deploy.sh"
