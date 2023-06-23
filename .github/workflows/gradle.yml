@@ -53,11 +53,14 @@ jobs:
       env:
         GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
         
-    - name: PR Comment test result
+    - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
       with:
-        files: test-results/**/*.xml
+        files: |
+          test-results/**/*.xml
+          test-results/**/*.trx
+          test-results/**/*.json
 
     - name: Check comment fail test 
       uses: mikepenz/action-junit-report@v3
