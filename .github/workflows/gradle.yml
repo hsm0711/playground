@@ -14,6 +14,7 @@ on:
 permissions:
   contents: read
   id-token: write
+  pull-requests: write
 
 jobs:
   test:
@@ -52,12 +53,12 @@ jobs:
         GOOGLE_APPLICATION_CREDENTIALS: '/home/runner/work/playground/playground/service.json'
         
     - name: PR Comment test result
-      uses: EnricoMi/publish-unit-test-result-action@v1
+      uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
       with:
-        files: '**/build/test-results/test/TEST-*.xml'
+        files: test-results/**/*.xml
 
-    - name: Fail test check comment
+    - name: Check comment fail test 
       uses: mikepenz/action-junit-report@v3
       if: always()
       with:
