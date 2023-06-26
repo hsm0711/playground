@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import com.playground.api.sample.model.SseDto;
 import com.playground.api.sample.service.ServerSentEventsService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@Api(tags = "SSE(Server Sent Events)(EventStream) 샘플 API")
+@Tag(name = "sse", description = "SSE(Server Sent Events)(EventStream) 샘플 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/playground/public/sample/sse")
@@ -26,7 +26,7 @@ public class ServerSentEventsController {
   /**
    * sse publish
    */
-  @ApiOperation(value = "sse 메시지 발송", notes = "sse의 연결된 사용자(id)에게 메시지 전송")
+  @Operation(summary = "sse 메시지 발송", description = "sse의 연결된 사용자(id)에게 메시지 전송")
   @PostMapping("/send-message")
   public ResponseEntity<Void> sendMessage(@RequestBody SseDto sseDto) {
     serverSentEventsService.sendMessage(sseDto);
@@ -37,7 +37,7 @@ public class ServerSentEventsController {
   /**
    * sse 연결
    */
-  @ApiOperation(value = "sse 구독", notes = "sse구독")
+  @Operation(summary = "sse 구독", description = "sse구독")
   @GetMapping(value = "/subscribe/{id}", produces = "text/event-stream")
   public SseEmitter subscribe(@PathVariable String id,
       @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
