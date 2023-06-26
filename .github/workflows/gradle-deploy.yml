@@ -21,7 +21,11 @@ permissions:
 jobs:
   test:
     name: Test
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+            
+    runs-on: ${{ matrix.os }}
     
     steps:
     - name: Checkout
@@ -83,7 +87,11 @@ jobs:
   build:
     name: Build
     needs: test
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+            
+    runs-on: ${{ matrix.os }}
     
     steps:
     - name: Checkout
@@ -124,7 +132,11 @@ jobs:
   deploy:
     name: Deploy & Restart
     needs: build
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+            
+    runs-on: ${{ matrix.os }}
 
     steps:
     - id: file-name
