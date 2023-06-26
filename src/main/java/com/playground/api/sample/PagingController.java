@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.playground.api.sample.entity.PagingEntity;
 import com.playground.api.sample.service.PagingService;
 import com.playground.model.BaseResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@Api(tags = "Paging 샘플 API")
+@Tag(name = "paging", description = "Paging 샘플 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/playground/public/sample/paging")
@@ -26,7 +26,7 @@ public class PagingController {
   /**
    * paging list 조회
    */
-  @ApiOperation(value = "paging list 조회", notes = "paging list 조회")
+  @Operation(summary = "paging list 조회", description = "paging list 조회")
   @GetMapping("/list")
   public ResponseEntity<BaseResponse<List<PagingEntity>>> getPagingList(Pageable pageable) {
     return ResponseEntity.ok(new BaseResponse<>(pagingService.getPagingList(pageable)));
@@ -35,7 +35,7 @@ public class PagingController {
   /**
    * paging page 조회
    */
-  @ApiOperation(value = "paging page 조회", notes = "paging page 조회")
+  @Operation(summary = "paging page 조회", description = "paging page 조회")
   @GetMapping("/page")
   public ResponseEntity<BaseResponse<Page<PagingEntity>>> getPagingPage(Pageable pageable) {
     return ResponseEntity.ok(new BaseResponse<>(pagingService.getPagingPage(pageable)));
@@ -44,7 +44,7 @@ public class PagingController {
   /**
    * paging slice 조회
    */
-  @ApiOperation(value = "paging slice 조회", notes = "paging slice 조회")
+  @Operation(summary = "paging slice 조회", description = "paging slice 조회")
   @GetMapping("/slice")
   public ResponseEntity<BaseResponse<Slice<PagingEntity>>> getPagingSlice(Pageable pageable) {
     return ResponseEntity.ok(new BaseResponse<>(pagingService.getPagingSlice(pageable)));
@@ -53,7 +53,7 @@ public class PagingController {
   /**
    * paging list 조회
    */
-  @ApiOperation(value = "paging list 조회", notes = "paging list 조회")
+  @Operation(summary = "paging list 조회", description = "paging list 조회")
   @PostMapping("/list")
   public ResponseEntity<BaseResponse<List<PagingEntity>>> postPagingList(Pageable pageable) {
     return ResponseEntity.ok(new BaseResponse<>(pagingService.getPagingList(pageable)));
@@ -62,7 +62,7 @@ public class PagingController {
   /**
    * paging page 조회
    */
-  @ApiOperation(value = "paging page 조회", notes = "paging page 조회")
+  @Operation(summary = "paging page 조회", description = "paging page 조회")
   @PostMapping("/page")
   public ResponseEntity<BaseResponse<Page<PagingEntity>>> postPagingPage(Pageable pageable) {
     return ResponseEntity.ok(new BaseResponse<>(pagingService.getPagingPage(pageable)));
@@ -71,7 +71,7 @@ public class PagingController {
   /**
    * paging slice 조회
    */
-  @ApiOperation(value = "paging slice 조회", notes = "paging slice 조회")
+  @Operation(summary = "paging slice 조회", description = "paging slice 조회")
   @PostMapping("/slice")
   public ResponseEntity<BaseResponse<Slice<PagingEntity>>> postPagingSlice(Pageable pageable) {
     return ResponseEntity.ok(new BaseResponse<>(pagingService.getPagingSlice(pageable)));

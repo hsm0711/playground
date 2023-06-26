@@ -16,11 +16,11 @@ import com.playground.api.sample.entity.RedisRepositoryEntity;
 import com.playground.api.sample.entity.RedisTemplateEntity;
 import com.playground.api.sample.service.RedisService;
 import com.playground.model.BaseResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@Api(tags = "Redis 샘플 API")
+@Tag(name = "redis", description = "Redis 샘플 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/playground/public/sample/redis")
@@ -30,7 +30,7 @@ public class RedisController {
   /**
    * redis 저장 - redisRepository
    */
-  @ApiOperation(value = "redis 저장 - redisRepository", notes = "redis 저장")
+  @Operation(summary = "redis 저장 - redisRepository", description = "redis 저장")
   @PutMapping("/repository")
   public ResponseEntity<BaseResponse<RedisRepositoryEntity>> putRepository(@RequestBody RedisRepositoryEntity param) {
     return ResponseEntity.ok(new BaseResponse<>(sampleService.putRepository(param)));
@@ -39,7 +39,7 @@ public class RedisController {
   /**
    * redis 조회 - redisRepository
    */
-  @ApiOperation(value = "redis 조회 - redisRepository", notes = "id 파라메터로 redis에 저장된 정보 조회")
+  @Operation(summary = "redis 조회 - redisRepository", description = "id 파라메터로 redis에 저장된 정보 조회")
   @GetMapping("/repository/{id}")
   public ResponseEntity<BaseResponse<RedisRepositoryEntity>> getRepository(@PathVariable String id) {
     return ResponseEntity.ok(new BaseResponse<>(sampleService.getRepository(id)));
@@ -48,7 +48,7 @@ public class RedisController {
   /**
    * redis Count 조회 - redisRepository
    */
-  @ApiOperation(value = "redis Count 조회 - redisRepository", notes = "redis에 저장된 총 count 조회")
+  @Operation(summary = "redis Count 조회 - redisRepository", description = "redis에 저장된 총 count 조회")
   @GetMapping("/repository/count")
   public ResponseEntity<BaseResponse<Long>> getCountRepository() {
     return ResponseEntity.ok(new BaseResponse<>(sampleService.getCountRepository()));
@@ -57,7 +57,7 @@ public class RedisController {
   /**
    * redis 전체 조회 - redisRepository
    */
-  @ApiOperation(value = "redis 전체 조회 - redisRepository", notes = "redis에 저장된 전체 데이터 조회")
+  @Operation(summary = "redis 전체 조회 - redisRepository", description = "redis에 저장된 전체 데이터 조회")
   @GetMapping("/repository")
   public ResponseEntity<BaseResponse<List<RedisRepositoryEntity>>> getAllRepository() {
     return ResponseEntity.ok(new BaseResponse<>(sampleService.getAllRepository()));
@@ -66,7 +66,7 @@ public class RedisController {
   /**
    * redis 삭제 - Entity - redisRepository
    */
-  @ApiOperation(value = "redis 삭제 - Entity - redisRepository", notes = "RedisEntity 파라메터로 redis에 저장된 정보 삭제")
+  @Operation(summary = "redis 삭제 - Entity - redisRepository", description = "RedisEntity 파라메터로 redis에 저장된 정보 삭제")
   @DeleteMapping("/repository")
   public ResponseEntity<Void> deleteRepository(@RequestBody RedisRepositoryEntity param) {
     sampleService.deleteRepository(param);
@@ -77,7 +77,7 @@ public class RedisController {
   /**
    * redis 삭제 - id - redisRepository
    */
-  @ApiOperation(value = "redis 삭제 - id - redisRepository", notes = "id 파라메터로 redis에 저장된 정보 삭제")
+  @Operation(summary = "redis 삭제 - id - redisRepository", description = "id 파라메터로 redis에 저장된 정보 삭제")
   @DeleteMapping("/repository/{id}")
   public ResponseEntity<Void> deleteByIdRepository(@PathVariable String id) {
     sampleService.deleteByIdRepository(id);
@@ -88,7 +88,7 @@ public class RedisController {
   /**
    * redis 저장 - redisTemplate
    */
-  @ApiOperation(value = "redis 저장 - redisTemplate", notes = "redis 저장")
+  @Operation(summary = "redis 저장 - redisTemplate", description = "redis 저장")
   @PutMapping("/template")
   public ResponseEntity<Void> putTemplate(@RequestBody RedisTemplateEntity param) {
     sampleService.putTemplate(param);
@@ -99,7 +99,7 @@ public class RedisController {
   /**
    * redis 조회 - redisTemplate
    */
-  @ApiOperation(value = "redis 조회 - redisTemplate", notes = "id 파라메터로 redis에 저장된 정보 조회")
+  @Operation(summary = "redis 조회 - redisTemplate", description = "id 파라메터로 redis에 저장된 정보 조회")
   @GetMapping("/template/{id}")
   public ResponseEntity<BaseResponse<RedisTemplateEntity>> getTemplate(@PathVariable String id) {
     return ResponseEntity.ok(new BaseResponse<>(sampleService.getTemplate(id)));
@@ -108,7 +108,7 @@ public class RedisController {
   /**
    * redis Count 조회 - redisTemplate
    */
-  @ApiOperation(value = "redis Count 조회 - redisTemplate", notes = "redis에 저장된 총 count 조회")
+  @Operation(summary = "redis Count 조회 - redisTemplate", description = "redis에 저장된 총 count 조회")
   @GetMapping("/template/count")
   public ResponseEntity<BaseResponse<Long>> getCountTemplate() {
     return ResponseEntity.ok(new BaseResponse<>(sampleService.getCountTemplate()));
@@ -117,7 +117,7 @@ public class RedisController {
   /**
    * redis 전체 조회 - redisTemplate
    */
-  @ApiOperation(value = "redis 전체 조회 - redisTemplate", notes = "redis에 저장된 전체 데이터 조회")
+  @Operation(summary = "redis 전체 조회 - redisTemplate", description = "redis에 저장된 전체 데이터 조회")
   @GetMapping("/template")
   public ResponseEntity<BaseResponse<List<RedisTemplateEntity>>> getAllTemplate() {
     return ResponseEntity.ok(new BaseResponse<>(sampleService.getAllTemplate()));
@@ -126,7 +126,7 @@ public class RedisController {
   /**
    * redis 삭제 - Entity - redisTemplate
    */
-  @ApiOperation(value = "redis 삭제 - Entity - redisTemplate", notes = "RedisEntity 파라메터로 redis에 저장된 정보 삭제")
+  @Operation(summary = "redis 삭제 - Entity - redisTemplate", description = "RedisEntity 파라메터로 redis에 저장된 정보 삭제")
   @DeleteMapping("/template")
   public ResponseEntity<Void> deleteTemplate(@RequestBody RedisTemplateEntity param) {
     sampleService.deleteTemplate(param);
@@ -137,7 +137,7 @@ public class RedisController {
   /**
    * redis 삭제 - id - redisTemplate
    */
-  @ApiOperation(value = "redis 삭제 - id - redisTemplate", notes = "id 파라메터로 redis에 저장된 정보 삭제")
+  @Operation(summary = "redis 삭제 - id - redisTemplate", description = "id 파라메터로 redis에 저장된 정보 삭제")
   @DeleteMapping("/template/{id}")
   public ResponseEntity<Void> deleteByIdTemplate(@PathVariable String id) {
     sampleService.deleteByIdTemplate(id);
@@ -148,7 +148,7 @@ public class RedisController {
   /**
    * redis pub/sub - publish
    */
-  @ApiOperation(value = "redis pub/sub - publish", notes = "redis의 topic 구독자에 메시지 전송")
+  @Operation(summary = "redis pub/sub - publish", description = "redis의 topic 구독자에 메시지 전송")
   @PostMapping("/publish")
   public ResponseEntity<Void> publishTopic(@RequestBody RedisPublishEntity redisPublishEntity) {
     sampleService.publishTopic(redisPublishEntity);
