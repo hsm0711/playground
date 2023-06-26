@@ -82,6 +82,17 @@ jobs:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         MATRIX_CONTEXT: ${{ toJson(matrix) }}
       if: failure()
+        
+    - name: Slack Notification
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        fields: repo,commit,message,author,action,took,eventName,ref,workflow,pullRequest
+        mention: here
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_2BONO }}
+        MATRIX_CONTEXT: ${{ toJson(matrix) }}
+      if: failure()
       
   build:
     name: Build
@@ -124,6 +135,17 @@ jobs:
         mention: here
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        MATRIX_CONTEXT: ${{ toJson(matrix) }}
+      if: failure()
+        
+    - name: Slack Notification
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        fields: repo,commit,message,author,action,took,eventName,ref,workflow,pullRequest
+        mention: here
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_2BONO }}
         MATRIX_CONTEXT: ${{ toJson(matrix) }}
       if: failure()
 
@@ -172,5 +194,17 @@ jobs:
         if_mention: failure,cancelled
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        MATRIX_CONTEXT: ${{ toJson(matrix) }}
+      if: always()
+
+    - name: Slack Notification
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        fields: repo,commit,message,author,action,took,eventName,ref,workflow,pullRequest
+        mention: here
+        if_mention: failure,cancelled
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_2BONO }}
         MATRIX_CONTEXT: ${{ toJson(matrix) }}
       if: always()
