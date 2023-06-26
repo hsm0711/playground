@@ -16,6 +16,7 @@ permissions:
   id-token: write
   checks: write
   pull-requests: write
+  actions: read
 
 jobs:
   test:
@@ -66,6 +67,19 @@ jobs:
       with:
         report_paths: '**/build/test-results/test/TEST-*.xml'
         token: ${{ github.token }}
+        
+    - name: Slack Notification
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        author_name: Build failure
+        #fields: repo,commit,message,author
+        fields: all
+        mention: here
+        if_mention: failure,cancelled
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      if: failure()
       
   build:
     name: Build
@@ -95,6 +109,19 @@ jobs:
         name: playground-artifact
         path: build/libs/playground.jar
         retention-days: 14
+        
+    - name: Slack Notification
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        author_name: Build failure
+        #fields: repo,commit,message,author
+        fields: all
+        mention: here
+        if_mention: failure,cancelled
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      if: failure()
 
   deploy:
     name: Deploy & Restart
@@ -127,3 +154,16 @@ jobs:
       
     - name: Run Deploy Script
       run: gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone "us-west1-b" --command "echo ${{ secrets.GCP_RUNNER_PASSWORD }} | sudo -S -u ${{ secrets.GCP_USER }} ${{ secrets.GCP_WORK_DIR }}/shell/deploy.sh"
+
+    - name: Slack Notification
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        author_name: Build result
+        #fields: repo,commit,message,author
+        fields: all
+        mention: here
+        if_mention: failure,cancelled
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      if: always()
