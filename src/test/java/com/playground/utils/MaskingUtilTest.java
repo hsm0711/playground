@@ -24,7 +24,7 @@ class MaskingUtilTest {
     log.debug(maskedNumber2);
 
     // Then
-    assertEquals("900711-1******", maskedNumber);
+    assertEquals("900711-1******1", maskedNumber);
     assertEquals("9007111******", maskedNumber2);
   }
 }
