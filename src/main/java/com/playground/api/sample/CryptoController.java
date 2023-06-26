@@ -14,11 +14,11 @@ import com.playground.api.sample.model.PasswordRequest;
 import com.playground.api.sample.model.PasswordResponse;
 import com.playground.model.BaseResponse;
 import com.playground.utils.CryptoUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@Api(tags = "Crypto 샘플 API")
+@Tag(name = "crypto", description = "Crypto 샘플 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/playground/public/sample/crypto")
@@ -26,7 +26,7 @@ public class CryptoController {
   /**
    * 암호화 - AES
    */
-  @ApiOperation(value = "암호화 - AES", notes = "AES 암호화")
+  @Operation(summary = "암호화 - AES", description = "AES 암호화")
   @PostMapping("/encrypt")
   public ResponseEntity<BaseResponse<EncryptResponse>> encrypt(@RequestBody EncryptRequest request) {
     String input = request.getPlainText();
@@ -37,7 +37,7 @@ public class CryptoController {
   /**
    * 복호화 - AES
    */
-  @ApiOperation(value = "복호화 - AES", notes = "AES 복호화")
+  @Operation(summary = "복호화 - AES", description = "AES 복호화")
   @PostMapping("/decrypt")
   public ResponseEntity<BaseResponse<DecryptResponse>> decrypt(@RequestBody DecryptRequest request) {
     String input = request.getEncryptedText();
@@ -48,7 +48,7 @@ public class CryptoController {
   /**
    * 비밀번호 단방향 암호화
    */
-  @ApiOperation(value = "비밀번호 단방향 암호화", notes = "비밀번호 단방향 암호화")
+  @Operation(summary = "비밀번호 단방향 암호화", description = "비밀번호 단방향 암호화")
   @PostMapping("/password")
   public ResponseEntity<BaseResponse<PasswordResponse>> password(@RequestBody PasswordRequest request) {
     String input = request.getPlainText();
@@ -59,7 +59,7 @@ public class CryptoController {
   /**
    * 평문, 암호화 비밀번호 비교
    */
-  @ApiOperation(value = "평문, 암호화 비밀번호 비교", notes = "평문과 암호화된 비밀번호가 동일한 값인지 비교")
+  @Operation(summary = "평문, 암호화 비밀번호 비교", description = "평문과 암호화된 비밀번호가 동일한 값인지 비교")
   @PostMapping("/password-compare")
   public ResponseEntity<BaseResponse<Boolean>> passwordCompare(@RequestBody PasswordCompareRequest request) {
     return ResponseEntity.ok(new BaseResponse<>(CryptoUtil.comparePassword(request.getPlainText(), request.getEncryptedText())));

@@ -34,11 +34,11 @@ import com.playground.api.sample.model.RequestMappingExcelDownResponse;
 import com.playground.api.sample.model.RequestMappingResponse;
 import com.playground.model.BaseResponse;
 import com.playground.utils.ExcelDownUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@Api(tags = "RequestMapping 샘플 API")
+@Tag(name = "request-mapping", description = "RequestMapping 샘플 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/playground/public/sample/request-mapping")
@@ -48,8 +48,8 @@ public class RequestMappingController {
   /**
    * requestMapping 정보 조회
    */
-  @ApiOperation(value = "requestMapping 정보 조회",
-      notes = "RequestMappingHandlerMapping를 활용해서 request의 url, http method, class명, method, parameter, return type등 정보를 조회")
+  @Operation(summary = "requestMapping 정보 조회",
+      description = "RequestMappingHandlerMapping를 활용해서 request의 url, http method, class명, method, parameter, return type등 정보를 조회")
   @GetMapping
   public ResponseEntity<BaseResponse<Map<String, RequestMappingResponse>>> getRequestMappings() {
     ParameterNameDiscoverer parameterNameDiscoverer = new DefaultParameterNameDiscoverer();
@@ -96,9 +96,7 @@ public class RequestMappingController {
 
 
       /*
-       * // 메소드 return 정보 : ResponseEntity가 generic 정보 필요 없을 때 사용
-       * requestMappingResponse.setReturnType(method.getReturnType().getName());
-       * requestMappingResponse.setReturnType(method.getReturnType().getSimpleName());
+       * // 메소드 return 정보 : ResponseEntity가 generic 정보 필요 없을 때 사용 requestMappingResponse.setReturnType(method.getReturnType().getName()); requestMappingResponse.setReturnType(method.getReturnType().getSimpleName());
        */
 
       // 메소드 return 정보 (generic 정보까지 조회) - start
@@ -114,17 +112,17 @@ public class RequestMappingController {
       }
       // 메소드 return 정보 (generic 정보까지 조회) - end
 
-      // @ApiOperation 정보로 메소드 상세 내역 조회 - start
-      ApiOperation apiOperation = method.getAnnotation(ApiOperation.class);
+      // @Operation 정보로 메소드 상세 내역 조회 - start
+      Operation apiOperation = method.getAnnotation(Operation.class);
 
       if (apiOperation != null) {
-        requestMappingResponse.setMethodDescription(apiOperation.value());
+        requestMappingResponse.setMethodDescription(apiOperation.summary());
 
-        if (StringUtils.isNotBlank(apiOperation.notes())) {
-          requestMappingResponse.setMethodDescriptionDetail(apiOperation.notes());
+        if (StringUtils.isNotBlank(apiOperation.description())) {
+          requestMappingResponse.setMethodDescriptionDetail(apiOperation.description());
         }
       }
-      // @ApiOperation 정보로 메소드 상세 내역 조회 - end
+      // @Operation 정보로 메소드 상세 내역 조회 - end
 
       // request url이 여러개인 경우 분리를 하기 위함
       for (String path : requestMappingResponse.getUrls()) {
@@ -138,8 +136,8 @@ public class RequestMappingController {
   /**
    * requestMapping 정보 엑셀 다운 - type1
    */
-  @ApiOperation(value = "requestMapping 정보 엑셀 다운 - type1",
-      notes = "RequestMappingHandlerMapping를 활용해서 request의 url, http method, class명, method, parameter, return type등 정보를 엑셀로 다운로드")
+  @Operation(summary = "requestMapping 정보 엑셀 다운 - type1",
+      description = "RequestMappingHandlerMapping를 활용해서 request의 url, http method, class명, method, parameter, return type등 정보를 엑셀로 다운로드")
   @GetMapping("/download/type1")
   public ResponseEntity<byte[]> downloadExcelType1RequestMappings() {
     ParameterNameDiscoverer parameterNameDiscoverer = new DefaultParameterNameDiscoverer();
@@ -197,17 +195,17 @@ public class RequestMappingController {
       }
       // 메소드 return 정보 (generic 정보까지 조회) - end
 
-      // @ApiOperation 정보로 메소드 상세 내역 조회 - start
-      ApiOperation apiOperation = method.getAnnotation(ApiOperation.class);
+      // @Operation 정보로 메소드 상세 내역 조회 - start
+      Operation apiOperation = method.getAnnotation(Operation.class);
 
       if (apiOperation != null) {
-        requestMappingResponse.setMethodDescription(apiOperation.value());
+        requestMappingResponse.setMethodDescription(apiOperation.summary());
 
-        if (StringUtils.isNotBlank(apiOperation.notes())) {
-          requestMappingResponse.setMethodDescriptionDetail(apiOperation.notes());
+        if (StringUtils.isNotBlank(apiOperation.description())) {
+          requestMappingResponse.setMethodDescriptionDetail(apiOperation.description());
         }
       }
-      // @ApiOperation 정보로 메소드 상세 내역 조회 - end
+      // @Operation 정보로 메소드 상세 내역 조회 - end
 
       resultList.add(requestMappingResponse);
     }
@@ -246,8 +244,8 @@ public class RequestMappingController {
   /**
    * requestMapping 정보 엑셀 다운 - type2
    */
-  @ApiOperation(value = "requestMapping 정보 엑셀 다운 - type2",
-      notes = "RequestMappingHandlerMapping를 활용해서 request의 url, http method, class명, method, parameter, return type등 정보를 엑셀로 다운로드")
+  @Operation(summary = "requestMapping 정보 엑셀 다운 - type2",
+      description = "RequestMappingHandlerMapping를 활용해서 request의 url, http method, class명, method, parameter, return type등 정보를 엑셀로 다운로드")
   @GetMapping("/download/type2")
   public ResponseEntity<byte[]> downloadExcelType2RequestMappings() {
     ParameterNameDiscoverer parameterNameDiscoverer = new DefaultParameterNameDiscoverer();
@@ -299,18 +297,18 @@ public class RequestMappingController {
       }
       // 메소드 return 정보 (generic 정보까지 조회) - end
 
-      // @ApiOperation 정보로 메소드 상세 내역 조회 - start
-      ApiOperation apiOperation = method.getAnnotation(ApiOperation.class);
+      // @Operation 정보로 메소드 상세 내역 조회 - start
+      Operation apiOperation = method.getAnnotation(Operation.class);
 
       if (apiOperation != null) {
-        requestMappingResponse.setMethodDescription(apiOperation.value());
+        requestMappingResponse.setMethodDescription(apiOperation.summary());
 
-        if (StringUtils.isNotBlank(apiOperation.notes())) {
-          requestMappingResponse.setMethodDescriptionDetail(apiOperation.notes());
+        if (StringUtils.isNotBlank(apiOperation.description())) {
+          requestMappingResponse.setMethodDescriptionDetail(apiOperation.description());
         }
       }
-      // @ApiOperation 정보로 메소드 상세 내역 조회 - end
 
+      // @Operation 정보로 메소드 상세 내역 조회 - end
       PatternsRequestCondition patternsRequestCondition = key.getPatternsCondition();
 
       if (patternsRequestCondition != null) {
