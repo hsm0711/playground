@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.playground.api.sample.service.ExcelService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@Api(tags = "Excel 샘플 API")
+@Tag(name = "excel", description = "Excel 샘플 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/playground/public/sample/excel")
@@ -19,7 +19,7 @@ public class ExcelController {
   /**
    * Excel download
    */
-  @ApiOperation(value = "Excel download", notes = "Excel 다운로드 샘플")
+  @Operation(summary = "Excel download", description = "Excel 다운로드 샘플")
   @GetMapping("/download")
   public ResponseEntity<byte[]> download() {
     return excelService.download();
@@ -28,7 +28,7 @@ public class ExcelController {
   /**
    * Excel download With Style
    */
-  @ApiOperation(value = "Excel download With Style", notes = "Cell에 스타일이 적용된 Excel 다운로드 샘플")
+  @Operation(summary = "Excel download With Style", description = "Cell에 스타일이 적용된 Excel 다운로드 샘플")
   @GetMapping("/download-style")
   public ResponseEntity<byte[]> downloadWithStyle() {
     return excelService.downloadWithStyle();
