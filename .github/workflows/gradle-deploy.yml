@@ -76,8 +76,7 @@ jobs:
       uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
-        author_name: Build failure
-        fields: all
+        fields: repo,commit,message,author,action,job,eventName,ref,workflow,pullRequest
         mention: here
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -121,8 +120,7 @@ jobs:
       uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
-        author_name: Build failure
-        fields: all
+        fields: repo,commit,message,author,action,job,eventName,ref,workflow,pullRequest
         mention: here
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -169,9 +167,7 @@ jobs:
       uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
-        author_name: Build result
-        #fields: repo,commit,message,author
-        fields: all
+        fields: repo,commit,message,author,action,job,eventName,ref,workflow,pullRequest
         mention: here
         if_mention: failure,cancelled
       env:
