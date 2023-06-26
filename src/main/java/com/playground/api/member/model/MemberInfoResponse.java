@@ -6,16 +6,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
-@Schema(name = "MyInfoResponse", description = "내 정보 조회 응답 데이터")
+@Schema(name = "MemberInfoResponse", description = "내 정보 조회 응답 데이터")
 @Getter
 @Setter
 public class MemberInfoResponse extends BaseDto {
 
-  @Schema(description = "사용자ID", defaultValue = "", example = "hong12")
+  @Schema(description = "사용자ID", defaultValue = "", example = "test1")
   private String userId;
 
   @Secret
-  @Schema(description = "비밀번호", defaultValue = "", example = "1111")
+  @Schema(description = "비밀번호", defaultValue = "", example = "1234")
   private String password;
 
   @Schema(description = "이름", defaultValue = "", example = "홍길동")
