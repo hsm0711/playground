@@ -73,12 +73,11 @@ jobs:
       with:
         status: ${{ job.status }}
         author_name: Build failure
-        #fields: repo,commit,message,author
         fields: all
         mention: here
-        if_mention: failure,cancelled
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        MATRIX_CONTEXT: ${{ toJson(matrix) }}
       if: failure()
       
   build:
@@ -115,12 +114,11 @@ jobs:
       with:
         status: ${{ job.status }}
         author_name: Build failure
-        #fields: repo,commit,message,author
         fields: all
         mention: here
-        if_mention: failure,cancelled
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        MATRIX_CONTEXT: ${{ toJson(matrix) }}
       if: failure()
 
   deploy:
@@ -166,4 +164,5 @@ jobs:
         if_mention: failure,cancelled
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        MATRIX_CONTEXT: ${{ toJson(matrix) }}
       if: always()
