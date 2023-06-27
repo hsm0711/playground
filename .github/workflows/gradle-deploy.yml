@@ -89,9 +89,10 @@ jobs:
       with:
         token: '${{ github.token }}'
         state: 'failure'
-        deployment-id: ${{env.DEPLOY_ID}}
+        deployment-id: ${{ env.DEPLOY_ID }}
           
     - name: Slack Notification
+      if: failure()
       uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
@@ -100,9 +101,9 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         MATRIX_CONTEXT: ${{ toJson(matrix) }}
-      if: failure()
         
     - name: Slack Notification
+      if: failure()
       uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
@@ -111,7 +112,6 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_2BONO }}
         MATRIX_CONTEXT: ${{ toJson(matrix) }}
-      if: failure()
       
   build:
     name: Build
@@ -156,9 +156,10 @@ jobs:
       with:
         token: '${{ github.token }}'
         state: 'failure'
-        deployment-id: ${{env.DEPLOY_ID}}
+        deployment-id: ${{ env.DEPLOY_ID }}
         
     - name: Slack Notification
+      if: failure()
       uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
@@ -167,9 +168,9 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         MATRIX_CONTEXT: ${{ toJson(matrix) }}
-      if: failure()
         
     - name: Slack Notification
+      if: failure()
       uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
@@ -178,7 +179,6 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_2BONO }}
         MATRIX_CONTEXT: ${{ toJson(matrix) }}
-      if: failure()
 
   deploy:
     name: Deploy & Restart
@@ -226,7 +226,7 @@ jobs:
       with:
         token: '${{ github.token }}'
         state: 'success'
-        deployment-id: ${{env.DEPLOY_ID}}
+        deployment-id: ${{ env.DEPLOY_ID }}
 
     - name: Failure Status
       if: failure()
@@ -234,9 +234,10 @@ jobs:
       with:
         token: '${{ github.token }}'
         state: 'failure'
-        deployment-id: ${{env.DEPLOY_ID}}
+        deployment-id: ${{ env.DEPLOY_ID }}
           
     - name: Slack Notification
+      if: always()
       uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
@@ -246,9 +247,9 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         MATRIX_CONTEXT: ${{ toJson(matrix) }}
-      if: always()
 
     - name: Slack Notification
+      if: always()
       uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
@@ -258,4 +259,3 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_2BONO }}
         MATRIX_CONTEXT: ${{ toJson(matrix) }}
-      if: always()
