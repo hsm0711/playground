@@ -3,7 +3,8 @@ package com.playground.utils;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import com.playground.api.member.model.MemberInfoResponse;
 import com.playground.constants.PlaygroundConstants;
@@ -11,13 +12,22 @@ import com.playground.exception.CustomException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@UtilityClass
+@Component
 public class JwtTokenUtil {
+  private static String pwd;
+
   private static final String USER_ID = "userId";
+
+  private JwtTokenUtil() {}
+
+  @Value("${CRYPTO_PWD}")
+  synchronized void setPwd(String cryptoPwd) {
+    pwd = cryptoPwd;
+  }
+
 
   // 토큰 생성
   public static String createToken(String userId, String name) {
@@ -44,7 +54,7 @@ public class JwtTokenUtil {
         .setIssuer("issuer") // 발급자
         .setSubject("auth") // 토큰 용도
         .setExpiration(ext) // 토큰 만료 시간 설정
-        .signWith(SignatureAlgorithm.HS256, "secretKey") // HS256과 Key로 Sign
+        .signWith(SignatureAlgorithm.HS256, pwd) // HS256과 Key로 Sign
         .compact(); // 토큰 생성
   }
 
@@ -60,7 +70,7 @@ public class JwtTokenUtil {
    */
   private static Claims getAllClaims(String token) {
     try {
-      return Jwts.parser().setSigningKey("secretKey").parseClaimsJws(token).getBody();
+      return Jwts.parser().setSigningKey(pwd).parseClaimsJws(token).getBody();
     } catch (Exception e) {
       throw new CustomException(MessageUtils.NOT_VERIFICATION_TOKEN);
     }
