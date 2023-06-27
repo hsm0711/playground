@@ -2,15 +2,6 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.13'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-	id "org.sonarqube" version "4.2.1.3168"
-}
-
-sonarqube {
-  properties {
-    property "sonar.projectKey", "hsm0711_playground"
-    property "sonar.organization", "hsm0711"
-    property "sonar.host.url", "https://sonarcloud.io"
-  }
 }
 
 group = 'com.playground'
