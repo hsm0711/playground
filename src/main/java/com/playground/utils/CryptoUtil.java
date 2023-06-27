@@ -2,8 +2,7 @@ package com.playground.utils;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-
-import org.bouncycastle.util.encoders.Hex;
+import org.apache.commons.codec.binary.Hex;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.codec.Utf8;
@@ -11,7 +10,6 @@ import org.springframework.security.crypto.encrypt.BytesEncryptor;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.stereotype.Component;
-
 import com.google.common.hash.Hashing;
 
 @Component
@@ -54,7 +52,7 @@ public class CryptoUtil {
    * @return String - 암호화된 문자열
    */
   public static String encrypt(String plainText) {
-    BytesEncryptor byteEncryptor = Encryptors.standard(Hex.toHexString(pwd.getBytes()), Hex.toHexString(salt.getBytes()));
+    BytesEncryptor byteEncryptor = Encryptors.standard(Hex.encodeHexString(pwd.getBytes()), Hex.encodeHexString(salt.getBytes()));
     Base64EncodingTextEncryptor encryptor = new Base64EncodingTextEncryptor(byteEncryptor);
 
     return encryptor.encrypt(plainText);
@@ -68,7 +66,7 @@ public class CryptoUtil {
    * @return String - 복호화된 문자열
    */
   public static String decrypt(String encryptedText) {
-    BytesEncryptor byteEncryptor = Encryptors.standard(Hex.toHexString(pwd.getBytes()), Hex.toHexString(salt.getBytes()));
+    BytesEncryptor byteEncryptor = Encryptors.standard(Hex.encodeHexString(pwd.getBytes()), Hex.encodeHexString(salt.getBytes()));
     Base64EncodingTextEncryptor encryptor = new Base64EncodingTextEncryptor(byteEncryptor);
 
     return encryptor.decrypt(encryptedText);

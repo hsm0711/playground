@@ -1,15 +1,12 @@
 package com.playground.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.lang.reflect.Method;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
-import com.playground.config.RoutingDataSource;
 import com.playground.constants.DataSourceType;
 import lombok.extern.slf4j.Slf4j;
 

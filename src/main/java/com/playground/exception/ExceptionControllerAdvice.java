@@ -11,7 +11,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import com.playground.model.BaseResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
 @RestControllerAdvice
@@ -35,7 +34,7 @@ public class ExceptionControllerAdvice {
     return new BaseResponse<>("ExpiredJwtException");
   }
 
-  @ExceptionHandler(SignatureException.class)
+  @ExceptionHandler(SecurityException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public BaseResponse<Void> signatureException(Exception e) {
     return new BaseResponse<>("SignatureException");
