@@ -11,11 +11,15 @@ jobs:
   dependencies:
     name: Dependencies
     runs-on: ubuntu-latest
-    permissions: # The Dependency Submission API requires write permission
+    permissions:
       contents: write
+      
     steps:
-      - name: 'Checkout Repository'
+      - name: Checkout Repository
         uses: actions/checkout@v3
+        
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
       - name: Run snapshot action
         uses: mikepenz/gradle-dependency-submission@v0.8.6
