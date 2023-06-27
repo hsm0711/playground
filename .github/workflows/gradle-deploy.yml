@@ -11,7 +11,7 @@ on:
   deployment
 
 permissions:
-  contents: write
+  contents: read
   id-token: write
   checks: write
   pull-requests: write
@@ -139,9 +139,6 @@ jobs:
         
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-
-    - name: Run snapshot action
-      uses: mikepenz/gradle-dependency-submission@v0.8.5
       
     - name: Build with Gradle
       run: ./gradlew build -x test
