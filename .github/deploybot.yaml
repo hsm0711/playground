@@ -3,6 +3,7 @@
 # Ordered list of Github Deployment environments
 deployments:
 - name: development
+  on_push: true
 # Automatically trigger deploy on default branch passing
 # on_push: true
 #- name: staging
