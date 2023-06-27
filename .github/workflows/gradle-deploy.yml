@@ -134,9 +134,6 @@ jobs:
 
     - name: Run snapshot action
       uses: mikepenz/gradle-dependency-submission@{latest}
-      with:
-        gradle-project-path: "gradle-example"
-        gradle-build-module: ":app"
           
     - name: Set up JDK 11
       uses: actions/setup-java@v3
