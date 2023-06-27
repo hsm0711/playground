@@ -83,8 +83,8 @@ jobs:
         report_paths: '**/build/test-results/test/TEST-*.xml'
         token: ${{ github.token }}
         
-    - name: Failure Status
-      if: failure()
+    - name: Failure & Cancel Status
+      if: failure() || cancelled()
       uses: chrnorm/deployment-status@v2
       with:
         token: '${{ github.token }}'
@@ -150,8 +150,8 @@ jobs:
         path: build/libs/playground.jar
         retention-days: 14
         
-    - name: Failure Status
-      if: failure()
+    - name: Failure & Cancel Status
+      if: failure() || cancelled()
       uses: chrnorm/deployment-status@v2
       with:
         token: '${{ github.token }}'
@@ -228,8 +228,8 @@ jobs:
         state: 'success'
         deployment-id: ${{ env.DEPLOY_ID }}
 
-    - name: Failure Status
-      if: failure()
+    - name: Failure & Cancel Status
+      if: failure() || cancelled()
       uses: chrnorm/deployment-status@v2
       with:
         token: '${{ github.token }}'
