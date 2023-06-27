@@ -131,9 +131,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-
-    - name: Run snapshot action
-      uses: mikepenz/gradle-dependency-submission@v0
           
     - name: Set up JDK 11
       uses: actions/setup-java@v3
@@ -144,6 +141,9 @@ jobs:
         
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+
+    - name: Run snapshot action
+      uses: mikepenz/gradle-dependency-submission@v0.8.6
       
     - name: Build with Gradle
       run: ./gradlew build -x test
