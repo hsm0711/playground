@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.io.CharacterEscapes;
 import com.fasterxml.jackson.core.io.SerializedString;
 
 public class HtmlCharacterEscapes extends CharacterEscapes {
+  private static final long serialVersionUID = -6642689576115391499L;
 
   private final int[] asciiEscapes;
 
