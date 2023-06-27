@@ -142,6 +142,12 @@ jobs:
 
     - name: Run snapshot action
       uses: mikepenz/gradle-dependency-submission@v0.8.6
+      with:
+        use-gradlew: false
+        gradle-build-module: |-
+          :
+        gradle-build-configuration: |-
+          compileClasspath
       
     - name: Build with Gradle
       run: ./gradlew build -x test
