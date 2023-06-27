@@ -76,7 +76,7 @@ jobs:
         files: |
           build/test-results/**/*.xml
 
-    - name: Check comment fail test 
+    - name: Report JUnit test
       uses: mikepenz/action-junit-report@v3
       if: always()
       with:
