@@ -1,6 +1,5 @@
 package com.playground.config;
 
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -8,7 +7,6 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.navercorp.lucy.security.xss.servletfilter.XssEscapeServletFilter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -22,16 +20,15 @@ public class WebConfig implements WebMvcConfigurer {
         HttpMethod.OPTIONS.name());
   }
 
-  @Bean
-  public FilterRegistrationBean<XssEscapeServletFilter> filterRegistrationBean() {
-    FilterRegistrationBean<XssEscapeServletFilter> filterRegistration = new FilterRegistrationBean<>();
-
-    filterRegistration.setFilter(new XssEscapeServletFilter());
-    filterRegistration.setOrder(1);
-    filterRegistration.addUrlPatterns("/*");
-
-    return filterRegistration;
-  }
+  /*
+   * TODO spring boot 3.1.X 버전 업 하면서 lucy-xss-servlet-filter 내부의 javax 패키지 사용하는 부분이 있어서 임시 주석
+   *
+   * @Bean public FilterRegistrationBean<XssEscapeServletFilter> filterRegistrationBean() { FilterRegistrationBean<XssEscapeServletFilter> filterRegistration = new FilterRegistrationBean<>();
+   *
+   * filterRegistration.setFilter(new XssEscapeServletFilter()); filterRegistration.setOrder(1); filterRegistration.addUrlPatterns("/*");
+   *
+   * return filterRegistration; }
+   */
 
   @Bean
   public MappingJackson2HttpMessageConverter jsonEscapeConverter() {
