@@ -1,7 +1,7 @@
 package com.playground.api.member.model;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import com.playground.annotation.Secret;
 import com.playground.model.BaseDto;
 import io.swagger.v3.oas.annotations.media.Schema;

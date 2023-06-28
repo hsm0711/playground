@@ -2,7 +2,7 @@ package com.playground.api.sample.entity;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Id;
+import jakarta.persistence.Id;
 
 import org.springframework.data.redis.core.RedisHash;
 import com.playground.entity.BaseEntity;

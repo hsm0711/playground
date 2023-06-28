@@ -1,6 +1,6 @@
 package com.playground.api.sample.entity;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import com.playground.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
