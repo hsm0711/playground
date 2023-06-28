@@ -18,10 +18,11 @@ springdoc:
     filter: true
 
 spring:
- redis:
-    port: ${sm://redis-port}
-    host: ${sm://redis-url}
-    password: ${sm://db-pwd}
+ data:
+   redis:
+     port: ${sm://redis-port}
+     host: ${sm://redis-url}
+     password: ${sm://db-pwd}
  datasource:
   master:
    hikari:

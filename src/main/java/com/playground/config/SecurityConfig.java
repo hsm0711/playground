@@ -2,8 +2,11 @@ package com.playground.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -18,11 +21,13 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-    http.csrf().disable().headers().xssProtection().and().frameOptions().sameOrigin().and().sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 사용 X
-        .and().formLogin().disable() // 화면 없으니 설정
-        .httpBasic().disable().authorizeRequests().antMatchers("/szs/me", "/szs/scrap", "szs/refund").authenticated().anyRequest().permitAll() // 위 3개의 url을 제외한 나머지는 다 접근 가능 설정
-        .and().addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class);
+    http.csrf(csrf -> csrf.disable()).headers(headers -> {
+      headers.xssProtection(Customizer.withDefaults());
+      headers.frameOptions(FrameOptionsConfig::sameOrigin);
+    }).sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용 X
+        .formLogin(AbstractHttpConfigurer::disable) // 화면 없으니 설정
+        .httpBasic(AbstractHttpConfigurer::disable).authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().permitAll()) // 위 3개의 url을 제외한 나머지는 다 접근 가능 설정
+        .addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
 

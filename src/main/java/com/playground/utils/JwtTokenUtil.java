@@ -73,9 +73,7 @@ public class JwtTokenUtil {
    */
   public static String getUsernameFromToken(String token) {
     try {
-      String name = String.valueOf(getAllClaims(token).get("name"));
-      log.debug("getUsernameFromToken subject = {}", name);
-      return name;
+      return String.valueOf(getAllClaims(token).get("name"));
     } catch (NullPointerException e) {
       throw new CustomException(MessageUtils.NOT_VERIFICATION_TOKEN);
     }
@@ -85,9 +83,7 @@ public class JwtTokenUtil {
    * Claim 에서 user_id 가져오기
    */
   public static String getUserIdFromToken(String token) {
-    String id = String.valueOf(getAllClaims(token).get(USER_ID));
-    log.debug("getUserIdFromToken subject = {}", id);
-    return id;
+    return String.valueOf(getAllClaims(token).get(USER_ID));
   }
 
   /**
@@ -111,7 +107,9 @@ public class JwtTokenUtil {
 
     if (StringUtils.hasText(token) && token.startsWith(PlaygroundConstants.TOKEN_PREFIX)) {
       authorization = authorization.replaceAll(PlaygroundConstants.TOKEN_PREFIX, "");
+
       log.debug(">>> authorization : {}", authorization);
+
       Claims claims = getAllClaims(authorization);
 
       rs.setName((String) claims.get("name"));
