@@ -21,7 +21,8 @@ public class SecurityConfig {
     http.csrf().disable().headers().xssProtection().and().frameOptions().sameOrigin().and().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 사용 X
         .and().formLogin().disable() // 화면 없으니 설정
-        .addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class);
+        .httpBasic().disable().authorizeRequests().antMatchers("/szs/me", "/szs/scrap", "szs/refund").authenticated().anyRequest().permitAll() // 위 3개의 url을 제외한 나머지는 다 접근 가능 설정
+        .and().addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
 
