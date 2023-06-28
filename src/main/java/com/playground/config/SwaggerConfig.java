@@ -1,6 +1,6 @@
 package com.playground.config;
 
-import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +27,7 @@ public class SwaggerConfig {
 
     Info info = new Info().version("v1.0.0").title("Playground API").description("playground 프로젝트 API 명세서");
 
-    // SecuritySecheme명
+    // SecurityScheme 명
     String jwtSchemeName = "jwtAuth";
 
     // API 요청헤더에 인증정보 포함
@@ -45,7 +45,7 @@ public class SwaggerConfig {
   public OperationCustomizer operationCustomizer() {
     return (Operation operation, HandlerMethod handlerMethod) -> {
       Parameter param = new Parameter().in(ParameterIn.HEADER.toString()) // 전역 헤더 설정
-          .schema(new StringSchema()._default("1234567").name("AppID")) // default값 설정
+          .schema(new StringSchema()._default("1234567").name("AppID")) // default 값 설정
           .name("AppID").description("TEST AppID").required(true);
 
       operation.addParametersItem(param);
