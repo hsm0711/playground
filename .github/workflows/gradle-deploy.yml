@@ -32,10 +32,14 @@ jobs:
       DEPLOY_ID: ${{ github.event.deployment.id}}
     
     steps:
-    - run: echo ${{ github.event.deployment }}
-    - run: echo ${{ github.event }}
-    - run: echo ${{ github }}
     - run: echo ${{ env }}
+    - run: echo ${{ github }}
+    - run: echo ${{ github.ref }}
+    - run: echo ${{ github.event }}
+    - run: echo ${{ github.event.deployment }}
+    - run: echo ${{ github.event.deployment_status }}
+    - run: echo ${{ github.event.deployment_status.state }}
+    
     - name: In-progress Status
       uses: chrnorm/deployment-status@v2
       with:
