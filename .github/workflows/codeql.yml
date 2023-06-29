@@ -38,7 +38,6 @@ jobs:
         # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
 
     steps:
-    - run: env
     - name: Checkout repository
       uses: actions/checkout@v3
 
