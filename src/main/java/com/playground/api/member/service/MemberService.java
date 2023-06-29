@@ -48,7 +48,7 @@ public class MemberService {
     MemberEntity rstMember = memberRepository.findById(req.getUserId()).orElseThrow(() -> new CustomException(MessageUtils.INVALID_USER));
 
     if (!CryptoUtil.comparePassword(req.getPassword(), rstMember.getPassword())) {
-      throw new CustomException(MessageUtils.INVALID_PASSWORD);
+      throw new CustomException(MessageUtils.INVALID_PASSWD);
     }
 
     log.debug(">>> rstMember : {}", rstMember);
