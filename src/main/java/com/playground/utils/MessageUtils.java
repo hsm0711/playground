@@ -12,7 +12,7 @@ public class MessageUtils {
   public static final String DUPLICATE_USER = "이미 가입 되어있는 회원입니다.";
   public static final String INVALID_USER_ID = "ID를 확인해주세요.";
   public static final String INVALID_NAME = "이름을 확인해주세요.";
-  public static final String INVALID_PASSWORD = "비밀번호를 확인해주세요.";
+  public static final String INVALID_PASSWD = "비밀번호를 확인해주세요.";
   public static final String INVALID_EMAIL = "이메일을 확인해주세요.";
   public static final String INVALID_TOKEN = "토큰을 확인해주세요.";
   public static final String NOT_EXIST_DATA = "데이터가 존재하지 않습니다.";
