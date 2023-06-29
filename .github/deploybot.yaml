@@ -2,10 +2,15 @@
 # Docs https://docs.deploybot.app/config/
 # Ordered list of Github Deployment environments
 deployments:
+- run: echo ${{ github.ref }}
+- run: echo ${{ github.event }}
+- run: echo ${{ github.event.deployment }}
+- run: echo ${{ github.event.deployment_status }}
 - name: development
   description: Development deploy
   on_push: true
   on_push_branch: master
+    
 # Automatically trigger deploy on default branch passing
 # on_push: true
 #- name: staging
