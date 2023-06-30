@@ -30,7 +30,7 @@ jobs:
       SHA: ${{ github.event.deployment.sha }}
       ENVIRONMENT: ${{ github.event.deployment.environment }}
       DEPLOY_ID: ${{ github.event.deployment.id}}
-      REF: ${{ github.event.deployment.ref }}
+      GITHUB_REF: ${{ github.event.deployment.ref }}
     
     steps:
     - name: In-progress Status
@@ -126,7 +126,7 @@ jobs:
       SHA: ${{ github.event.deployment.sha }}
       ENVIRONMENT: ${{ github.event.deployment.environment }}
       DEPLOY_ID: ${{ github.event.deployment.id}}
-      REF: ${{ github.event.deployment.ref }}
+      GITHUB_REF: ${{ github.event.deployment.ref }}
     
     steps:
     - name: Checkout
@@ -194,7 +194,7 @@ jobs:
       SHA: ${{ github.event.deployment.sha }}
       ENVIRONMENT: ${{ github.event.deployment.environment }}
       DEPLOY_ID: ${{ github.event.deployment.id}}
-      REF: ${{ github.event.deployment.ref }}
+      GITHUB_REF: ${{ github.event.deployment.ref }}
 
     steps:
     - id: file-name
