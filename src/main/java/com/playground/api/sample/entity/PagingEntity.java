@@ -1,11 +1,11 @@
 package com.playground.api.sample.entity;
 
+import com.playground.annotation.Secret;
+import com.playground.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import com.playground.annotation.Secret;
-import com.playground.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
