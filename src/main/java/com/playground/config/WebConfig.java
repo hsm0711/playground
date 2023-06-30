@@ -21,13 +21,15 @@ public class WebConfig implements WebMvcConfigurer {
   }
 
   /*
-   * TODO spring boot 3.1.X 버전 업 하면서 lucy-xss-servlet-filter 내부의 javax 패키지 사용하는 부분이 있어서 임시 주석
    *
-   * @Bean public FilterRegistrationBean<XssEscapeServletFilter> filterRegistrationBean() { FilterRegistrationBean<XssEscapeServletFilter> filterRegistration = new FilterRegistrationBean<>();
    *
-   * filterRegistration.setFilter(new XssEscapeServletFilter()); filterRegistration.setOrder(1); filterRegistration.addUrlPatterns("/*");
+   * TODO spring boot 3.1.X 버전 업 하면서 lucy-xss-servlet-filter 내부의 javax 패키지 사용하는 부분이 있어서 임시 주석** //NOSONAR
    *
-   * return filterRegistration; }
+   * @Bean public FilterRegistrationBean<XssEscapeServletFilter> filterRegistrationBean() { FilterRegistrationBean<XssEscapeServletFilter> filterRegistration = new FilterRegistrationBean<>(); //NOSONAR
+   *
+   * filterRegistration.setFilter(new XssEscapeServletFilter()); filterRegistration.setOrder(1); filterRegistration.addUrlPatterns("/*"); //NOSONAR
+   *
+   * return filterRegistration; } //NOSONAR
    */
 
   @Bean

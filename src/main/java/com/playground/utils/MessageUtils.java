@@ -18,4 +18,6 @@ public class MessageUtils {
   public static final String NOT_EXIST_DATA = "데이터가 존재하지 않습니다.";
   public static final String NOT_VERIFICATION_TOKEN = "토큰이 유효하지 않습니다.";
   public static final String INVALID_TOKEN_BEARER = "토큰이 Bearer 방식이 아닙니다.";
+
+  public static final String FAIL_EXCEL_DOWNLOAD = "엑셀 다운로드 처리 중 오류가 발생했습니다.";
 }

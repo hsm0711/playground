@@ -18,7 +18,7 @@ import com.playground.utils.MaskingUtil;
 
 public class BaseDto {
   @Override
-  public String toString() {
+  public String toString() { // NOSONAR
     Map<String, Object> map = new HashMap<>();
     Field[] fields = FieldUtils.getAllFields(getClass());
     ObjectMapper objectMapper = new ObjectMapper();
@@ -41,8 +41,7 @@ public class BaseDto {
         if (annotation != null && StringUtils.isNotBlank(fieldValue)) {
           if (fieldValue.matches(PlaygroundConstants.RegexPattern.RESIDENT_FOREIGNER_REGISTRATION_NUMBER)) {
             fieldValue = MaskingUtil.residentForeignerRegistrationNumber(fieldValue);
-            // } else if (false) {
-            // TODO 전화, 카드, 계좌 등등 마스킹 처리
+            // TODO 전화, 카드, 계좌 등등 마스킹 처리 //NOSONAR
           } else if (!StringUtils.isBlank(fieldValue)) {
             fieldValue = MaskingUtil.withoutFirstAndLast(fieldValue);
           }

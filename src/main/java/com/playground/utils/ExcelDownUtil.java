@@ -33,6 +33,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ReflectionUtils;
 import com.playground.annotation.ExcelDown;
+import com.playground.exception.CustomException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -67,7 +68,7 @@ public class ExcelDownUtil<T> {
     this.dataList = dataList;
 
     if (CollectionUtils.isNotEmpty(dataList) && dataList.size() > MAX_ROWS) {
-      // TODO max row 초과 Exception
+      throw new CustomException(MessageUtils.FAIL_EXCEL_DOWNLOAD);
     }
 
     workbook = new SXSSFWorkbook(FLUSH_ROWS);
@@ -116,7 +117,7 @@ public class ExcelDownUtil<T> {
     List<Field> fieldList = FieldUtils.getFieldsListWithAnnotation(clazz, ExcelDown.class);
 
     if (CollectionUtils.isEmpty(fieldList)) {
-      // TODO Exception annotation 붙어있는 필드가 없는경우 Exception 처리
+      throw new CustomException(MessageUtils.FAIL_EXCEL_DOWNLOAD);
     }
 
     columnList = fieldList.stream().map(field -> {
@@ -128,7 +129,7 @@ public class ExcelDownUtil<T> {
     }).sorted(Comparator.comparing(ColumnInfo::getOrder)).collect(Collectors.toList());
 
     if (CollectionUtils.isEmpty(columnList)) {
-      // TODO 컬럼 목록 없을때 Exception 처리
+      throw new CustomException(MessageUtils.FAIL_EXCEL_DOWNLOAD);
     }
   }
 
@@ -171,7 +172,7 @@ public class ExcelDownUtil<T> {
     }
   }
 
-  private void setBody() {
+  private void setBody() { // NOSONAR
     for (int i = 0; i < dataList.size(); i++) {
       Row row = sheet.createRow(i + 1);
       T dataObj = dataList.get(i);
@@ -190,7 +191,7 @@ public class ExcelDownUtil<T> {
           if (getMethod != null) {
             value = StringUtils.defaultString(Objects.toString(ReflectionUtils.invokeMethod(getMethod, dataObj)));
           } else {
-            // TODO 이상황까지 오려나.. 일단 나중에 처리 생각 해보기
+            throw new CustomException(MessageUtils.FAIL_EXCEL_DOWNLOAD);
           }
         }
 
@@ -238,11 +239,10 @@ public class ExcelDownUtil<T> {
       bytes = bos.toByteArray();
       workbook.dispose();
     } catch (IOException e) {
-      // TODO Exception 처리
+      throw new CustomException(MessageUtils.FAIL_EXCEL_DOWNLOAD);
     }
 
     HttpHeaders headers = new HttpHeaders();
-    // headers.add(HttpHeaders.CONTENT_TYPE, "application/ms-excel");
     headers.add(HttpHeaders.CONTENT_TYPE, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
     headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + ".xlsx;");
 

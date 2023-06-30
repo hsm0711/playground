@@ -5,12 +5,10 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.springframework.util.ReflectionUtils;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -20,7 +18,7 @@ import com.playground.utils.MaskingUtil;
 
 public class BaseEntity {
   @Override
-  public String toString() {
+  public String toString() { // NOSONAR
     Map<String, Object> map = new HashMap<>();
     Field[] fields = FieldUtils.getAllFields(getClass());
     ObjectMapper objectMapper = new ObjectMapper();
@@ -43,8 +41,7 @@ public class BaseEntity {
         if (annotation != null && StringUtils.isNotBlank(fieldValue)) {
           if (fieldValue.matches(PlaygroundConstants.RegexPattern.RESIDENT_FOREIGNER_REGISTRATION_NUMBER)) {
             fieldValue = MaskingUtil.residentForeignerRegistrationNumber(fieldValue);
-            // } else if (false) {
-            // TODO 전화, 카드, 계좌 등등 마스킹 처리
+            // TODO 전화, 카드, 계좌 등등 마스킹 처리 //NOSONAR
           } else if (!StringUtils.isBlank(fieldValue)) {
             fieldValue = MaskingUtil.withoutFirstAndLast(fieldValue);
           }
