@@ -14,20 +14,20 @@ import lombok.Setter;
 public class SignUpRequest extends BaseDto {
 
   @NotBlank(message = "ID는 필수 값 입니다.")
-  @Schema(description = "사용자ID", defaultValue = "", example = "hong12")
+  @Schema(description = "사용자ID", example = "hong12")
   private String userId;
 
   @NotBlank(message = "비밀번호는 필수 값 입니다.")
   @Secret
-  @Schema(description = "비밀번호", defaultValue = "", example = "1111")
+  @Schema(description = "비밀번호", example = "1111")
   private String password;
 
   @NotBlank(message = "이름은 필수 값 입니다.")
-  @Schema(description = "이름", defaultValue = "", example = "홍길동")
+  @Schema(description = "이름", example = "홍길동")
   private String name;
 
   @Email(message = "이메일 형식을 확인해 주세요.")
   @NotBlank(message = "이메일은 필수 값 입니다.")
-  @Schema(description = "이메일", defaultValue = "", example = "emailId@gmail.com")
+  @Schema(description = "이메일", example = "emailId@gmail.com")
   private String email;
 }

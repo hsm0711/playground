@@ -17,7 +17,7 @@ public class CryptoUtil {
   private static String pwd;
   private static String salt;
 
-  private static BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+  private static final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
   private CryptoUtil() {}
 
@@ -36,7 +36,7 @@ public class CryptoUtil {
   /**
    * SHA-256 해싱
    *
-   * @param password - 해싱할 평문
+   * @param plaintext - 해싱할 평문
    *
    * @return String - 해싱된 문자열
    */
@@ -95,21 +95,16 @@ public class CryptoUtil {
     return passwordEncoder.matches(password, new String(Base64.getDecoder().decode(encodedPassword)));
   }
 
-  private static class Base64EncodingTextEncryptor implements TextEncryptor {
-    private final BytesEncryptor encryptor;
-
-    Base64EncodingTextEncryptor(BytesEncryptor encryptor) {
-      this.encryptor = encryptor;
-    }
+  private record Base64EncodingTextEncryptor(BytesEncryptor encryptor) implements TextEncryptor {
 
     @Override
-    public String encrypt(String text) {
-      return Base64.getEncoder().encodeToString(this.encryptor.encrypt(Utf8.encode(text)));
-    }
+      public String encrypt(String text) {
+        return Base64.getEncoder().encodeToString(this.encryptor.encrypt(Utf8.encode(text)));
+      }
 
-    @Override
-    public String decrypt(String encryptedText) {
-      return Utf8.decode(this.encryptor.decrypt(Base64.getDecoder().decode(encryptedText)));
+      @Override
+      public String decrypt(String encryptedText) {
+        return Utf8.decode(this.encryptor.decrypt(Base64.getDecoder().decode(encryptedText)));
+      }
     }
-  }
 }

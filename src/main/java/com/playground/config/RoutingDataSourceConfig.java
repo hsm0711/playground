@@ -16,8 +16,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import com.playground.constants.DataSourceType;
 
-@EnableJpaRepositories(basePackages = "com.playground.api", entityManagerFactoryRef = "entityManagerFactory",
-    transactionManagerRef = "transactionManager")
+@EnableJpaRepositories(basePackages = "com.playground.api")
 @Configuration
 public class RoutingDataSourceConfig {
 

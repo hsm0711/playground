@@ -78,7 +78,7 @@ public class RedisService {
     if (CollectionUtils.isEmpty(hashEntries)) {
       resultList = new ArrayList<>();
     } else {
-      resultList = hashEntries.entrySet().stream().map(entry -> modelMapper.map(entry.getValue(), RedisTemplateEntity.class)).toList();
+      resultList = hashEntries.values().stream().map(o -> modelMapper.map(o, RedisTemplateEntity.class)).toList();
     }
 
     return resultList;
