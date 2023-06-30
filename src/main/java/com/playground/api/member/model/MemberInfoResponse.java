@@ -11,16 +11,16 @@ import lombok.Setter;
 @Setter
 public class MemberInfoResponse extends BaseDto {
 
-  @Schema(description = "사용자ID", defaultValue = "", example = "test1")
+  @Schema(description = "사용자ID", example = "test1")
   private String userId;
 
   @Secret
-  @Schema(description = "비밀번호", defaultValue = "", example = "1234")
+  @Schema(description = "비밀번호", example = "1234")
   private String password;
 
-  @Schema(description = "이름", defaultValue = "", example = "홍길동")
+  @Schema(description = "이름", example = "홍길동")
   private String name;
 
-  @Schema(description = "이메일", defaultValue = "", example = "emailId@gmail.com")
+  @Schema(description = "이메일", example = "emailId@gmail.com")
   private String email;
 }

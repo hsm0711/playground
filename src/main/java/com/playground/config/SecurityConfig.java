@@ -21,7 +21,7 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-    http.csrf(csrf -> csrf.disable()).headers(headers -> {
+    http.csrf(AbstractHttpConfigurer::disable).headers(headers -> {
       headers.xssProtection(Customizer.withDefaults());
       headers.frameOptions(FrameOptionsConfig::sameOrigin);
     }).sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용 X

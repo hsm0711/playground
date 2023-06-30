@@ -19,21 +19,21 @@ public @interface ExcelDown {
 
   /**
    * Column의 width를 설정한다.
-   *
+   * <p>
    * default: -1
    */
   int width() default -1;
 
   /**
    * Column이 표시될 순서를 설정한다. 순서가 지정되지 않은 경우 order설정 된 Column들 뒤에 VO/DTO에 선언한 순서로 표시된다.
-   *
+   * <p>
    * default: Integer.MAX_VALUE(2147483647)
    */
   int order() default Integer.MAX_VALUE;
 
   /**
    * 해당 Cell Data의 Format을 설정한다. ex: "#,##", "yyyy-MM-dd"
-   *
+   * <p>
    * default: Empty String
    */
   String dataFormat() default "";

@@ -16,7 +16,7 @@ class RoutingDataSourceConfigTest {
 
   private static final String DETERMINE_CURRENT_LOOKUP_KEY = "determineCurrentLookupKey";
 
-  @Transactional(readOnly = false)
+  @Transactional
   @DisplayName("MasterDataSource Replication 설정 테스트")
   @Test
   void testMasterDataSourceReplication() throws Exception {

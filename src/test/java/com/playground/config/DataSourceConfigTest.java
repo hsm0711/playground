@@ -29,8 +29,7 @@ class DataSourceConfigTest {
     String username = environment.getProperty("spring.datasource.master.hikari.username");
 
     // When
-    if (masterDataSource instanceof DecoratedDataSource) {
-      DecoratedDataSource decoratedDataSource = (DecoratedDataSource) masterDataSource;
+    if (masterDataSource instanceof DecoratedDataSource decoratedDataSource) {
 
       try (HikariDataSource hikariDataSource = (HikariDataSource) decoratedDataSource.getRealDataSource()) {
 
@@ -64,8 +63,7 @@ class DataSourceConfigTest {
     String username = environment.getProperty("spring.datasource.slave.hikari.username");
 
     // When
-    if (slaveDataSource instanceof DecoratedDataSource) {
-      DecoratedDataSource decoratedDataSource = (DecoratedDataSource) slaveDataSource;
+    if (slaveDataSource instanceof DecoratedDataSource decoratedDataSource) {
 
       try (HikariDataSource hikariDataSource = (HikariDataSource) decoratedDataSource.getRealDataSource()) {
 

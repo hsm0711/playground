@@ -5,7 +5,10 @@ import com.fasterxml.jackson.core.SerializableString;
 import com.fasterxml.jackson.core.io.CharacterEscapes;
 import com.fasterxml.jackson.core.io.SerializedString;
 
+import java.io.Serial;
+
 public class HtmlCharacterEscapes extends CharacterEscapes {
+  @Serial
   private static final long serialVersionUID = -6642689576115391499L;
 
   private final int[] asciiEscapes;

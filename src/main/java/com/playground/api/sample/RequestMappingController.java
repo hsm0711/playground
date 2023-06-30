@@ -360,12 +360,10 @@ public class RequestMappingController {
       stringBuilder.append(">");
 
       return stringBuilder.toString();
-    } else if (type instanceof TypeVariable) {
-      TypeVariable<?> typeVariable = (TypeVariable<?>) type;
+    } else if (type instanceof TypeVariable<?> typeVariable) {
 
       return typeVariable.getName();
-    } else if (type instanceof Class) {
-      Class<?> clzz = (Class<?>) type;
+    } else if (type instanceof Class<?> clzz) {
 
       return isSimple ? clzz.getSimpleName() : clzz.getName();
     } else {

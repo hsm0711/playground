@@ -13,11 +13,11 @@ import lombok.Setter;
 public class SignInRequest extends BaseDto {
 
   @NotBlank(message = "ID는 필수 값 입니다.")
-  @Schema(description = "사용자ID", defaultValue = "", example = "hong12")
+  @Schema(description = "사용자ID", example = "hong12")
   private String userId;
 
   @NotBlank(message = "비밀번호는 필수 값 입니다.")
   @Secret
-  @Schema(description = "비밀번호", defaultValue = "", example = "1111")
+  @Schema(description = "비밀번호", example = "1111")
   private String password;
 }

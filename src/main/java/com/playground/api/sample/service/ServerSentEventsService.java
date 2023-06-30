@@ -49,7 +49,7 @@ public class ServerSentEventsService {
     if (StringUtils.isNotBlank(lastEventId)) {
       Map<String, ServerSentEventsEmitterEntity> events = sseRepository.getRetryMap(userId, lastEventId);
 
-      events.entrySet().stream().forEach(entry -> sendToClient(entry.getValue().getSseEmitter(), entry.getKey(), entry.getValue().getData()));
+      events.forEach((key, value) -> sendToClient(value.getSseEmitter(), key, value.getData()));
     }
 
     return sseEmitter;

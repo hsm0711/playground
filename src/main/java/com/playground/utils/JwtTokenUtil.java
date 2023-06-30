@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class JwtTokenUtil {
   private static final String USER_ID = "userId";
 
-  private static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+  private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
   // 토큰 생성
   public static String createToken(String userId, String name) {
@@ -37,7 +37,7 @@ public class JwtTokenUtil {
     payloads.put("name", name);
 
     // 토큰 유효 시간 (30분)
-    Long expiredTime = 1000 * 60 * 30L;
+    long expiredTime = 1000 * 60 * 30L;
 
     Date ext = new Date(); // 토큰 만료 시간
     ext.setTime(ext.getTime() + expiredTime);

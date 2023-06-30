@@ -181,7 +181,7 @@ public class ExcelDownUtil<T> {
         Cell cell = row.createCell(j);
         ColumnInfo columnInfo = columnList.get(j);
 
-        String value = "";
+        String value;
 
         try {
           value = StringUtils.defaultString(Objects.toString(FieldUtils.readField(dataObj, columnInfo.getKey(), true)));
@@ -232,9 +232,9 @@ public class ExcelDownUtil<T> {
   public ResponseEntity<byte[]> download() {
     makeExcel();
 
-    byte[] bytes = null;
+    byte[] bytes;
 
-    try (ByteArrayOutputStream bos = new ByteArrayOutputStream();) {
+    try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
       workbook.write(bos);
       bytes = bos.toByteArray();
       workbook.dispose();

@@ -2,7 +2,6 @@ package com.playground.config;
 
 import java.util.Arrays;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.function.Predicate;
 import org.hibernate.engine.jdbc.internal.FormatStyle;
 import org.springframework.context.annotation.Configuration;
@@ -26,12 +25,11 @@ public class P6SpySqlFormatConfig implements MessageFormattingStrategy {
   }
 
   private String sqlFormatToUpper(final String sql, final String category, final String message) {
-    if (Objects.isNull(sql.trim()) || sql.trim().isEmpty()) {
+    if (sql.trim().isEmpty()) {
       return "";
     }
 
-    return new StringBuilder().append(NEW_LINE).append(SEPARATOR).append(NEW_LINE).append(" Query").append(NEW_LINE).append(SEPARATOR)
-        .append(sqlFormatToUpper(sql, category)).append(";").append(message).toString();
+    return NEW_LINE + SEPARATOR + NEW_LINE + " Query" + NEW_LINE + SEPARATOR + sqlFormatToUpper(sql, category) + ";" + message;
   }
 
   private String sqlFormatToUpper(final String sql, final String category) {
@@ -54,10 +52,9 @@ public class P6SpySqlFormatConfig implements MessageFormattingStrategy {
   }
 
   private String getMessage(final int connectionId, final long elapsed, final StringBuilder callStackBuilder) {
-    return new StringBuilder().append(NEW_LINE).append(SEPARATOR).append(NEW_LINE).append(" Info").append(NEW_LINE).append(SEPARATOR).append(NEW_LINE)
-        .append(TAB).append(String.format("Connection ID : %s", connectionId)).append(NEW_LINE).append(TAB)
-        .append(String.format("Execution Time : %s ms", elapsed)).append(NEW_LINE).append(NEW_LINE).append(TAB)
-        .append(String.format("Call Stack : %s", callStackBuilder)).append(NEW_LINE).append(SEPARATOR).toString();
+    return NEW_LINE + SEPARATOR + NEW_LINE + " Info" + NEW_LINE + SEPARATOR + NEW_LINE + TAB + String.format("Connection ID : %s", connectionId)
+        + NEW_LINE + TAB + String.format("Execution Time : %s ms", elapsed) + NEW_LINE + NEW_LINE + TAB + String.format("Call Stack : %s",
+        callStackBuilder) + NEW_LINE + SEPARATOR;
   }
 
   private StringBuilder getStackBuilder() {

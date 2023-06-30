@@ -10,12 +10,12 @@ import lombok.Setter;
 @Setter
 public class SignUpResponse extends BaseDto {
 
-  @Schema(description = "사용자ID", defaultValue = "", example = "hong12")
+  @Schema(description = "사용자 ID", example = "hong12")
   private String userId;
 
-  @Schema(description = "이름", defaultValue = "", example = "홍길동")
+  @Schema(description = "이름", example = "홍길동")
   private String name;
 
-  @Schema(description = "이메일", defaultValue = "", example = "emailId@gmail.com")
+  @Schema(description = "이메일", example = "emailId@gmail.com")
   private String email;
 }
