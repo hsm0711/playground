@@ -8,7 +8,8 @@
 name: Build & Deploy
 
 on:
-  deployment
+  push: 
+    branches: master
 
 permissions:
   contents: read
@@ -17,6 +18,11 @@ permissions:
   pull-requests: write
   actions: read
   deployments: write
+  
+env:
+  SHA: ${{ github.sha }}
+  ENVIRONMENT: 'development'
+  DEPLOY_ID: ${{ github.event.deployment.id }}
 
 jobs:
   test:
@@ -26,13 +32,13 @@ jobs:
         os: [ubuntu-latest]
             
     runs-on: ${{ matrix.os }}
-    env:
-      SHA: ${{ github.event.deployment.sha }}
-      ENVIRONMENT: ${{ github.event.deployment.environment }}
-      DEPLOY_ID: ${{ github.event.deployment.id}}
-      OVERRIDE_GITHGUB_REF: ${{ github.event.deployment.ref }}
     
     steps:
+    - run: |
+        env
+        echo ${{ toJson(github) }}
+        echo ${GITHUB_SHA}
+        echo ${SHA}
     - name: In-progress Status
       uses: chrnorm/deployment-status@v2
       with:
@@ -122,11 +128,6 @@ jobs:
         os: [ubuntu-latest]
             
     runs-on: ${{ matrix.os }}
-    env:
-      SHA: ${{ github.event.deployment.sha }}
-      ENVIRONMENT: ${{ github.event.deployment.environment }}
-      DEPLOY_ID: ${{ github.event.deployment.id}}
-      OVERRIDE_GITHGUB_REF: ${{ github.event.deployment.ref }}
     
     steps:
     - name: Checkout
@@ -190,11 +191,6 @@ jobs:
         os: [ubuntu-latest]
             
     runs-on: ${{ matrix.os }}
-    env:
-      SHA: ${{ github.event.deployment.sha }}
-      ENVIRONMENT: ${{ github.event.deployment.environment }}
-      DEPLOY_ID: ${{ github.event.deployment.id}}
-      OVERRIDE_GITHGUB_REF: ${{ github.event.deployment.ref }}
 
     steps:
     - id: file-name
