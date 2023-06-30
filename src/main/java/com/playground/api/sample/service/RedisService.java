@@ -1,21 +1,21 @@
 package com.playground.api.sample.service;
 
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import org.modelmapper.ModelMapper;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import com.playground.api.sample.entity.RedisPublishEntity;
 import com.playground.api.sample.entity.RedisRepositoryEntity;
 import com.playground.api.sample.entity.RedisTemplateEntity;
 import com.playground.api.sample.repository.RedisRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -78,8 +78,7 @@ public class RedisService {
     if (CollectionUtils.isEmpty(hashEntries)) {
       resultList = new ArrayList<>();
     } else {
-      resultList =
-          hashEntries.entrySet().stream().map(entry -> modelMapper.map(entry.getValue(), RedisTemplateEntity.class)).collect(Collectors.toList());
+      resultList = hashEntries.entrySet().stream().map(entry -> modelMapper.map(entry.getValue(), RedisTemplateEntity.class)).toList();
     }
 
     return resultList;
