@@ -34,9 +34,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     steps:
-    - run: |
-        env
-        echo ${{ toJson(github) }}
     - name: In-progress Status
       uses: chrnorm/deployment-status@v2
       with:
