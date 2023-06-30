@@ -22,7 +22,7 @@ permissions:
 env:
   SHA: ${{ github.sha }}
   ENVIRONMENT: 'development'
-  DEPLOY_ID: ${{ github.event.deployment.id }}
+  DEPLOY_ID: ${{ github.run_id }}
 
 jobs:
   test:
@@ -37,8 +37,6 @@ jobs:
     - run: |
         env
         echo ${{ toJson(github) }}
-        echo ${GITHUB_SHA}
-        echo ${SHA}
     - name: In-progress Status
       uses: chrnorm/deployment-status@v2
       with:
