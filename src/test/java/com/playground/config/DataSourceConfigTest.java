@@ -1,7 +1,7 @@
 package com.playground.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import javax.sql.DataSource;
+import jakarta.sql.DataSource;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
