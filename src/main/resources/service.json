@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "august-cascade-385602",
+  "private_key_id": "51d8eb5929ba702adb050dcaf917ad3627d521ad",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCgpY+kx96Zzdxr\nLGYbj+8yRI9P41ODxPfdjskqrHLZCmgbwysvedzX+ia0tCbbHYx78dgXq86Soi80\nd5lPT4L0dM4YFW64pAptRNtep2BJFkU6kHAQuTcoay5PVV0PzlcPY13JjBBYXoHH\nfh/neqDyIvX3cSo23lyIeNCG/TXrkWZf+NWoH2DI8TK1HyqJG78NCgX/pKBigUjM\ncutAM/pKMh723MALBMha3r9Ko2TyxMX9O+hMXXGj/MUByLKURGd5iuDcbwGl+vIj\n/bp++xKflhP9Wj9MO1Nfkm/i81bxfa8FQvXv26ZlxFbcPpN5y72uvUXVAwNpRior\ndUFtNEulAgMBAAECggEABVOYALGz2sutnEwbkpxiJPuK+O4jrcHRKiJ63xRatoGW\n1BzTiL50qSCdOe6jPy6qos1xCc/jiI8iG44/ohaT1AEveDL1ud+OjPL0hx3rnmDD\nqN5zKMrLXma3YWAGNujzkAoOaQlg3V081l2DN0ykm4K3Px4cdTdIQCopV+B7cjUR\nhuaDH4JiJMVcCRdmL3RfWNOKsY7aL7uKhoQM0gPFvFFOqm1IkyXesZff49Ch+KXc\n4dLSP7m6bAm0F1YhNusgJXVzauNoU+6rl/M1KBdw7CvH20a+a7gUkei0BkeLzVrS\nC0oD+VJ+ktVAH91gQT+Em1yiN6JWKozzk6zw75ZMHQKBgQDT0qj3UofwJKLfy9Ui\nV55m7PIgkuM4oQ/FMtyZ3fOJdJLrypUEY5Y1UVHG2MeLu6cM4awqKbjCG+wK5w5l\neuib0iSpcBEw5wDOprfuz07B6NEvH+I0IeXWd0TmaBO0lx7xE8+BZH4k0MIE9xaj\nBWIAEy26rjo8KneHaSUYX5Sm/wKBgQDCJpPXf7UrO94TAWOQZfeJOn7rEWOKju9s\nCAZQq1dxabQN29KDLCachnrFWh4VJbMpLnIp/AEmE00l5TdZlMhogd2SczhTl6ED\nQRhtKvL/0xQPCMCIOXjqHjo5Xx8BjgPdJlcmZZxtwGI4ycPnqc64cC2xhp2u/Wi3\nLxupwboRWwKBgGpijBAjODjo/ZBu3C2yWdERwg2QGGSxp6z//YGd0pm/naalCTC6\nH4/JtsuqxpWseprioMhQSgXbZjKXl0hqcXcJFPawXUH1Uxd27jwXjFOhbaZAWiia\nucd8AXPC49q4Z4bmzzoKUbyFyFwcCRd5NZ4aA8aViJP9NCkjKslR/+PbAoGBAJ2p\nfj1t881cHIcKhbPpWg8SdaamxFLsp/juu1IfEi+DSzhF3rmuzNwnSOOivvMlXkx+\n7y6w+q3U1r2DWmNgsy5K54faEU+wvoxJ/HAKhLLC0nMzBEabhVl5moakfCVjEjgw\nvmzr7xAhPqInFvO1ra2RS0nyq3JDTxoTIz/DljopAoGAZgPcSHlZn9jrzZJKuFn3\nAD/6RU2VfrF5UvVyRAkVZqjnTbVAMXOPwJ0zzIU8O7vOstRmIspyhiGYnXqfpLw9\nvpPQ/Es49x777lACQMA+0iMuyV5+oqGEN3E0+diOqqZO4kw1yALnq0Gs/gK6pOdr\nc54C1dD2PsAhUOssvfN0Jk8=\n-----END PRIVATE KEY-----\n",
+  "client_email": "secret-manager@august-cascade-385602.iam.gserviceaccount.com",
+  "client_id": "108945589872509208020",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/secret-manager%40august-cascade-385602.iam.gserviceaccount.com"
+}
