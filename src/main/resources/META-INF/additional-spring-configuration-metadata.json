@@ -10,6 +10,11 @@
     "description": "암호화 유틸 salt"
   },
   {
+    "name": "CLIENT_URL",
+    "type": "java.lang.String",
+    "description": "Front Server Url"
+  },
+  {
     "name": "spring.datasource.master.hikari.read-only",
     "type": "java.lang.String",
     "description": "Reflication 설정을 위한 master hikari.read-only'"
@@ -58,5 +63,20 @@
     "name": "spring.datasource.slave.hikari.driver-class-name",
     "type": "java.lang.String",
     "description": "Reflication 설정을 위한 slave hikari.driver-class-name'"
+  },
+  {
+    "name": "openai-key",
+    "type": "java.lang.String",
+    "description": "A description for 'openai-key'"
+  },
+  {
+    "name": "spring.cloud.gcp.storage.bucket",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.cloud.gcp.storage.bucket'"
+  },
+  {
+    "name": "profiler.tomcat.excludeurl",
+    "type": "java.lang.String",
+    "description": "A description for 'profiler.tomcat.excludeurl'"
   }
 ]}

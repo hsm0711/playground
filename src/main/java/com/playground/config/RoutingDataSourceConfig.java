@@ -5,7 +5,9 @@ import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
@@ -16,7 +18,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import com.playground.constants.DataSourceType;
 
-@EnableJpaRepositories(basePackages = "com.playground.api")
+@EnableJpaRepositories(basePackages = "com.playground.api.*.repository",
+    excludeFilters = @ComponentScan.Filter(type = FilterType.ASPECTJ, pattern = "com.playground.api.*.repository.redis.*"))
 @Configuration
 public class RoutingDataSourceConfig {
 
@@ -28,7 +31,7 @@ public class RoutingDataSourceConfig {
   private static final String TRANSACTION_MANAGER = "transactionManager";
 
   @Bean(ROUTING_DATA_SOURCE)
-  public DataSource routingDataSource(@Qualifier(MASTER_DATA_SOURCE) final DataSource masterDataSource,
+  DataSource routingDataSource(@Qualifier(MASTER_DATA_SOURCE) final DataSource masterDataSource,
       @Qualifier(SLAVE_DATA_SOURCE) final DataSource slaveDataSource) {
     Map<Object, Object> dataSourceMap = new HashMap<>();
 
@@ -45,12 +48,12 @@ public class RoutingDataSourceConfig {
 
   @Primary
   @Bean(DATA_SOURCE)
-  public DataSource dataSource(@Qualifier(ROUTING_DATA_SOURCE) DataSource routingDataSource) {
+  DataSource dataSource(@Qualifier(ROUTING_DATA_SOURCE) DataSource routingDataSource) {
     return new LazyConnectionDataSourceProxy(routingDataSource);
   }
 
   @Bean(ENTITY_MANAGER_FACTORY)
-  public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier(DATA_SOURCE) DataSource dataSource) {
+  LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier(DATA_SOURCE) DataSource dataSource) {
     LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
 
     entityManagerFactory.setDataSource(dataSource);
@@ -72,7 +75,7 @@ public class RoutingDataSourceConfig {
   }
 
   @Bean(TRANSACTION_MANAGER)
-  public PlatformTransactionManager platformTransactionManager(
+  PlatformTransactionManager platformTransactionManager(
       @Qualifier(ENTITY_MANAGER_FACTORY) LocalContainerEntityManagerFactoryBean entityManagerFactory) {
     JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
 
