@@ -2,10 +2,6 @@ package com.playground.filter;
 
 import java.io.IOException;
 import java.util.List;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.MDC;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,12 +9,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 import com.google.common.net.HttpHeaders;
+import com.playground.constants.MessageCode;
 import com.playground.constants.PlaygroundConstants;
-import com.playground.exception.CustomException;
+import com.playground.exception.BizException;
+import com.playground.model.LoginMemberDto;
 import com.playground.utils.JwtTokenUtil;
-import com.playground.utils.MessageUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -27,7 +28,7 @@ public class JwtFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
 
-    String username;
+    String userName;
     String token;
     String userId = "";
 
@@ -37,17 +38,19 @@ public class JwtFilter extends OncePerRequestFilter {
 
     if (url.matches("^/\\w+/api/.*") && authorizationHeader != null && authorizationHeader.startsWith(PlaygroundConstants.TOKEN_PREFIX)) { // Bearer 토큰 파싱
       token = authorizationHeader.substring(7); // jwt token 파싱
-      username = JwtTokenUtil.getUsernameFromToken(token); // username 얻어오기
+      userName = JwtTokenUtil.getUsernameFromToken(token); // username 얻어오기
       userId = JwtTokenUtil.getUserIdFromToken(token);
 
       // 현재 SecurityContextHolder 에 인증객체가 있는지 확인
-      if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+      if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
         // 토큰 유효여부 확인
         log.debug(">>> JWT Filter token = {}", token);
         if (Boolean.TRUE.equals(JwtTokenUtil.isValidToken(token))) {
+          LoginMemberDto userDto = LoginMemberDto.builder().mberId(userId).mberNm(userName).build();
+
           UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-              new UsernamePasswordAuthenticationToken(username, null, List.of(new SimpleGrantedAuthority("USER")));
+              new UsernamePasswordAuthenticationToken(userDto, null, List.of(new SimpleGrantedAuthority("USER")));
 
           usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
@@ -59,7 +62,7 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     try {
-      MDC.put("userId", userId);
+      MDC.put("mberId", userId);
       filterChain.doFilter(request, response);
     } finally {
       MDC.clear();
@@ -71,15 +74,15 @@ public class JwtFilter extends OncePerRequestFilter {
     String token = extractToken(authorizationHeader);
 
     try {
-      return Jwts.parserBuilder().setSigningKey(JwtTokenUtil.getKey()).build().parseClaimsJws(token).getBody();
+      return Jwts.parser().verifyWith(JwtTokenUtil.getKey()).build().parseSignedClaims(token).getPayload();
     } catch (Exception e) {
-      throw new CustomException(MessageUtils.NOT_VERIFICATION_TOKEN);
+      throw new BizException(MessageCode.INVALID_TOKEN);
     }
   }
 
   private void validationAuthorizationHeader(String header) {
     if (header == null || !header.startsWith(PlaygroundConstants.TOKEN_PREFIX)) {
-      throw new CustomException(MessageUtils.INVALID_TOKEN_BEARER);
+      throw new BizException(MessageCode.INVALID_TOKEN);
     }
   }
 

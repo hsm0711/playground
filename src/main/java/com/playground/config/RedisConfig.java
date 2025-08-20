@@ -23,7 +23,7 @@ import com.playground.listener.RedisSeverSentEventsMessageSubscribeListener;
 import com.playground.listener.RedisWebSocketMessageSubscribeListener;
 
 @Configuration
-@EnableRedisRepositories
+@EnableRedisRepositories(basePackages = "com.playground.api.*.repository.redis")
 public class RedisConfig {
 
   @Value("${spring.data.redis.host}")
@@ -36,7 +36,7 @@ public class RedisConfig {
   private String redisPassword;
 
   @Bean
-  public RedisConnectionFactory redisConnectionFactory() {
+  RedisConnectionFactory redisConnectionFactory() {
     RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
 
     redisStandaloneConfiguration.setHostName(redisHost);
@@ -47,11 +47,10 @@ public class RedisConfig {
   }
 
   @Bean
-  public RedisTemplate<String, Object> redisTemplate() {
+  RedisTemplate<String, Object> redisTemplate() {
     RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
     StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
     GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer(objectMapper());
-
 
     redisTemplate.setConnectionFactory(redisConnectionFactory());
     redisTemplate.setKeySerializer(stringRedisSerializer);
@@ -63,35 +62,16 @@ public class RedisConfig {
   }
 
   @Bean
-  public RedisMessageListenerContainer redisContainer(MessageListenerAdapter websocketMessageListener,
-      MessageListenerAdapter serverSentEventsMessageListener) {
+  RedisMessageListenerContainer redisContainer(RedisWebSocketMessageSubscribeListener redisWebSocketMessageSubscribeListener,
+      RedisSeverSentEventsMessageSubscribeListener redisSeverSentEventsMessageSubscribeListener) {
     RedisMessageListenerContainer container = new RedisMessageListenerContainer();
     container.setConnectionFactory(redisConnectionFactory());
-    container.addMessageListener(websocketMessageListener, webSocketTopic());
-    container.addMessageListener(serverSentEventsMessageListener, serverSentEventsTopic());
+    container.addMessageListener(new MessageListenerAdapter(redisWebSocketMessageSubscribeListener),
+        new ChannelTopic(RedisSubscibeChannel.WEBSOCKET_TOPIC.name()));
+    container.addMessageListener(new MessageListenerAdapter(redisSeverSentEventsMessageSubscribeListener),
+        new ChannelTopic(RedisSubscibeChannel.SSE_TOPIC.name()));
 
     return container;
-  }
-
-  @Bean
-  public MessageListenerAdapter websocketMessageListener(RedisWebSocketMessageSubscribeListener redisWebSocketMessageSubscribeListener) {
-    return new MessageListenerAdapter(redisWebSocketMessageSubscribeListener);
-  }
-
-  @Bean
-  public MessageListenerAdapter serverSentEventsMessageListener(
-      RedisSeverSentEventsMessageSubscribeListener redisSeverSentEventsMessageSubscribeListener) {
-    return new MessageListenerAdapter(redisSeverSentEventsMessageSubscribeListener);
-  }
-
-  @Bean
-  public ChannelTopic webSocketTopic() {
-    return new ChannelTopic(RedisSubscibeChannel.WEBSOCKET_TOPIC.name());
-  }
-
-  @Bean
-  public ChannelTopic serverSentEventsTopic() {
-    return new ChannelTopic(RedisSubscibeChannel.SSE_TOPIC.name());
   }
 
   private ObjectMapper objectMapper() {

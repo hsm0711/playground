@@ -1,55 +1,90 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.8.0'
+    }
+}
+
 plugins {
+	id 'base'
 	id 'java'
-	id 'org.springframework.boot' version '3.2.2'
-	id 'io.spring.dependency-management' version '1.1.4'
+	id 'org.springframework.boot' version '3.3.2'
+	id 'io.spring.dependency-management' version '1.1.3'
+	id 'jacoco'
 }
 
 group = 'com.playground'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+version = '0.0.1'
+
+java {
+    sourceCompatibility JavaVersion.VERSION_17
+}
 
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	querydsl {
+		extendsFrom compileClasspath
+	}
 }
 
 repositories {
 	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
 }
 
 ext {
-	set('springCloudGcpVersion', "3.4.9")
+	set('springCloudGcpVersion', '5.3.0')
 	set('snakeyaml.version', '2.0')
 	set('guava.version', '32.0.1-jre')
+	set('springBootAdminVersion', "3.3.2")
 }
 
-bootJar {
-    exclude('**/test/**')
-    archivesBaseName = 'playground'
-    archiveFileName = 'playground.jar'
-    archiveVersion = "0.0.1"
+base {
+    archivesName = 'playground-api'
 }
 
 jar {
-    enabled = false
+    enabled false
+}
+
+bootJar {
+	archivesBaseName = 'playground-api'
+	archiveFileName = 'playground-api.jar'
+	archiveVersion = "0.0.0"
+}
+
+springBoot {
+    buildInfo()
 }
 
 dependencies {
 	implementation 'com.auth0:java-jwt:4.4.0'
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
-	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1'
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
 	implementation 'com.google.cloud:spring-cloud-gcp-starter'
 	implementation 'com.google.cloud:spring-cloud-gcp-starter-secretmanager'
+	implementation 'com.google.cloud:spring-cloud-gcp-starter-storage'
 	// implementation 'com.navercorp.lucy:lucy-xss-servlet:2.0.1' // spring boot 3.1.X 버전 업 하면서 lucy-xss-servlet-filter 내부의 javax 패키지 사용하는 부분이 있어서 임시 주석
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	implementation 'de.codecentric:spring-boot-admin-starter-client'
+	implementation 'io.hypersistence:hypersistence-utils-hibernate-63:3.7.4'
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
 	implementation 'org.apache.commons:commons-text:1.11.0'
-	implementation 'org.apache.poi:poi:5.2.5'
-	implementation 'org.apache.poi:poi-ooxml:5.2.5'
+	implementation 'org.apache.commons:commons-lang3:3.14.0'
+	implementation 'org.apache.poi:poi:5.2.4'
+	implementation 'org.apache.poi:poi-ooxml:5.2.4'
 	implementation 'org.json:json:20231013'
 	implementation 'org.modelmapper:modelmapper:3.2.0'
 	implementation 'org.postgresql:postgresql'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+	implementation platform("org.springframework.ai:spring-ai-bom:0.8.1-SNAPSHOT")
+  	implementation 'org.springframework.ai:spring-ai-openai'
+	implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-cache'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
@@ -57,6 +92,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'com.google.appengine:appengine-api-1.0-sdk:2.0.26'
 	annotationProcessor 'org.projectlombok:lombok'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -66,14 +102,88 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+	implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
+	implementation "com.querydsl:querydsl-core:5.1.0"
+	implementation "com.querydsl:querydsl-sql:5.1.0"
+	implementation "com.querydsl:querydsl-sql-spring:5.1.0"
+    annotationProcessor "com.querydsl:querydsl-apt:5.1.0:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 }
 
 dependencyManagement {
 	imports {
+		mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
 		mavenBom "com.google.cloud:spring-cloud-gcp-dependencies:${springCloudGcpVersion}"
 	}
 }
 
+apply plugin: 'com.google.cloud.tools.appengine'
+appengine {  // App Engine tasks configuration
+    deploy {   // deploy configuration
+        projectId 'august-cascade-385602' // gcloud config set project
+        stopPreviousVersion true
+        promote true
+    }
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
+    finalizedBy 'jacocoTestReport' // test가 끝나면 jacocoTestReport 동작
 }
+
+// jacoco report 설정
+jacocoTestReport {
+    reports {
+        html.required = true
+        xml.required = true
+        csv.required = true
+    }
+
+    def Qdomains = []
+    for (qPattern in '**/entity/QA'..'**/entity/QZ') {
+        Qdomains.add(qPattern + '*')
+    }
+
+    afterEvaluate {
+        classDirectories.setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it, excludes: [
+                    "**/*Application*",
+                    "**/*Config*",
+                    "**/*Util*",
+                    "**/*Advice*",
+                    "**/*Aspect*",
+                    "**/*Aware*",
+                    "**/*Constants*",
+                    "**/*Dto*",
+                    "**/*Entity*",
+                    "**/*PK*",
+                    "**/*Request*",
+                    "**/*Response*",
+                    "**/*Interceptor*",
+                    "**/*Repository*",
+                    "**/*Custom*",
+                    "**/*Exception*"
+                    ] + Qdomains)
+                })
+        )
+    }
+}
+
+def querydslDir = 'src/main/generated'
+
+sourceSets {
+ main.java.srcDirs += [ querydslDir ]
+}
+
+tasks.withType(JavaCompile) {
+ options.generatedSourceOutputDirectory = file(querydslDir)
+}
+
+clean {
+	delete file(querydslDir)
+}
+
+
+

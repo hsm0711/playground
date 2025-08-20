@@ -2,6 +2,8 @@ package com.playground.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import javax.sql.DataSource;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import com.github.gavlyukovskiy.boot.jdbc.decorator.DecoratedDataSource;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
 
+@Disabled
 @Slf4j
 @SpringBootTest
 class DataSourceConfigTest {

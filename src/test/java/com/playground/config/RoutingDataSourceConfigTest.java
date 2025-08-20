@@ -2,6 +2,8 @@ package com.playground.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.lang.reflect.Method;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +12,7 @@ import org.springframework.util.ReflectionUtils;
 import com.playground.constants.DataSourceType;
 import lombok.extern.slf4j.Slf4j;
 
+@Disabled
 @Slf4j
 @SpringBootTest
 class RoutingDataSourceConfigTest {

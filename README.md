@@ -1,5 +1,5 @@
 # 1. Swagger
- * [Swagger UI 바로가기](https://bingo-playground.duckdns.org:8080/swagger-ui/index.html)
+ * [Swagger UI 바로가기](https://august-cascade-385602.uw.r.appspot.com/swagger-ui/index.html)
 
 
 
@@ -126,10 +126,13 @@
 
 
 
+
 ------------------------------------------------------------
 
 
 > DB접속정보 등 기타 정보는 Confluence 개발환경 페이지에 기록함
+
+
 
 
 
