@@ -74,7 +74,7 @@ dependencies {
 	implementation 'io.hypersistence:hypersistence-utils-hibernate-63:3.7.4'
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
 	implementation 'org.apache.commons:commons-text:1.11.0'
-	implementation 'org.apache.commons:commons-lang3:3.14.0'
+	implementation 'org.apache.commons:commons-lang3:3.18.0'
 	implementation 'org.apache.poi:poi:5.2.4'
 	implementation 'org.apache.poi:poi-ooxml:5.2.4'
 	implementation 'org.json:json:20231013'
